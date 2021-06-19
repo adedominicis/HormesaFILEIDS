@@ -9,7 +9,7 @@ using SharpDX.XInput;
 using System;
 using HormesaFILEIDS.ViewModel;
 
-namespace AddinTesting
+namespace HormesaFILEIDS
 {
     /// <summary>
     /// Interaction logic for MyAddinControl.xaml
@@ -34,6 +34,16 @@ namespace AddinTesting
         }
 
         #endregion
+
+
+        #region Metodos accionados desde la interfaz.
+        private void btNuevoPartID_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Ha solicitado generar un partid");
+        }
+
+        #endregion
+
 
     }
 }

@@ -3,7 +3,7 @@ using Dna;
 using System.IO;
 using static AngelSix.SolidDna.SolidWorksEnvironment;
 
-namespace AddinTesting
+namespace HormesaFILEIDS
 {
     // 
     //  *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-

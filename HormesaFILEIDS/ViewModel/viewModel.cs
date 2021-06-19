@@ -1,6 +1,7 @@
 ﻿using SolidWorks.Interop.sldworks;
 using System;
 using System.ComponentModel;
+using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -11,10 +12,37 @@ namespace HormesaFILEIDS.ViewModel
     public class viewModel : INotifyPropertyChanged
     {
 
-        #region private fields
+        #region Private fields
         private SldWorks swApp;
+        private string id;
+        private int selectedConfigId;
+        private DataTable dtResumenPartID;
 
         #endregion
+
+
+        #region Public properties
+
+        //Identificador de la configuración seleccionada en el combobox.
+        public int SelectedConfigId
+        {
+            set { 
+                //Los combobox de XAML cuentan desde cero, la BD cuenta desde 1 en los ID. Esto es ajustable a posteriori.
+                selectedConfigId = value + 1;
+                OnPropertyChanged("SelectedConfigId");
+            }
+        }
+
+        public string Id
+        {
+            get
+            {
+                return "000-000";
+            }
+        }
+
+        #endregion
+
 
         #region Inicializar
 
@@ -25,7 +53,7 @@ namespace HormesaFILEIDS.ViewModel
                 // Obtener Instancia activa de solidworks
                 swApp = (SldWorks)System.Runtime.InteropServices.Marshal.GetActiveObject("SldWorks.Application");
 
-                
+
             }
             catch (Exception e)
             {
@@ -35,8 +63,7 @@ namespace HormesaFILEIDS.ViewModel
 
         #endregion
 
-
-
+       
         #region Implementar la interfaz InotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

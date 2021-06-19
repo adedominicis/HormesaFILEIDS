@@ -7,8 +7,8 @@
     <ProjectGuid>{A6EE8D43-A1CF-4FC3-A62D-9DCE655117E0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AddinTesting</RootNamespace>
-    <AssemblyName>AddinTesting</AssemblyName>
+    <RootNamespace>HormesaFILEIDS</RootNamespace>
+    <AssemblyName>HormesaFILEIDS</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -83,6 +83,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="model\DAO.cs" />
+    <Compile Include="model\queryDump.cs" />
+    <Compile Include="model\SwActiveDocument.cs" />
     <Compile Include="MyAddinControl.xaml.cs">
       <DependentUpon>MyAddinControl.xaml</DependentUpon>
     </Compile>
@@ -134,8 +137,6 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
