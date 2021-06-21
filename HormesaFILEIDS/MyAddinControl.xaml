@@ -41,96 +41,108 @@
         </Style>
 
     </UserControl.Resources>
-    <StackPanel Orientation="Vertical" Background="WhiteSmoke">
-        <Grid Height="40" Margin="10 10 10 10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
 
-            <Image Source="Resources/logo.png"
+    <TabControl>
+        <TabItem Header="SOLIDWORKS">
+            <StackPanel Orientation="Vertical" Background="WhiteSmoke">
+                <Grid Height="40" Margin="10 10 10 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="Resources/logo.png"
                    Stretch="Uniform" 
                    Grid.Column="1"
                    Margin="2 2 2 2"/>
-            <TextBlock Grid.Row="0" 
+                    <TextBlock Grid.Row="0" 
                        Style="{StaticResource txBlocks}"> 
                        CONTROL DE NÚMEROS DE PARTE</TextBlock>
-        </Grid>
-        <Grid HorizontalAlignment="Stretch" Margin="10 10 10 10">
+                </Grid>
+                <Grid HorizontalAlignment="Stretch" Margin="10 10 10 10">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
 
-            </Grid.RowDefinitions>
+                    </Grid.RowDefinitions>
 
 
-            <TextBlock Grid.Row="0" 
+                    <TextBlock Grid.Row="0" 
                        Style="{StaticResource txBlocks}"
                        Margin="2 2 2 2"
                        HorizontalAlignment="Left">SELECCIONE UNA CONFIGURACIÓN</TextBlock>
-            <ComboBox Grid.Row="1" 
+                    <ComboBox Grid.Row="1" 
                       Name="cbConfiguraciones"
                       Margin="2 2 2 2"
                       SelectedIndex="{Binding SelectedConfigId}"
                       Style="{StaticResource cbExtensiones}"
                       IsEnabled="False">
-            </ComboBox>
+                    </ComboBox>
 
-        </Grid>
-        <Grid HorizontalAlignment="Stretch" Margin="10 10 10 10">
+                </Grid>
+                <Grid HorizontalAlignment="Stretch" Margin="10 10 10 10">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
 
-            </Grid.RowDefinitions>
+                    </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="1" 
+                    <TextBlock Grid.Row="2" 
                        Style="{StaticResource txBlocks}"
                        Margin="2 2 2 2"
                        HorizontalAlignment="Left">PARTID / DWGID</TextBlock>
-            <Button Name="btNuevoPartID"
+                    <Button Name="btNuevoPartID"
                         Grid.Row="0"
                         Grid.Column="0" 
                         Grid.ColumnSpan="2" 
                         Margin="2 2 2 2"
-                    
                         Click="btNuevoPartID_Click">CREAR ID EN CONFIGURACIÓN</Button>
-            <TextBox Style= "{StaticResource txID}"
+
+                    <Button Name="btPartIDTodasConfigs"
+                        Grid.Row="1"
+                        Grid.Column="0" 
+                        Grid.ColumnSpan="2" 
+                        Margin="2 2 2 2"
+                        Click="btNuevoPartID_Click">CREAR ID EN TODAS LAS CONFIGURACIONES</Button>
+
+
+                    <TextBox Style= "{StaticResource txID}"
                      IsReadOnly="True"
                      Margin="2 2 2 2"
                      Name="txID" 
-                     Grid.Row="1" 
+                     Grid.Row="2" 
                      Grid.Column="2" 
                      MaxLength="7" 
                      Text="{Binding Id, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
-        </Grid>
+                </Grid>
 
-        <Grid HorizontalAlignment="Stretch" Margin="10 10 10 10">
+                <Grid HorizontalAlignment="Stretch" Margin="10 10 10 10">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
 
-            </Grid.RowDefinitions>
+                    </Grid.RowDefinitions>
 
 
-            <TextBlock Grid.Row="0" 
+                    <TextBlock Grid.Row="0" 
                        Style="{StaticResource txBlocks}"
                        Margin="2 2 2 2"
                        HorizontalAlignment="Left">RESUMEN DE PARTIDS</TextBlock>
-            <DataGrid Name="dgridPartiID"
+                    <DataGrid Name="dgridPartiID"
                       Margin="2 2 2 2"
                       Grid.Row="1" 
                       IsReadOnly="True" 
@@ -140,10 +152,15 @@
                       FontSize="10"
                       FontWeight="DemiBold"
                       AlternatingRowBackground="LightBlue">
-            </DataGrid>
+                    </DataGrid>
 
-        </Grid>
+                </Grid>
 
-    </StackPanel>
+            </StackPanel>
+
+        </TabItem>
+        <TabItem Header="OTROS"></TabItem>
+    </TabControl>
+    
 
 </UserControl>

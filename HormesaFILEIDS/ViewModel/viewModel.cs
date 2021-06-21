@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using HormesaFILEIDS.model;
 
 
 namespace HormesaFILEIDS.ViewModel
@@ -17,6 +18,7 @@ namespace HormesaFILEIDS.ViewModel
         private string id;
         private int selectedConfigId;
         private DataTable dtResumenPartID;
+        private SwEventHandler swHandler;
 
         #endregion
 
@@ -52,7 +54,8 @@ namespace HormesaFILEIDS.ViewModel
             {
                 // Obtener Instancia activa de solidworks
                 swApp = (SldWorks)System.Runtime.InteropServices.Marshal.GetActiveObject("SldWorks.Application");
-
+                //Instanciar un listener de solidworks
+                swHandler = new SwEventHandler(swApp);
 
             }
             catch (Exception e)

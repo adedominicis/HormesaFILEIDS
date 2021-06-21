@@ -86,6 +86,8 @@
     <Compile Include="model\DAO.cs" />
     <Compile Include="model\queryDump.cs" />
     <Compile Include="model\SwActiveDocument.cs" />
+    <Compile Include="model\SwEventHandler.cs" />
+    <Compile Include="model\UIHelper.cs" />
     <Compile Include="MyAddinControl.xaml.cs">
       <DependentUpon>MyAddinControl.xaml</DependentUpon>
     </Compile>
