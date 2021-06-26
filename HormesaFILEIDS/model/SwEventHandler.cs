@@ -15,15 +15,11 @@ namespace HormesaFILEIDS.model
         /// 1- Se abre un archivo solidworks
         /// 2- Se añaden nuevas configuraciones.
         /// 3- Se renombra una configuración
-        /// 4- Se renombra el archivo activo.
-        /// 5- Se renombra un archivo dentro del ensamblaje.
-        /// 6- Se eliminan configuraciones.
-        /// 7- Cambió el documento activo
-        /// 8- Se cambió el partid manualmente.
-        /// 9- Cambió la configuración activa.
-        /// 10- El archivo fue renombrado fuera de SW
-        /// 
-        /// 
+        /// 4- El archivo fue renombrado fuera de SW
+        /// 5- Se eliminan configuraciones.
+        /// 6- Cambió el documento activo
+        /// 7- Se cambió el partid manualmente.
+        /// 8- Cambió la configuración activa.
         /// </summary>
 
 
@@ -130,7 +126,7 @@ namespace HormesaFILEIDS.model
 
         #endregion
 
-        #region 1,7 - Nuevo documento o cambio de documento activo
+        #region 1,6 - Nuevo documento o cambio de documento activo
         /// <summary>
         /// Este bloque se encarga de actualizar la referencia a swModel cuando el usuario cambia de documento.
         /// Adicionalmente, crea el swDoc correspondiente, bien sea PartDoc, AssemblyDoc o DrawingDoc
@@ -210,7 +206,30 @@ namespace HormesaFILEIDS.model
         }
         #endregion
 
-        #region 8- Se cambió el partid manualmente.
+        #region 4- Archivo renombrado fuera de SW (no implementado)
+        #endregion
+
+        #region 5- Se eliminó una config
+        private int SwPart_DeleteItemNotify(int EntityType, string itemName)
+        {
+            if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
+            {
+                uiHelper.msgCreator(UIHelper.UserMessages.userDeletedConfig);
+            }
+            return 0;
+        }
+
+        private int SwPart_DeleteItemPreNotify(int EntityType, string itemName)
+        {
+            if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
+            {
+                uiHelper.msgCreator(UIHelper.UserMessages.userAboutToDeleteConfig);
+            }
+            return 0;
+        }
+        #endregion
+
+        #region 7- Se cambió el partid manualmente. (Esto no está funcionando)
         private int SwPart_DeleteCustomPropertyNotify(string propName, string Configuration, string Value, int valueType)
         {
             if (propName.Equals("partid", StringComparison.OrdinalIgnoreCase))
@@ -240,28 +259,7 @@ namespace HormesaFILEIDS.model
 
         #endregion
 
-        #region 6- Se eliminó una config
-        private int SwPart_DeleteItemNotify(int EntityType, string itemName)
-        {
-            if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
-            {
-                uiHelper.msgCreator(UIHelper.UserMessages.userDeletedConfig);
-            }
-            return 0;
-        }
-
-        private int SwPart_DeleteItemPreNotify(int EntityType, string itemName)
-        {
-            if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
-            {
-                uiHelper.msgCreator(UIHelper.UserMessages.userAboutToDeleteConfig);
-            }
-            return 0;
-        }
-        #endregion
-
-
-        #region 9- Cambio de configuración activa.
+        #region 8- Cambio de configuración activa.
 
         private int SwPart_ActiveConfigChangeNotify()
         {
@@ -269,10 +267,6 @@ namespace HormesaFILEIDS.model
             return 0;
         }
         #endregion
-
-
-
-
 
     }
 }
