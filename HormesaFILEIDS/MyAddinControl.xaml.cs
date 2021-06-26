@@ -40,6 +40,7 @@ namespace HormesaFILEIDS
         private void btNuevoPartID_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Ha solicitado generar un partid");
+            
         }
 
         #endregion
