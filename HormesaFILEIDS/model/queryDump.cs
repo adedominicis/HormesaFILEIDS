@@ -20,6 +20,11 @@ namespace HormesaFILEIDS.model
             return string.Format("exec getConfigPartIdFromConfigName {0},{1} ", filePartid, configName);
         }
 
+        //Revisa si un archivo posee una configuración con el nombre suministrado. Usa como referencia el partid del archivo.
+        public string checkIfConfigExistsFromFilePartId(int filePartid, string configName)
+        {
+            return string.Format("exec checkIfConfigExistsFromFilePartId {0},{1} ", filePartid, configName);
+        }
         #endregion
 
         #region Procedimientos almacenados - Escrituras
@@ -30,6 +35,58 @@ namespace HormesaFILEIDS.model
             return string.Format("exec insertFileFromPath {0}", fullpath);
         }
 
+        //Asignar una configuración a un archivo, usando como referencia su partid.
+        public string createConfigFromFilePartID(int filePartid, string configName)
+        {
+            return string.Format("exec createConfigFromFilePartID {0},{1} ", filePartid, configName);
+        }
+
+        //Asignar una configuración a un archivo, usando como referencia su path
+        public string createConfigFromFilePath(string fullPath, string configName)
+        {
+            return string.Format("exec createConfigFromFilePath {0},{1} ", fullPath, configName);
+        }
+
+        //Asignar un partid a una configuracion que no lo tiene, usando como referencia el partid del archivo
+        public string assignPartIdToConfigFromFileID(int filePartid, string configName)
+        {
+            return string.Format("exec assignPartIdToConfigFromFileID {0},{1} ", filePartid, configName);
+        }
+
+        //Asignar un partid a una configuracion que no lo tiene, usando como referencia el path del archivo
+        //Por definir
+
         #endregion
+
+        #region Procedimientos Almacenados - Eliminaciones
+
+        //Eliminar una configuracion, dando como referencia el path del archivo y el nombre de la configuración
+        public string deleteConfigFromFilePath(string fullPath, string configName)
+        {
+            return string.Format("exec deleteConfigFromFilePath {0},{1} ", fullPath, configName);
+        }
+
+        //Eliminar una configuracion, dando como referencia el partid del archivo y el nombre de la configuración
+        public string deleteConfigFromFilePartID(int filePartid, string configName)
+        {
+            return string.Format("exec deleteConfigFromFilePartID {0},{1} ", filePartid, configName);
+        }
+
+        #endregion
+
+        #region Procedimientos Almacenados - Actualizaciones.
+        //Renombrar una configuracion desde el path del archivo y el nombre de la configuracion
+        public string renameConfigFromFilePath(string fullPath, string oldConfigName,string newConfigName)
+        {
+            return string.Format("exec renameConfigFromFilePath {0},{1},{2} ", fullPath, oldConfigName, newConfigName);
+        }
+
+        //Renombrar una configuracion desde el ID del archivo y el nombre de la configuracion
+        public string renameConfigFromFilePartId(int filePartId, string oldConfigName, string newConfigName)
+        {
+            return string.Format("exec renameConfigFromFilePartId {0},{1},{2} ", filePartId, oldConfigName, newConfigName);
+        }
+        #endregion
+
     }
 }
