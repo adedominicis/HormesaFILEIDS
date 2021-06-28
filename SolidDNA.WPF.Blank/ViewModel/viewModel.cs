@@ -5,7 +5,7 @@ using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using HormesaFILEIDS.model;
-
+using SolidWorks.Interop.swconst;
 
 namespace HormesaFILEIDS.ViewModel
 {
@@ -25,7 +25,7 @@ namespace HormesaFILEIDS.ViewModel
         private SelectionMgr selMgr;
         private Feature swFeat;
         private UIHelper uiHelper;
-
+        private SwActiveDocument swActiveDoc;
         #endregion
 
 
@@ -34,7 +34,8 @@ namespace HormesaFILEIDS.ViewModel
         //Identificador de la configuración seleccionada en el combobox.
         public int SelectedConfigId
         {
-            set { 
+            set
+            {
                 //Los combobox de XAML cuentan desde cero, la BD cuenta desde 1 en los ID. Esto es ajustable a posteriori.
                 selectedConfigId = value + 1;
                 OnPropertyChanged("SelectedConfigId");
@@ -49,6 +50,11 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
+        //Documento activo.
+        public SwActiveDocument SwActiveDoc
+        {
+            get { return swActiveDoc; }
+        }
         #endregion
 
 
@@ -64,7 +70,6 @@ namespace HormesaFILEIDS.ViewModel
                 SwAppEventSubscriber();
                 //Instanciar algunos singletons importantes.
                 uiHelper = new UIHelper();
-
             }
             catch (Exception e)
             {
@@ -153,42 +158,52 @@ namespace HormesaFILEIDS.ViewModel
         private int SwApp_FileNewNotify2(object NewDoc, int DocType, string TemplateName)
         {
             //Actualizar swModel
-            SwModel = (ModelDoc2)NewDoc;
+            swModel = (ModelDoc2)NewDoc;
+            //Instanciar documento activo.
+            swActiveDoc = null;
+            swActiveDoc = new SwActiveDocument(swModel);
             //Mensaje para debug.
-            uiHelper.msgCreator(UIHelper.UserMessages.UserCreatedNewDocument);
+            //uiHelper.msgCreator(UIHelper.UserMessages.UserCreatedNewDocument);
             return 0;
         }
         private int SwApp_FileOpenNotify(string FileName)
         {
             //Actualizar swModel
-            SwModel = (ModelDoc2)swApp.ActiveDoc;
+            swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            //Instanciar documento activo.
+            swActiveDoc = null;
+            swActiveDoc = new SwActiveDocument(swModel);
             //Mensaje para debug.
-            uiHelper.msgCreator(UIHelper.UserMessages.userOpenedDocument);
+            //uiHelper.msgCreator(UIHelper.UserMessages.userOpenedDocument);
             return 0;
         }
         private int SwApp_ActiveDocChangeNotify()
         {
             //Actualizar swModel
-            SwModel = (ModelDoc2)swApp.ActiveDoc;
+            swModel = (ModelDoc2)swApp.ActiveDoc;
+            //Instanciar documento activo.
+            swActiveDoc = null;
+            swActiveDoc = new SwActiveDocument(swModel);
             //Mensaje para debug.
-            uiHelper.msgCreator(UIHelper.UserMessages.userChangedDocument);
+            //uiHelper.msgCreator(UIHelper.UserMessages.userChangedDocument);
             return 0;
         }
         //Actualizar el tipo de documento y castear el tipo al swDoc correcto
         public void updateSwDoc()
         {
             //Crear objetos swDoc
-            if (SwModel.GetType() == (int)swDocumentTypes_e.swDocPART)
+            if (swModel.GetType() == (int)swDocumentTypes_e.swDocPART)
             {
-                swPart = (PartDoc)SwModel;
+                swPart = (PartDoc)swModel;
             }
-            else if (SwModel.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY)
+            else if (swModel.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY)
             {
-                swAssy = (AssemblyDoc)SwModel;
+                swAssy = (AssemblyDoc)swModel;
             }
-            else if (SwModel.GetType() == (int)swDocumentTypes_e.swDocDRAWING)
+            else if (swModel.GetType() == (int)swDocumentTypes_e.swDocDRAWING)
             {
-                swDraw = (DrawingDoc)SwModel;
+                swDraw = (DrawingDoc)swModel;
             }
 
             //Suscribirse a todos los listeners usando delegados.

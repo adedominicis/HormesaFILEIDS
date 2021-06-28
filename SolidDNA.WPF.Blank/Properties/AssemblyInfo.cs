@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HormesaFILEIDS")]
+[assembly: AssemblyProduct("SHormesaFILEIDS")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(true)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a6ee8d43-a1cf-4fc3-a62d-9dce655117e0")]
+[assembly: Guid("19BCBD7C-1518-4180-B118-7DF731D40E5C")]
 
 // Version information for an assembly consists of the following four values:
 //

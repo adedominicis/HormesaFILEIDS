@@ -16,15 +16,17 @@ namespace HormesaFILEIDS.model
         private string conName;
         private queryDump q = new queryDump();
         public event EventHandler<string> exceptionRaised;
+        private ErrorHandler err;
 
         #region Conexión a DB
         // Database index:  1:localtest,  2: azureproductionmirs
 
         private int dbIndex = 1;
-        public DAO() { }
-        public DAO(int dbindex)
+
+        public DAO(int dbindex = 1)
         {
             dbIndex = dbindex;
+            err = new ErrorHandler();
         }
 
         public void startConnection()
@@ -42,6 +44,8 @@ namespace HormesaFILEIDS.model
                         conStr = "Server=.;Initial Catalog=HORMESAFILEIDS;Integrated Security=true";
                         break;
                     default:
+                        conName = "localtest";
+                        conStr = "Server=.;Initial Catalog=HORMESAFILEIDS;Integrated Security=true";
                         break;
                 }
 
@@ -50,7 +54,7 @@ namespace HormesaFILEIDS.model
             }
             catch (Exception e)
             {
-                exceptionRaised?.Invoke(this, ErrorHandler.handler(EnumMensajes.errorEnConexionDB) + conName + "\\n" + e.Message);
+                exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorEnConexionDB) + conName + "\\n" + e.Message);
             }
         }
 
@@ -86,7 +90,7 @@ namespace HormesaFILEIDS.model
             }
             catch (Exception ex)
             {
-                exceptionRaised?.Invoke(this, ErrorHandler.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.singleReturnQuery");
+                exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.singleReturnQuery");
             }
             finally
             {
@@ -115,7 +119,7 @@ namespace HormesaFILEIDS.model
             }
             catch (Exception ex)
             {
-                exceptionRaised?.Invoke(this, ErrorHandler.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.genericSelectQuery");
+                exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.genericSelectQuery");
             }
             finally
             {
@@ -144,6 +148,6 @@ namespace HormesaFILEIDS.model
 
         #endregion
 
-        
+
     }
 }

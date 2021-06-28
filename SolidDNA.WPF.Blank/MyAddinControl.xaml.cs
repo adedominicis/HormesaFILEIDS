@@ -1,13 +1,8 @@
-﻿using System.ComponentModel;
-using System.Windows.Controls;
-using static AngelSix.SolidDna.SolidWorksEnvironment;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Threading;
-using SharpDX.XInput;
-using System;
+﻿using HormesaFILEIDS.model;
 using HormesaFILEIDS.ViewModel;
+using System.Windows;
+using System.Windows.Controls;
+
 
 namespace HormesaFILEIDS
 {
@@ -18,6 +13,7 @@ namespace HormesaFILEIDS
     {
         //DATACONTEXT.
         private viewModel vm;
+        private ErrorHandler err;
 
 
         #region Constructor
@@ -31,16 +27,26 @@ namespace HormesaFILEIDS
             this.DataContext = vm;
             vm.initVM();
             InitializeComponent();
+            //Error handler.
+            err = new ErrorHandler();
+
         }
 
         #endregion
 
-
         #region Metodos accionados desde la interfaz.
         private void btNuevoPartID_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Ha solicitado generar un partid");
-            
+            //Insertar archivo en la BD.
+            if (vm.SwActiveDoc.insertFileOnDb())
+            {
+                err.handler(EnumMensajes.registroExitoso);
+            }
+            else
+            {
+                err.handler(EnumMensajes.registroFallido);
+            }
+
         }
 
         #endregion

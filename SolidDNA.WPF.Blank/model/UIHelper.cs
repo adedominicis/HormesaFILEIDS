@@ -27,7 +27,7 @@ namespace HormesaFILEIDS.model
             userDeletedPartid
         }
 
-        public void msgCreator(Enum msg,string msgTail="")
+        public void msgCreator(Enum msg, string msgTail = "")
         {
             switch (msg)
             {

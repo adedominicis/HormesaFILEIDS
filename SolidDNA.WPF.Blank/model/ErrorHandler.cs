@@ -3,23 +3,23 @@
     public class ErrorHandler
     {
 
-        public ErrorHandler()
-        {
-            //Suscribirse al evento de excepciones del DAO
-            DAO dao = new DAO();
-            dao.exceptionRaised += Dao_exceptionRaised;
+        //public ErrorHandler()
+        //{
+        //    //Suscribirse al evento de excepciones del DAO
+        //    DAO dao = new DAO();
+        //    dao.exceptionRaised += Dao_exceptionRaised;
 
-        }
+        //}
 
-        private void Dao_exceptionRaised(object sender, string e)
-        {
-            DAO dao = (DAO)sender;
-            //Escribe el mensaje en la base de datos.
-            dao.logException(e);
+        //private void Dao_exceptionRaised(object sender, string e)
+        //{
+        //    DAO dao = (DAO)sender;
+        //    //Escribe el mensaje en la base de datos.
+        //    dao.logException(e);
 
-        }
+        //}
 
-        public static string handler(EnumMensajes err)
+        public string handler(EnumMensajes err)
         {
             string errorMsg;
 

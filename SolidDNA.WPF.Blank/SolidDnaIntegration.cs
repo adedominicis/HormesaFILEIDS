@@ -22,7 +22,7 @@ namespace HormesaFILEIDS
     //        To get your dll to run inside SolidWorks as an add-in you need to register it.
     //        Inside this project template in the Resources folder is the SolidWorksAddinInstaller.exe.
     //        Compile your project, open up the SolidWorksAddinInstaller.exe, then browse for your
-    //        output dll file (for example /bin/Debug/AddinTesting.dll) and click Install.
+    //        output dll file (for example /bin/Debug/SolidDNA.WPF.Blank.dll) and click Install.
     //
     //        Now when you start SolidWorks your Add-in should load and should appear in the 
     //        Tools > Add-ins menu. 
@@ -95,7 +95,7 @@ namespace HormesaFILEIDS
             //      Dna.Framework.Service<SomeClass>();
             //
 
-            // Add file logger (will be in /bin/Debug/AddinTesting.log.txt)
+            // Add file logger (will be in /bin/Debug/SolidDNA.WPF.Blank.log.txt)
             construction.AddFileLogger(Path.ChangeExtension(this.AssemblyFilePath(), "log.txt"));
         }
 
@@ -139,12 +139,12 @@ namespace HormesaFILEIDS
         /// <summary>
         /// My Add-in title
         /// </summary>
-        public override string AddInTitle => "HORMESA FILEIDS";
+        public override string AddInTitle => "NUMEROS DE PARTE - HORMESA";
 
         /// <summary>
         /// My Add-in description
         /// </summary>
-        public override string AddInDescription => "GENERADOR DE NUMEROS DE PARTE Y METADATOS";
+        public override string AddInDescription => "Generador de numeros de parte. HORMESA";
 
         #endregion
 
@@ -157,7 +157,7 @@ namespace HormesaFILEIDS
             {
                 // Set taskpane icon
                 Icon = Path.Combine(this.AssemblyPath(), "logo-small.png"),
-                WpfControl = new MyAddinControl()
+                  WpfControl = new MyAddinControl()
             };
 
             // Add it to taskpane

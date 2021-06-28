@@ -16,7 +16,7 @@ namespace HormesaFILEIDS
         /// <summary>
         /// Our unique ProgId for SolidWorks to find and load us
         /// </summary>
-        private const string MyProgId = "HormesaFILEIDS.Taskpane";
+        private const string MyProgId = "HormesaFILEIDS";
 
         #endregion
 
