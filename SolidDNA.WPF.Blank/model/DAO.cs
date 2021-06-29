@@ -68,7 +68,9 @@ namespace HormesaFILEIDS.model
 
         #region Core queries
 
-        // Consulta generica "select" que retorna un solo string. 
+        // Consulta generica "select" que retorna un solo string.
+
+
         public string singleReturnQuery(string query)
         {
 
@@ -77,16 +79,11 @@ namespace HormesaFILEIDS.model
                 // Check for an available connection
                 startConnection();
 
-                //Todo esto parece estar mal. Deberia usarse sqlcommand.executescalar. Revisar.
-                //Dataset
-                DataSet ds = new DataSet();
-                //Data adapter
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(query, connection);
-                //Llenar dataset con el resultado de dataAdapter
-                dataAdapter.Fill(ds, "resultado");
-                DataTable tbl = ds.Tables["resultado"];
-                return tbl.Rows[0][0].ToString();
+                SqlCommand command = new SqlCommand(query,connection);
+                string dbResponse = command.ExecuteScalar().ToString();
+                int modifiedRows=command.ExecuteNonQuery();
 
+                return dbResponse;
             }
             catch (Exception ex)
             {
@@ -96,7 +93,7 @@ namespace HormesaFILEIDS.model
             {
                 connection.Close();
             }
-            return null;
+            return string.Empty;
         }
 
         // Consulta generica "select" que retorna un datatable

@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using HormesaFILEIDS.model;
 using SolidWorks.Interop.swconst;
+using System.Collections.ObjectModel;
 
 namespace HormesaFILEIDS.ViewModel
 {
@@ -13,19 +14,22 @@ namespace HormesaFILEIDS.ViewModel
     public class viewModel : INotifyPropertyChanged
     {
 
-        #region Private fields
+        #region SolidWorks API Private Fields
         private SldWorks swApp;
-        private string id;
-        private int selectedConfigId;
-        private DataTable dtResumenPartID;
         private PartDoc swPart;
         private AssemblyDoc swAssy;
         private DrawingDoc swDraw;
         private ModelDoc2 swModel;
         private SelectionMgr selMgr;
         private Feature swFeat;
+        #endregion
+
+        #region Other private fields
+        private int selectedConfigId;
         private UIHelper uiHelper;
         private SwActiveDocument swActiveDoc;
+        //Instancia de la vista.
+        private MyAddinControl myView;
         #endregion
 
 
@@ -42,11 +46,36 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
-        public string Id
+        public string PartId
+        {
+            get 
+            {
+                if (swActiveDoc != null)
+                {
+                    return swActiveDoc.getFormattedPartId();
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+
+
+        //Lista de configuraciones del documento activo.
+        public ObservableCollection<string> LsConfigsActiveDoc
         {
             get
             {
-                return "000-000";
+                if (swActiveDoc != null)
+                {
+                    return swActiveDoc.getFileConfigList();
+                }
+                else
+                {
+                    return new ObservableCollection<string>();
+                }
             }
         }
 
@@ -57,10 +86,9 @@ namespace HormesaFILEIDS.ViewModel
         }
         #endregion
 
+        #region Inicializadores
 
-        #region Inicializar
-
-        public void initVM()
+        public void initializeViewModel(MyAddinControl v)
         {
             try
             {
@@ -70,6 +98,8 @@ namespace HormesaFILEIDS.ViewModel
                 SwAppEventSubscriber();
                 //Instanciar algunos singletons importantes.
                 uiHelper = new UIHelper();
+                //Instancia de la vista
+                myView = v;
             }
             catch (Exception e)
             {
@@ -77,12 +107,55 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
+        private void refreshTaskPane()
+        {
+            //Fire onpropertychanged
+            OnPropertyChanged("PartId");
+            OnPropertyChanged("LsConfigsActiveDoc");
+            //Actualizar vista
+            myView.fillComboBoxes();
+        }
+
         #endregion
 
         #region TaskPane Methods and listeners.
+        //Los botones accionados en la vista llaman métodos aqui.
+        //Esta suerte de "daisychaining" de métodos puede tener una mejor solución.
+        //¿O es una forma de mediador?
+
+        public bool asignarPartid()
+        {
+            if (swModel != null && swActiveDoc != null)
+            {
+                if (swActiveDoc.insertFileOnDb())
+                {
+                    OnPropertyChanged("PartId");
+                    return true;
+                }
+                else
+                {
+                    //Algun mensaje aqui. No pudo asignarse partid.
+                    return false;
+                }
+            }
+            else
+            {
+                //Algun mensaje sobre archivo no disponible.
+                return false;
+            }
+
+
+        }
+
+        public void renombrarArchivo()
+        {
+            //Renombrar archivo;
+            swActiveDoc.renameFile();
+
+        }
         #endregion
 
-        #region Solidworks Event Listeners
+        #region Solidworks Event Subscribers
 
         // Subscripción a los eventos de la instancia de solidworks (swApp)
         private void SwAppEventSubscriber()
@@ -162,8 +235,8 @@ namespace HormesaFILEIDS.ViewModel
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel);
-            //Mensaje para debug.
-            //uiHelper.msgCreator(UIHelper.UserMessages.UserCreatedNewDocument);
+            //Actualizar taskpane
+            refreshTaskPane();
             return 0;
         }
         private int SwApp_FileOpenNotify(string FileName)
@@ -174,8 +247,8 @@ namespace HormesaFILEIDS.ViewModel
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel);
-            //Mensaje para debug.
-            //uiHelper.msgCreator(UIHelper.UserMessages.userOpenedDocument);
+            //Actualizar taskpane
+            refreshTaskPane();
             return 0;
         }
         private int SwApp_ActiveDocChangeNotify()
@@ -185,8 +258,8 @@ namespace HormesaFILEIDS.ViewModel
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel);
-            //Mensaje para debug.
-            //uiHelper.msgCreator(UIHelper.UserMessages.userChangedDocument);
+            //Actualizar taskpane
+            refreshTaskPane();
             return 0;
         }
         //Actualizar el tipo de documento y castear el tipo al swDoc correcto

@@ -25,32 +25,52 @@ namespace HormesaFILEIDS
             //El datacontext es el viewmodel, el viewmodel se comunica con todas las otras clases 
             vm = new viewModel();
             this.DataContext = vm;
-            vm.initVM();
+            vm.initializeViewModel(this);
+            //Inicializar taskpane en solidworks
             InitializeComponent();
             //Error handler.
             err = new ErrorHandler();
-
+            //Resetear interfaz
+            resetTaskPane();
         }
 
         #endregion
 
         #region Metodos accionados desde la interfaz.
-        private void btNuevoPartID_Click(object sender, RoutedEventArgs e)
+        private void btNuevoPartIdComponente_Click(object sender, RoutedEventArgs e)
         {
             //Insertar archivo en la BD.
-            if (vm.SwActiveDoc.insertFileOnDb())
+            if (vm.asignarPartid())
             {
-                err.handler(EnumMensajes.registroExitoso);
+                //Deshabilitar botón.
+                btNuevoPartIdComponente.IsEnabled = false;
             }
-            else
-            {
-                err.handler(EnumMensajes.registroFallido);
-            }
-
         }
 
         #endregion
 
+        #region Metodos de estado e inicializacion
 
+
+        public void fillComboBoxes()
+        {
+            cbConfiguraciones.ItemsSource = vm.LsConfigsActiveDoc;
+        }
+
+        public void resetTaskPane()
+        {
+            fillComboBoxes();
+        }
+        #endregion
+
+        private void btRenombrarArchivo_Click(object sender, RoutedEventArgs e)
+        {
+            vm.renombrarArchivo();
+        }
+
+        private void btAsignarPartidAConfig_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,14 +12,22 @@ namespace HormesaFILEIDS.model
 {
     public class SwActiveDocument
     {
-        #region Private fields
+        #region Delegates
 
+
+        #endregion
+
+        #region Private fields
+        private const string CustomPropertyPartid = "PARTID";
+        private CustomPropertyManager custPropMgr;
+        private ModelDocExtension swModelDocExt;
         private string partId;
         private ModelDoc2 swModel;
         private ObservableCollection<string> dbConfigList;
         private Configuration activeConfig;
         private DAO dao;
         private queryDump q;
+        private string descriptores;
         #endregion
 
         #region Constructor
@@ -31,9 +40,10 @@ namespace HormesaFILEIDS.model
             dao = new DAO();
             // Querydump
             q = new queryDump();
-
             //Si el archivo actual está en la DB, setear el partid interno de la clase para tener identificado el archivo.
             partId = dao.singleReturnQuery(q.getFilePartIdFromPath(swModel.GetPathName()));
+            //Reescribir partid en el archivo.
+            writePartIdToFile();
         }
 
         #endregion
@@ -45,16 +55,10 @@ namespace HormesaFILEIDS.model
             get { return partId; }
         }
 
-        //La lista de configuraciones del modelo.
-        public ObservableCollection<string> ConfigList
-        {
-            get { return (ObservableCollection<string>)swModel.GetConfigurationNames(); }
-        }
 
         //La configuración activa.
         public string ActiveConfigName
         {
-
             get { return getActiveConfigName(); }
         }
 
@@ -78,21 +82,54 @@ namespace HormesaFILEIDS.model
             return dao.tableReturnQuery(q.listConfigsFromFilePartID(partId));
         }
 
+        //Obtener las configuraciones de este archivo
+        public ObservableCollection<string> getFileConfigList()
+        {
+            return (arrayToObsCollection((string[])swModel.GetConfigurationNames()));
+        }
         //Inserta archivo en la DB y le asigna partid.
         public bool insertFileOnDb()
         {
-            //Insertar el archivo activo en la DB
-            dao.singleReturnQuery(q.insertFileFromPath(swModel.GetPathName()));
-
-            //Setear el partid.
-            partId = dao.singleReturnQuery(q.getFilePartIdFromPath(swModel.GetPathName()));
+            //Insertar el archivo activo en la DB y guardar el partid local
+            partId=dao.singleReturnQuery(q.insertFileFromPath(swModel.GetPathName()));
+            writePartIdToFile();
             return !string.IsNullOrEmpty(partId);
         }
+
+        //Obtener nombre de la configuración activa
         private string getActiveConfigName()
         {
             activeConfig = (Configuration)swModel.GetActiveConfiguration();
             return activeConfig.Name;
         }
+
+        //Convertir un array de strings a un ObservableCollection
+        private ObservableCollection<string> arrayToObsCollection (string [] arr)
+        {
+            ObservableCollection<string> obsCol = new ObservableCollection<string>();
+            foreach (string row in arr)
+            {
+                obsCol.Add(row);
+            }
+            return obsCol;
+        }
+
+        //Asignar partid al property
+
+        private void writePartIdToFile()
+        {
+            custPropMgr = swModel.Extension.CustomPropertyManager[""];
+            // = swModelDocExt.get_CustomPropertyManager("");
+            //Escribir partid.
+            custPropMgr.Set2("PARTID", partId);
+        }
+
+        //Renombrar el archivo.
+        internal void renameFile()
+        {
+    
+        }
         #endregion
+
     }
 }
