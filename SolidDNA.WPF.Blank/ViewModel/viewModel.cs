@@ -164,12 +164,37 @@ namespace HormesaFILEIDS.ViewModel
             swApp.ActiveDocChangeNotify -= SwApp_ActiveDocChangeNotify;
             swApp.FileOpenNotify -= SwApp_FileOpenNotify;
             swApp.FileNewNotify2 -= SwApp_FileNewNotify2;
+            swApp.FileCloseNotify += SwApp_FileCloseNotify;
             //Suscribir en limpio
             swApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             swApp.FileOpenNotify += SwApp_FileOpenNotify;
             swApp.FileNewNotify2 += SwApp_FileNewNotify2;
+            swApp.FileCloseNotify += SwApp_FileCloseNotify;
 
         }
+        
+        //crea el swDoc correspondiente, bien sea PartDoc, AssemblyDoc o DrawingDoc
+        public void updateSwDoc()
+        {
+            //Crear objetos swDoc
+            if (swModel.GetType() == (int)swDocumentTypes_e.swDocPART)
+            {
+                swPart = (PartDoc)swModel;
+            }
+            else if (swModel.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY)
+            {
+                swAssy = (AssemblyDoc)swModel;
+            }
+            else if (swModel.GetType() == (int)swDocumentTypes_e.swDocDRAWING)
+            {
+                swDraw = (DrawingDoc)swModel;
+            }
+
+            //Suscribirse a todos los listeners usando delegados.
+            SwSpecificEventSubscriber();
+
+        }
+
         //Suscripción a los eventos de parte, pieza o ensamble mediante delegates
         public void SwSpecificEventSubscriber()
         {
@@ -217,17 +242,12 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
-
         #endregion
 
-        #region 1,6 - Nuevo documento o cambio de documento activo
-        /// <summary>
-        /// Este bloque se encarga de actualizar la referencia a swModel cuando el usuario cambia de documento.
-        /// Adicionalmente, crea el swDoc correspondiente, bien sea PartDoc, AssemblyDoc o DrawingDoc
-        /// </summary>
+        // Delegate Methods suscritos a eventos de SolidWorks
 
-
-        // Handlers (Delegate methods)
+        #region 1- Se crea un nuevo documento
+        
         private int SwApp_FileNewNotify2(object NewDoc, int DocType, string TemplateName)
         {
             //Actualizar swModel
@@ -239,6 +259,9 @@ namespace HormesaFILEIDS.ViewModel
             refreshTaskPane();
             return 0;
         }
+        #endregion
+
+        #region 2- Abrir documento
         private int SwApp_FileOpenNotify(string FileName)
         {
             //Actualizar swModel
@@ -251,6 +274,9 @@ namespace HormesaFILEIDS.ViewModel
             refreshTaskPane();
             return 0;
         }
+        #endregion
+
+        #region 3- Cambiar documento activo
         private int SwApp_ActiveDocChangeNotify()
         {
             //Actualizar swModel
@@ -262,36 +288,15 @@ namespace HormesaFILEIDS.ViewModel
             refreshTaskPane();
             return 0;
         }
-        //Actualizar el tipo de documento y castear el tipo al swDoc correcto
-        public void updateSwDoc()
-        {
-            //Crear objetos swDoc
-            if (swModel.GetType() == (int)swDocumentTypes_e.swDocPART)
-            {
-                swPart = (PartDoc)swModel;
-            }
-            else if (swModel.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY)
-            {
-                swAssy = (AssemblyDoc)swModel;
-            }
-            else if (swModel.GetType() == (int)swDocumentTypes_e.swDocDRAWING)
-            {
-                swDraw = (DrawingDoc)swModel;
-            }
-
-            //Suscribirse a todos los listeners usando delegados.
-            SwSpecificEventSubscriber();
-
-        }
         #endregion
 
-        #region 2- Se añadió una nueva config
+        #region 4- Se añadió una nueva config
 
         private int SwPart_AddItemNotify(int EntityType, string itemName)
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-                uiHelper.msgCreator(UIHelper.UserMessages.userAddedConfig);
+                refreshTaskPane();
             }
 
             return 0;
@@ -299,26 +304,26 @@ namespace HormesaFILEIDS.ViewModel
 
         #endregion
 
-        #region 3- Se renombra una configuración
+        #region 5- Se renombra una configuración
         private int SwPart_RenameItemNotify(int EntityType, string oldName, string NewName)
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-                uiHelper.msgCreator(UIHelper.UserMessages.userRenamedConfiguration);
+                refreshTaskPane();
             }
             return 0;
         }
         #endregion
 
-        #region 4- Archivo renombrado fuera de SW (no implementado)
+        #region 6- Archivo renombrado fuera de SW (no implementado)
         #endregion
 
-        #region 5- Se eliminó una config
+        #region 7- Se eliminó una config
         private int SwPart_DeleteItemNotify(int EntityType, string itemName)
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-                uiHelper.msgCreator(UIHelper.UserMessages.userDeletedConfig);
+                refreshTaskPane();
             }
             return 0;
         }
@@ -327,13 +332,13 @@ namespace HormesaFILEIDS.ViewModel
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-                uiHelper.msgCreator(UIHelper.UserMessages.userAboutToDeleteConfig);
+                refreshTaskPane();
             }
             return 0;
         }
         #endregion
 
-        #region 7- Se cambió el partid manualmente. (Esto no está funcionando)
+        #region 8- Se cambió el partid manualmente. (Esto no está funcionando)
         private int SwPart_DeleteCustomPropertyNotify(string propName, string Configuration, string Value, int valueType)
         {
             if (propName.Equals("partid", StringComparison.OrdinalIgnoreCase))
@@ -363,7 +368,7 @@ namespace HormesaFILEIDS.ViewModel
 
         #endregion
 
-        #region 8- Cambio de configuración activa.
+        #region 9- Cambio de configuración activa.
 
         private int SwPart_ActiveConfigChangeNotify()
         {
@@ -372,6 +377,14 @@ namespace HormesaFILEIDS.ViewModel
         }
         #endregion
 
+        #region 10 - Se cierra el archivo.
+        private int SwApp_FileCloseNotify(string FileName, int reason)
+        {
+            swActiveDoc.writePartIdToFile();
+            return 0;
+        }
+
+        #endregion
 
         #region Implementar la interfaz InotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

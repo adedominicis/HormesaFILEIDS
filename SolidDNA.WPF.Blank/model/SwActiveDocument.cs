@@ -1,4 +1,5 @@
 ﻿using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swconst;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -114,14 +115,11 @@ namespace HormesaFILEIDS.model
             return obsCol;
         }
 
-        //Asignar partid al property
-
-        private void writePartIdToFile()
+        //Asignar partid al property (archivo)
+        public void writePartIdToFile()
         {
             custPropMgr = swModel.Extension.CustomPropertyManager[""];
-            // = swModelDocExt.get_CustomPropertyManager("");
-            //Escribir partid.
-            custPropMgr.Set2("PARTID", partId);
+            custPropMgr.Add3("PARTID", (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId(), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd); ;
         }
 
         //Renombrar el archivo.

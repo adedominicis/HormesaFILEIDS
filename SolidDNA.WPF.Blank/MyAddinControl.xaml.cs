@@ -65,12 +65,7 @@ namespace HormesaFILEIDS
 
         private void btRenombrarArchivo_Click(object sender, RoutedEventArgs e)
         {
-            vm.renombrarArchivo();
-        }
-
-        private void btAsignarPartidAConfig_Click(object sender, RoutedEventArgs e)
-        {
-
+            
         }
     }
 }
