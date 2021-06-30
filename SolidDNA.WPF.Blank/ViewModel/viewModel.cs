@@ -32,7 +32,6 @@ namespace HormesaFILEIDS.ViewModel
         private MyAddinControl myView;
         #endregion
 
-
         #region Public properties
 
         //Identificador de la configuración seleccionada en el combobox.
@@ -61,7 +60,15 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
-
+        private ModelDoc2 SwModel
+        {
+            get { return swModel; }
+            set
+            {
+                swModel = value;
+                SwModelEventSubscriber();
+            }
+        }
 
         //Lista de configuraciones del documento activo.
         public ObservableCollection<string> LsConfigsActiveDoc
@@ -165,6 +172,7 @@ namespace HormesaFILEIDS.ViewModel
             swApp.FileOpenNotify -= SwApp_FileOpenNotify;
             swApp.FileNewNotify2 -= SwApp_FileNewNotify2;
             swApp.FileCloseNotify += SwApp_FileCloseNotify;
+           
             //Suscribir en limpio
             swApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             swApp.FileOpenNotify += SwApp_FileOpenNotify;
@@ -173,8 +181,8 @@ namespace HormesaFILEIDS.ViewModel
 
         }
         
-        //crea el swDoc correspondiente, bien sea PartDoc, AssemblyDoc o DrawingDoc
-        public void updateSwDoc()
+        //Suscripción a los eventos de parte, pieza o ensamble mediante delegates (swModel)
+        public void SwModelEventSubscriber()
         {
             //Crear objetos swDoc
             if (swModel.GetType() == (int)swDocumentTypes_e.swDocPART)
@@ -189,15 +197,6 @@ namespace HormesaFILEIDS.ViewModel
             {
                 swDraw = (DrawingDoc)swModel;
             }
-
-            //Suscribirse a todos los listeners usando delegados.
-            SwSpecificEventSubscriber();
-
-        }
-
-        //Suscripción a los eventos de parte, pieza o ensamble mediante delegates
-        public void SwSpecificEventSubscriber()
-        {
             //Eventos de seleccion en partes
             if (swPart != null)
             {
@@ -247,11 +246,11 @@ namespace HormesaFILEIDS.ViewModel
         // Delegate Methods suscritos a eventos de SolidWorks
 
         #region 1- Se crea un nuevo documento
-        
+
         private int SwApp_FileNewNotify2(object NewDoc, int DocType, string TemplateName)
         {
             //Actualizar swModel
-            swModel = (ModelDoc2)NewDoc;
+            SwModel = (ModelDoc2)NewDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel);
@@ -265,8 +264,7 @@ namespace HormesaFILEIDS.ViewModel
         private int SwApp_FileOpenNotify(string FileName)
         {
             //Actualizar swModel
-            swModel = (ModelDoc2)swApp.ActiveDoc;
-
+            SwModel = (ModelDoc2)swApp.ActiveDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel);
@@ -280,7 +278,7 @@ namespace HormesaFILEIDS.ViewModel
         private int SwApp_ActiveDocChangeNotify()
         {
             //Actualizar swModel
-            swModel = (ModelDoc2)swApp.ActiveDoc;
+            SwModel = (ModelDoc2)swApp.ActiveDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel);
@@ -296,7 +294,7 @@ namespace HormesaFILEIDS.ViewModel
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-                refreshTaskPane();
+               refreshTaskPane();
             }
 
             return 0;
@@ -336,6 +334,7 @@ namespace HormesaFILEIDS.ViewModel
             }
             return 0;
         }
+
         #endregion
 
         #region 8- Se cambió el partid manualmente. (Esto no está funcionando)
@@ -372,7 +371,7 @@ namespace HormesaFILEIDS.ViewModel
 
         private int SwPart_ActiveConfigChangeNotify()
         {
-            uiHelper.msgCreator(UIHelper.UserMessages.userSwitchedConfig);
+            refreshTaskPane();
             return 0;
         }
         #endregion

@@ -47,7 +47,17 @@ namespace HormesaFILEIDS
             }
         }
 
+        private void btRenombrarArchivo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btAsignarPartidAConfig_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         #endregion
+
 
         #region Metodos de estado e inicializacion
 
@@ -61,11 +71,9 @@ namespace HormesaFILEIDS
         {
             fillComboBoxes();
         }
+
         #endregion
 
-        private void btRenombrarArchivo_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
+
     }
 }

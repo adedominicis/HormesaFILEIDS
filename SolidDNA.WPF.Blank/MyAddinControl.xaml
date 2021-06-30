@@ -88,6 +88,9 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <TextBox Grid.Row="0" 
@@ -99,23 +102,32 @@
                        Text="{Binding PartId, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                        HorizontalAlignment="Left"></TextBox>
 
+                    <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Height="10">
+                        <Rectangle.OpacityMask>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black" Offset="0"/>
+                                <GradientStop Color="#FF40A8A8" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    
                     <Button Name="btNuevoPartIdComponente"
                         Style="{StaticResource btID}"
-                        Grid.Row="1"
+                        Grid.Row="2"
                         Click="btNuevoPartIdComponente_Click">(+)</Button>
-                    
+
                     <Button Name="btRenombrarArchivo"
                         Style="{StaticResource btID}"
-                        Grid.Row="1"
+                        Grid.Row="2"
                         Grid.Column="1"
                         Click="btRenombrarArchivo_Click">RENOMBRAR</Button>
 
-                    <TextBlock Grid.Row="3" 
+                    <TextBlock Grid.Row="4" 
                        Style="{StaticResource txSubTitulo}"
                        Grid.ColumnSpan="2"
                        HorizontalAlignment="Left">Configuraciones en este modelo</TextBlock>
 
-                    <ComboBox Grid.Row="4" 
+                    <ComboBox Grid.Row="5" 
                       Name="cbConfiguraciones"
                               Grid.ColumnSpan="2"
                       Margin="2 2 2 2"
@@ -125,7 +137,7 @@
 
                     <Button Name="btAsignarPartidAConfig"
                         Style="{StaticResource btID}"
-                        Grid.Row="5"
+                        Grid.Row="6"
                         Grid.ColumnSpan="2"
                         Click="btAsignarPartidAConfig_Click">ASIGNAR PARTID A CONFIGURACIÓN</Button>
                 </Grid>
