@@ -20,9 +20,16 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5 5 5 5"/>
+        </Style>
+        <Style x:Key="txItem" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <Style x:Key="btID" TargetType="Button">
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -30,6 +37,7 @@
             <Setter Property="Margin" Value="2 2 2 2"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Background" Value="LightGreen"/>
+
         </Style>
         <Style x:Key="txID" TargetType="TextBox">
             <Setter Property="FontSize" Value="20"/>
@@ -41,16 +49,35 @@
             <Setter Property="Background" Value="WhiteSmoke"/>
             <Setter Property="BorderBrush" Value="WhiteSmoke"/>
         </Style>
-        <Style x:Key="txItems" TargetType="TextBox">
+        <Style x:Key="txSqlPdm" TargetType="TextBox">
             <Setter Property="FontSize" Value="9"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5 5 5 5" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="IsReadOnly" Value="True" />
-
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=cbPdmSql, Path=IsChecked}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
+        <Style x:Key="pwSqlPdm" TargetType="PasswordBox">
+            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5 5 5 5" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=cbPdmSql, Path=IsChecked}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        
         <Style x:Key="cbConfiguraciones" TargetType="ComboBox">
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -60,74 +87,118 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
 
+        <Style x:Key="cmPdmSql" TargetType="CheckBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="tbPdmSql" TargetType="TextBox">
+            
+        </Style>
+
     </UserControl.Resources>
 
     <TabControl>
         <TabItem Header="SOLIDWORKS">
             <StackPanel Orientation="Vertical" Background="WhiteSmoke">
-                <Grid Height="40" Margin="10 10 10 10">
+                <Grid Height="30" Margin="5 5 5 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" 
                        Style="{StaticResource txTitulo}"> 
-                       CONTROL DE NÚMEROS DE PARTE</TextBlock>
+                       Propiedades de pieza (@)</TextBlock>
                 </Grid>
 
-                <Grid HorizontalAlignment="Stretch" Margin="10 10 10 10">
+                <Grid 
+                    
+                    Height="120"
+                    HorizontalAlignment="Stretch"
+                    Margin="5 5 5 5"
+                    Background="#baefef">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Style="{StaticResource txSubTitulo}">PARTID (@)</TextBlock>
+                    <TextBlock
+                        Style="{StaticResource txSubTitulo}"
+                        Grid.Column="0"
+                        Grid.Row="1">Descriptor (ES)</TextBlock>
+
+
+                    <TextBox Grid.Row="0" 
+                             Grid.Column="1"
+                             MaxLength="7"
+                       Style="{StaticResource txID}"
+                       IsReadOnly="True"
+                       Text="{Binding PartId, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                       HorizontalAlignment="Left"></TextBox>
+                    
+                    <TextBox Grid.Row="1" 
+                             Grid.Column="1"
+                             MaxLength="100"
+                       Style="{StaticResource txID}"
+                       Text="{Binding DescriptorEs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       HorizontalAlignment="Left"></TextBox>
+
+                    <Button Name="btNuevoPartIdComponente"
+                        Style="{StaticResource btID}"
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Click="btNuevoPartIdComponente_Click">ASIGNAR PARTID @</Button>
+
+                    <Button Name="btRenombrarArchivo"
+                        Style="{StaticResource btID}"
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Click="btRenombrarArchivo_Click">RENOMBRAR</Button>
+
+                </Grid>
+
+                <Grid Height="30" Margin="5 5 5 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" 
+                       Style="{StaticResource txTitulo}"> 
+                      Propiedades de Configuración</TextBlock>
+                </Grid>
+                <Grid 
+                    Height="130"
+                    HorizontalAlignment="Stretch"
+                    Margin="5 5 5 5"
+                    Background="#baefef">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBox Grid.Row="0" 
-                             Grid.Column="0"
-                             MaxLength="7"
-                             
-                       Style="{StaticResource txID}"
-                       IsReadOnly="True"
-                       Text="{Binding PartId, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                       HorizontalAlignment="Left"></TextBox>
-
-                    <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Height="10">
-                        <Rectangle.OpacityMask>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="Black" Offset="0"/>
-                                <GradientStop Color="#FF40A8A8" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    
-                    <Button Name="btNuevoPartIdComponente"
-                        Style="{StaticResource btID}"
-                        Grid.Row="2"
-                        Click="btNuevoPartIdComponente_Click">(+)</Button>
-
-                    <Button Name="btRenombrarArchivo"
-                        Style="{StaticResource btID}"
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Click="btRenombrarArchivo_Click">RENOMBRAR</Button>
-
-                    <TextBlock Grid.Row="4" 
-                       Style="{StaticResource txSubTitulo}"
+                    <TextBlock Grid.Row="0" 
+                       Style="{StaticResource txTitulo}"
                        Grid.ColumnSpan="2"
-                       HorizontalAlignment="Left">Configuraciones en este modelo</TextBlock>
+                       HorizontalAlignment="Left" >Elije una configuración
+                    </TextBlock>
 
-                    <ComboBox Grid.Row="5" 
+                    <ComboBox Grid.Row="1" 
                       Name="cbConfiguraciones"
                               Grid.ColumnSpan="2"
                       Margin="2 2 2 2"
@@ -137,16 +208,62 @@
 
                     <Button Name="btAsignarPartidAConfig"
                         Style="{StaticResource btID}"
-                        Grid.Row="6"
+                        Grid.Row="3"
                         Grid.ColumnSpan="2"
-                        Click="btAsignarPartidAConfig_Click">ASIGNAR PARTID A CONFIGURACIÓN</Button>
+                           
+                        Click="btAsignarPartidAConfig_Click">ASIGNAR NUEVO PARTID A CONFIGURACIÓN</Button>
+                </Grid>
+
+                <Grid Height="30" Margin="5 5 5 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" 
+                       Style="{StaticResource txTitulo}"> 
+                      Resumen de PARTIDs</TextBlock>
+                </Grid>
+            </StackPanel>
+
+        </TabItem>
+        <TabItem Header="CONFIGURACIÓN" Background="WhiteSmoke">
+
+            <StackPanel Orientation="Vertical" Background="WhiteSmoke">
+                <Grid Height="40" Margin="10 10 10 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Style="{StaticResource txTitulo}">Habilitar consulta a PDM SQL</TextBlock>
+                    <CheckBox 
+                        Grid.Column="1" Style="{StaticResource cmPdmSql}"
+                        Name="cbPdmSql"></CheckBox>
+                </Grid>
+
+                <Grid Height="150" Margin="10 10 10 10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Style="{StaticResource txItem}">Nombre de la base datos Almacen PDM</TextBlock>
+                    <TextBox Grid.Row="1" Style="{StaticResource txSqlPdm}"></TextBox>
+                    <TextBlock Grid.Row="2" Style="{StaticResource txItem}">Nombre o IP del servidor de base de datos PDM</TextBlock>
+                    <TextBox Grid.Row="3" Style="{StaticResource txSqlPdm}"></TextBox>
+                    <TextBlock Grid.Row="4" Style="{StaticResource txItem}">Contraseña del SA (PDM DB)</TextBlock>
+                    <PasswordBox Grid.Row="5" Style="{StaticResource pwSqlPdm}" ></PasswordBox>
                 </Grid>
 
 
             </StackPanel>
-
         </TabItem>
-        <TabItem Header="OTROS"></TabItem>
     </TabControl>
 
 </UserControl>
