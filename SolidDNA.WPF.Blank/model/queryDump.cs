@@ -55,7 +55,7 @@ namespace HormesaFILEIDS.model
 
         public string getFilePartIdFromPath(string fullpath)
         {
-            return string.Format("getFilePartIdFromPath '{0}'", fullpath);
+            return string.Format("exec getFilePartIdFromPath '{0}'", fullpath);
         }
 
         //Asignar un partid a una configuracion que no lo tiene, usando como referencia el path del archivo

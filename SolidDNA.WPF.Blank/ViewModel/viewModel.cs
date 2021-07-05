@@ -1,12 +1,11 @@
-﻿using SolidWorks.Interop.sldworks;
+﻿using HormesaFILEIDS.model;
+using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swconst;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using HormesaFILEIDS.model;
-using SolidWorks.Interop.swconst;
-using System.Collections.ObjectModel;
 
 namespace HormesaFILEIDS.ViewModel
 {
@@ -25,7 +24,8 @@ namespace HormesaFILEIDS.ViewModel
         #endregion
 
         #region Other private fields
-        private int selectedConfigId;
+
+        private string selectedConfig;
         private UIHelper uiHelper;
         private SwActiveDocument swActiveDoc;
         private string configPartId;
@@ -35,10 +35,8 @@ namespace HormesaFILEIDS.ViewModel
 
         #region Public properties
 
-        //Identificador de la configuración seleccionada en el combobox.
-
         
-
+        //Partid de la configuracion seleccionada.
         public string ConfigPartId
         {
             get
@@ -46,7 +44,8 @@ namespace HormesaFILEIDS.ViewModel
                 if (swActiveDoc != null)
                 {
                     //Metodo por definir.
-                    return swActiveDoc.getFormattedPartId();
+
+                    return swActiveDoc.getFormattedPartId(selectedConfig);
                 }
                 else
                 {
@@ -55,13 +54,14 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
-        public int SelectedConfigId
+        //Identificador de la configuración seleccionada en el combobox.
+        public string SelectedConfig
         {
             set
             {
-                //Los combobox de XAML cuentan desde cero, la BD cuenta desde 1 en los ID. Esto es ajustable a posteriori.
-                selectedConfigId = value + 1;
-                OnPropertyChanged("SelectedConfigId");
+                selectedConfig = value;
+                OnPropertyChanged("SelectedConfig");
+                OnPropertyChanged("ConfigPartId");
             }
         }
 
@@ -138,6 +138,7 @@ namespace HormesaFILEIDS.ViewModel
         {
             //Fire onpropertychanged
             OnPropertyChanged("PartId");
+            OnPropertyChanged("ConfigPartId");
             OnPropertyChanged("LsConfigsActiveDoc");
             //Actualizar vista
             myView.fillComboBoxes();
@@ -150,6 +151,32 @@ namespace HormesaFILEIDS.ViewModel
         //Esta suerte de "daisychaining" de métodos puede tener una mejor solución.
         //¿O es una forma de mediador?
 
+        //Asignar nuevo partid a una configuración
+        public bool asignarPartIdAConfig()
+        {
+            if (swModel != null && swActiveDoc != null)
+            {
+                if (swActiveDoc.assignPartIdToConfig(selectedConfig))
+                {
+                    OnPropertyChanged("ConfigPartId");
+                    return true;
+                }
+                else
+                {
+                    //Algun mensaje aqui. No pudo asignarse partid.
+                    return false;
+                }
+            }
+            else
+            {
+                //Algun mensaje sobre archivo no disponible.
+                return false;
+            }
+
+    
+        }
+
+        //Asignar nuevo partid a la pieza, ensamblaje o plano.
         public bool asignarPartid()
         {
             if (swModel != null && swActiveDoc != null)

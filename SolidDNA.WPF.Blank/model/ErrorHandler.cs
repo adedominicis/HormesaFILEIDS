@@ -1,4 +1,6 @@
-﻿namespace HormesaFILEIDS.model
+﻿using System.Windows;
+
+namespace HormesaFILEIDS.model
 {
     public class ErrorHandler
     {
@@ -8,7 +10,6 @@
         //    //Suscribirse al evento de excepciones del DAO
         //    DAO dao = new DAO();
         //    dao.exceptionRaised += Dao_exceptionRaised;
-
         //}
 
         //private void Dao_exceptionRaised(object sender, string e)
@@ -19,7 +20,12 @@
 
         //}
 
-        public string handler(EnumMensajes err)
+        public void thrower(string msg)
+        {
+            MessageBox.Show(msg);
+        }
+
+        public string handler(EnumMensajes err,string tail="")
         {
             string errorMsg;
 
@@ -45,7 +51,7 @@
                     break;
                 case EnumMensajes.errorSQL:
                     // Mostrar mensaje de error 
-                    errorMsg = "Error en consulta SQL";
+                    errorMsg = string.Format("Error en consulta SQL \\{0}",tail);
                     break;
                 case EnumMensajes.formularioIncompleto:
                     // Mostrar mensaje de error 
@@ -77,7 +83,7 @@
                     break;
                 case EnumMensajes.errorEnConexionDB:
                     // Mostrar mensaje de error 
-                    errorMsg = "No es posible conectar a la base de datos ";
+                    errorMsg = string.Format("No es posible conectar a la base de datos \\{0}",tail);
                     break;
 
                 default:

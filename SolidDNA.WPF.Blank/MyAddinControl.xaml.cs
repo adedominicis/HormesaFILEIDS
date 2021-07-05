@@ -54,7 +54,7 @@ namespace HormesaFILEIDS
 
         private void btAsignarPartidAConfig_Click(object sender, RoutedEventArgs e)
         {
-
+            vm.asignarPartIdAConfig();
         }
         #endregion
 
@@ -72,8 +72,8 @@ namespace HormesaFILEIDS
             fillComboBoxes();
         }
 
-        #endregion
 
+        #endregion
 
     }
 }

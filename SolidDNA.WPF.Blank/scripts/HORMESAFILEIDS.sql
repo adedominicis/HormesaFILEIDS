@@ -147,7 +147,8 @@ BEGIN
                 @extensionid,
                 0
 				)
-            select @partid
+
+			SELECT @partid
 
 			COMMIT TRANSACTION REGISTRO
 		END TRY
@@ -520,6 +521,16 @@ BEGIN
         AND configuraciones.nombre = @configname
 				)
 
+		/*Si la configuración no existe, hay que crearla.*/
+		IF @exists = 0
+		BEGIN
+        EXEC createConfigFromFilePartID @filepartid,
+				@configname
+
+        SET @exists = 1
+    END
+
+		/*Si la configuracion existe pero aun no tiene partid, se crea el partid.*/
 		IF @exists <> 0
         AND @alreadyassigned = 0
 		BEGIN
@@ -529,15 +540,15 @@ BEGIN
             (0)
 
         SET @configpartid = SCOPE_IDENTITY()
-
-        /*Asignar el PARTID a la configuracion, se actualiza la tabla configuraciones.*/
-        UPDATE configuraciones
-			SET id_partid = @configpartid
-			WHERE id_archivo = @filepartid
-            AND nombre = @configname
-
-        COMMIT TRANSACTION REGISTRO
     END
+
+		/*Asignar el PARTID a la configuracion, se actualiza la tabla configuraciones.*/
+		UPDATE configuraciones
+		SET id_partid = @configpartid
+		WHERE id_archivo = @filepartid
+        AND nombre = @configname
+
+		COMMIT TRANSACTION REGISTRO
 	END TRY
 
 	BEGIN CATCH
@@ -548,10 +559,13 @@ BEGIN
 END
 GO
 
-
 /*Obtener partid del archivo*/
 GO
-CREATE OR ALTER PROCEDURE getFilePartIdFromPath
+
+CREATE
+	OR
+
+ALTER PROCEDURE getFilePartIdFromPath
     (@fullpath VARCHAR(255))
 AS
 BEGIN

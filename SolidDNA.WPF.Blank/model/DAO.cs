@@ -52,9 +52,10 @@ namespace HormesaFILEIDS.model
                 connection = new SqlConnection(conStr);
                 connection.Open();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorEnConexionDB) + conName + "\\n" + e.Message);
+                err.thrower(err.handler(EnumMensajes.errorEnConexionDB, conName + " " + ex.Message + "DAO.startConnection()"));
+                //exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorEnConexionDB) + conName + "\\n" + e.Message);
             }
         }
 
@@ -87,7 +88,8 @@ namespace HormesaFILEIDS.model
             }
             catch (Exception ex)
             {
-                exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.singleReturnQuery");
+                err.thrower(err.handler(EnumMensajes.errorSQL, conName + " " + ex.Message + "DAO.singleReturnQuery"));
+                //exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.singleReturnQuery");
             }
             finally
             {
@@ -116,7 +118,8 @@ namespace HormesaFILEIDS.model
             }
             catch (Exception ex)
             {
-                exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.genericSelectQuery");
+                err.thrower(err.handler(EnumMensajes.errorSQL, conName + " " + ex.Message + "DAO.tableReturnQuery"));
+                //exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.genericSelectQuery");
             }
             finally
             {

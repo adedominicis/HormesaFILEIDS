@@ -40,12 +40,12 @@
 
         </Style>
         <Style x:Key="txID" TargetType="TextBox">
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Padding" Value="2 2 2 2"/>
-            <Setter Property="Margin" Value="10 10 10 10"/>
+            <Setter Property="Margin" Value="2 2 2 2"/>
             <Setter Property="Background" Value="WhiteSmoke"/>
             <Setter Property="BorderBrush" Value="WhiteSmoke"/>
         </Style>
@@ -113,7 +113,7 @@
 
                 <Grid 
                     
-                    Height="120"
+                    Height="160"
                     HorizontalAlignment="Stretch"
                     Margin="5 5 5 5"
                     Background="#baefef">
@@ -176,7 +176,7 @@
                       Propiedades de Configuración</TextBlock>
                 </Grid>
                 <Grid 
-                    Height="130"
+                    Height="160"
                     HorizontalAlignment="Stretch"
                     Margin="5 5 5 5"
                     Background="#baefef">
@@ -202,7 +202,7 @@
                       Name="cbConfiguraciones"
                               Grid.ColumnSpan="2"
                       Margin="2 2 2 2"
-                      SelectedIndex="{Binding SelectedConfigId}"
+                      SelectedItem="{Binding SelectedConfig , UpdateSourceTrigger=PropertyChanged}"
                       Style="{StaticResource cbConfiguraciones}">
                     </ComboBox>
 
