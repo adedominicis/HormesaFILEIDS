@@ -28,6 +28,7 @@ namespace HormesaFILEIDS.ViewModel
         private int selectedConfigId;
         private UIHelper uiHelper;
         private SwActiveDocument swActiveDoc;
+        private string configPartId;
         //Instancia de la vista.
         private MyAddinControl myView;
         #endregion
@@ -35,6 +36,25 @@ namespace HormesaFILEIDS.ViewModel
         #region Public properties
 
         //Identificador de la configuración seleccionada en el combobox.
+
+        
+
+        public string ConfigPartId
+        {
+            get
+            {
+                if (swActiveDoc != null)
+                {
+                    //Metodo por definir.
+                    return swActiveDoc.getFormattedPartId();
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
         public int SelectedConfigId
         {
             set

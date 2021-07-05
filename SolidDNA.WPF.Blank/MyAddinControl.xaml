@@ -206,11 +206,22 @@
                       Style="{StaticResource cbConfiguraciones}">
                     </ComboBox>
 
+                    <TextBlock 
+                        Style="{StaticResource txSubTitulo}"
+                        Grid.Row="2">PARTID (Config)</TextBlock>
+
+                    <TextBox Grid.Row="2" 
+                             Grid.Column="1"
+                             MaxLength="7"
+                       Style="{StaticResource txID}"
+                       IsReadOnly="True"
+                       Text="{Binding ConfigPartId, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                       HorizontalAlignment="Left"></TextBox>
+                    
                     <Button Name="btAsignarPartidAConfig"
                         Style="{StaticResource btID}"
                         Grid.Row="3"
                         Grid.ColumnSpan="2"
-                           
                         Click="btAsignarPartidAConfig_Click">ASIGNAR NUEVO PARTID A CONFIGURACIÓN</Button>
                 </Grid>
 
