@@ -397,19 +397,26 @@ namespace HormesaFILEIDS.ViewModel
 
         #endregion
 
-        #region 5- Se renombra una configuración
+        #region 5- Se renombra una configuración; 6-Se renombra el archivo
         private int SwPart_RenameItemNotify(int EntityType, string oldName, string NewName)
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-                swActiveDoc.renameConfig(oldName, NewName);
+                swActiveDoc.renameConfigOnDatabase(oldName, NewName);
+                refreshUI();
+            }
+            if ((int)swNotifyEntityType_e.swNotifyComponent == EntityType)
+            {
+                swActiveDoc.renameFileOnDatabase(oldName, NewName);
                 refreshUI();
             }
             return 0;
         }
         #endregion
 
-        #region 6- Archivo renombrado fuera de SW (no implementado)
+        #region 6- Archivo renombrado en SW
+
+
         #endregion
 
         #region 7- Se eliminó una config
@@ -417,7 +424,7 @@ namespace HormesaFILEIDS.ViewModel
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-                swActiveDoc.deleteConfigurationFromDB(itemName);
+                swActiveDoc.deleteConfigurationFromDatabase(itemName);
                 updateCombosAndTables();
             }
             return 0;
@@ -480,6 +487,8 @@ namespace HormesaFILEIDS.ViewModel
             swActiveDoc.writePartIdToFile();
             //Escribir Partids a todas las configuraciones.
             swActiveDoc.writePartIdToAllConfigs();
+            //Limpiar todo
+            refreshUI();
             return 0;
         }
 

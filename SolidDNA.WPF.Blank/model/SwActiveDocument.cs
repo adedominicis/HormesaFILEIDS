@@ -22,14 +22,12 @@ namespace HormesaFILEIDS.model
         #region Private fields
         private const string CustomPropertyPartid = "PARTID";
         private CustomPropertyManager custPropMgr;
-        private ModelDocExtension swModelDocExt;
         private string partId;
         private ModelDoc2 swModel;
-        private ObservableCollection<string> dbConfigList;
         private Configuration activeConfig;
         private DAO dao;
         private queryDump q;
-        private string descriptores;
+        private string descriptorEs;
         private ErrorHandler err;
         #endregion
 
@@ -60,6 +58,12 @@ namespace HormesaFILEIDS.model
             get { return partId; }
         }
 
+        //Descriptor ES
+        public string DescriptorEs
+        {
+            get { return descriptorEs; }
+            set { descriptorEs = value; }
+        }
 
         //La configuración activa.
         public string ActiveConfigName
@@ -179,16 +183,22 @@ namespace HormesaFILEIDS.model
         }
 
         //Renombrar en la BD una configuración que fue renombrada en la interfaz.
-        internal void renameConfig(string oldName, string newName)
+        internal void renameConfigOnDatabase(string oldName, string newName)
         {
+            //Renombrar en la base de datos.
             dao.singleReturnQuery(q.renameConfigFromFilePartId(partId, oldName, newName));
-            //err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::renameConfig()"));
+            
         }
 
         //Eliminar en la BD una configuración que fue eliminada en la interfaz
-        internal void deleteConfigurationFromDB(string itemName)
+        internal void deleteConfigurationFromDatabase(string configName)
         {
-            err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::deleteConfigurationFromDB()"));
+            //Borrar de la BD
+            dao.singleReturnQuery(q.deleteConfigFromFilePartID(partId,configName));
+        }
+        internal void renameFileOnDatabase(string oldName, string newName)
+        {
+            err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::renameFileOnDatabase()"));
         }
 
         //Reescribir en todas las configuraciones que tengan PARTID, el partid desde la DB.
@@ -196,6 +206,8 @@ namespace HormesaFILEIDS.model
         {
             err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::writePartIdToAllConfigs()"));
         }
+
+
         #endregion
 
     }
