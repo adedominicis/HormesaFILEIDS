@@ -25,7 +25,13 @@ namespace HormesaFILEIDS.model
             MessageBox.Show(msg);
         }
 
-        public string handler(EnumMensajes err,string tail="")
+
+        public void sqlThrower(string connection, string query, string method, string exmsg)
+        {
+            thrower(string.Format("Ha ocurrido un error de base de datos\n" +
+                "Conexión: {0}\nConsulta: {1}\nCaller: {2}\nExcepción: {3}", connection, query, method, exmsg));
+        }
+        public string handler(EnumMensajes err, string tail = "")
         {
             string errorMsg;
 
@@ -51,7 +57,7 @@ namespace HormesaFILEIDS.model
                     break;
                 case EnumMensajes.errorSQL:
                     // Mostrar mensaje de error 
-                    errorMsg = string.Format("Error en consulta SQL \\{0}",tail);
+                    errorMsg = string.Format("Error en consulta SQL \\{0}", tail);
                     break;
                 case EnumMensajes.formularioIncompleto:
                     // Mostrar mensaje de error 
@@ -83,9 +89,12 @@ namespace HormesaFILEIDS.model
                     break;
                 case EnumMensajes.errorEnConexionDB:
                     // Mostrar mensaje de error 
-                    errorMsg = string.Format("No es posible conectar a la base de datos \\{0}",tail);
+                    errorMsg = string.Format("No es posible conectar a la base de datos \\{0}", tail);
                     break;
-
+                case EnumMensajes.metodoNoImplementado:
+                    // Mostrar mensaje de error 
+                    errorMsg = string.Format("El métodp {0} no ha sido implementado.", tail);
+                    break;
                 default:
                     errorMsg = "Error desconocido";
                     break;

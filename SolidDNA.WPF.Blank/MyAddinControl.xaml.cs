@@ -30,8 +30,6 @@ namespace HormesaFILEIDS
             InitializeComponent();
             //Error handler.
             err = new ErrorHandler();
-            //Resetear interfaz
-            resetTaskPane();
         }
 
         #endregion
@@ -39,22 +37,25 @@ namespace HormesaFILEIDS
         #region Metodos accionados desde la interfaz.
         private void btNuevoPartIdComponente_Click(object sender, RoutedEventArgs e)
         {
-            //Insertar archivo en la BD.
-            if (vm.asignarPartid())
-            {
-                //Deshabilitar botón.
-                btNuevoPartIdComponente.IsEnabled = false;
-            }
+            //Deshabilitar botón.
+            btNuevoPartIdComponente.IsEnabled = !vm.asignarPartid();
         }
 
         private void btRenombrarArchivo_Click(object sender, RoutedEventArgs e)
         {
-
+            vm.renombrarArchivo();
         }
 
         private void btAsignarPartidAConfig_Click(object sender, RoutedEventArgs e)
         {
-            vm.asignarPartIdAConfig();
+            btAsignarPartidAConfig.IsEnabled = !vm.asignarPartIdAConfig();
+        }
+
+        private void cbConfiguraciones_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            vm.updateTextBoxes();
+            //Si no hay partid en la configuración, botón habilitado.
+            btAsignarPartidAConfig.IsEnabled = string.IsNullOrEmpty(txConfigPartid.Text);
         }
         #endregion
 
@@ -62,18 +63,8 @@ namespace HormesaFILEIDS
         #region Metodos de estado e inicializacion
 
 
-        public void fillComboBoxes()
-        {
-            cbConfiguraciones.ItemsSource = vm.LsConfigsActiveDoc;
-        }
-
-        public void resetTaskPane()
-        {
-            fillComboBoxes();
-        }
-
-
         #endregion
+
 
     }
 }

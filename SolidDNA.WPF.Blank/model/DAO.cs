@@ -54,7 +54,7 @@ namespace HormesaFILEIDS.model
             }
             catch (Exception ex)
             {
-                err.thrower(err.handler(EnumMensajes.errorEnConexionDB, conName + " " + ex.Message + "DAO.startConnection()"));
+                err.sqlThrower(conName, conStr, "DAO.startConnection()", ex.Message);
                 //exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorEnConexionDB) + conName + "\\n" + e.Message);
             }
         }
@@ -69,9 +69,10 @@ namespace HormesaFILEIDS.model
 
         #region Core queries
 
+        //Ejecución sin retornos.
+
+
         // Consulta generica "select" que retorna un solo string.
-
-
         public string singleReturnQuery(string query)
         {
 
@@ -80,15 +81,21 @@ namespace HormesaFILEIDS.model
                 // Check for an available connection
                 startConnection();
 
-                SqlCommand command = new SqlCommand(query,connection);
-                string dbResponse = command.ExecuteScalar().ToString();
-                int modifiedRows=command.ExecuteNonQuery();
+                SqlCommand command = new SqlCommand(query, connection);
+                var dbResponse = command.ExecuteScalar();
+                if (dbResponse != null)
+                {
+                    return dbResponse.ToString();
+                }
+                else
+                {
+                    return string.Empty;
+                }
 
-                return dbResponse;
             }
             catch (Exception ex)
             {
-                err.thrower(err.handler(EnumMensajes.errorSQL, conName + " " + ex.Message + "DAO.singleReturnQuery"));
+                err.sqlThrower(conName, query, "DAO.singleReturnQuery", ex.Message);
                 //exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.singleReturnQuery");
             }
             finally
@@ -118,7 +125,7 @@ namespace HormesaFILEIDS.model
             }
             catch (Exception ex)
             {
-                err.thrower(err.handler(EnumMensajes.errorSQL, conName + " " + ex.Message + "DAO.tableReturnQuery"));
+                err.sqlThrower(conName, query, "DAO.tableReturnQuery", ex.Message);
                 //exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.genericSelectQuery");
             }
             finally

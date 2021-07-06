@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace HormesaFILEIDS.model
 {
@@ -29,6 +30,7 @@ namespace HormesaFILEIDS.model
         private DAO dao;
         private queryDump q;
         private string descriptores;
+        private ErrorHandler err;
         #endregion
 
         #region Constructor
@@ -45,6 +47,8 @@ namespace HormesaFILEIDS.model
             partId = dao.singleReturnQuery(q.getFilePartIdFromPath(swModel.GetPathName()));
             //Reescribir partid en el archivo.
             writePartIdToFile();
+            //Error handler
+            err = new ErrorHandler();
         }
 
         #endregion
@@ -67,19 +71,23 @@ namespace HormesaFILEIDS.model
 
         #region Methods
 
-        //Obtener el partid estilizado.
-        public string getFormattedPartId(string configName="")
+        //Obtener el partid formateado.
+        public string getFormattedPartId(string configName)
         {
-            if (!string.IsNullOrEmpty(partId))
+            if (!string.IsNullOrEmpty(partId) && !string.IsNullOrEmpty(configName))
             {
-                if (string.IsNullOrEmpty(configName))
+                if (string.Equals(configName,"@"))
                 {
                     return partId.ToString().PadLeft(6, '0').Insert(3, "-");
                 }
                 else
                 {
-                    string configPartId= dao.singleReturnQuery(q.getConfigPartIdFromConfigName(partId, configName));
-                    return configPartId.PadLeft(6, '0').Insert(3, "-");
+                    string configPartId = dao.singleReturnQuery(q.getConfigPartIdFromConfigName(partId, configName));
+                    if (!string.IsNullOrEmpty(configPartId))
+                    {
+                        return configPartId.PadLeft(6, '0').Insert(3, "-");
+                    }
+                    
                 }
             }
             return string.Empty;
@@ -102,9 +110,15 @@ namespace HormesaFILEIDS.model
         public bool insertFileOnDb()
         {
             //Insertar el archivo activo en la DB y guardar el partid local
-            partId=dao.singleReturnQuery(q.insertFileFromPath(swModel.GetPathName()));
+            partId = dao.singleReturnQuery(q.insertFileFromPath(swModel.GetPathName()));
             writePartIdToFile();
             return !string.IsNullOrEmpty(partId);
+        }
+
+        //Obtener listado de partids por configuracion.
+        public DataTable getConfigPartidList()
+        {
+            return dao.tableReturnQuery(q.listConfigsFromFilePartID(partId));
         }
 
         //Asignar partid a la configuración seleccionada.
@@ -122,7 +136,7 @@ namespace HormesaFILEIDS.model
             {
                 return false;
             }
-            
+
         }
 
         //Obtener nombre de la configuración activa
@@ -133,7 +147,7 @@ namespace HormesaFILEIDS.model
         }
 
         //Convertir un array de strings a un ObservableCollection
-        private ObservableCollection<string> arrayToObsCollection (string [] arr)
+        private ObservableCollection<string> arrayToObsCollection(string[] arr)
         {
             ObservableCollection<string> obsCol = new ObservableCollection<string>();
             foreach (string row in arr)
@@ -147,12 +161,13 @@ namespace HormesaFILEIDS.model
         public void writePartIdToFile()
         {
             custPropMgr = swModel.Extension.CustomPropertyManager[""];
-            custPropMgr.Add3("PARTID", (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId(), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd); ;
+            custPropMgr.Add3("PARTID", (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId("@"), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd); ;
         }
 
         //Asignar partid al property (archivo)
         public void writePartIdToConfig(string configName)
         {
+
             custPropMgr = swModel.Extension.CustomPropertyManager[configName];
             custPropMgr.Add3("PARTID", (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId(configName), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd); ;
         }
@@ -160,7 +175,26 @@ namespace HormesaFILEIDS.model
         //Renombrar el archivo.
         internal void renameFile()
         {
-    
+            err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::renameFile()"));
+        }
+
+        //Renombrar en la BD una configuración que fue renombrada en la interfaz.
+        internal void renameConfig(string oldName, string newName)
+        {
+            dao.singleReturnQuery(q.renameConfigFromFilePartId(partId, oldName, newName));
+            //err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::renameConfig()"));
+        }
+
+        //Eliminar en la BD una configuración que fue eliminada en la interfaz
+        internal void deleteConfigurationFromDB(string itemName)
+        {
+            err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::deleteConfigurationFromDB()"));
+        }
+
+        //Reescribir en todas las configuraciones que tengan PARTID, el partid desde la DB.
+        internal void writePartIdToAllConfigs()
+        {
+            err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::writePartIdToAllConfigs()"));
         }
         #endregion
 

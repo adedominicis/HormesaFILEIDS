@@ -2,10 +2,13 @@
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace HormesaFILEIDS.ViewModel
 {
@@ -28,15 +31,41 @@ namespace HormesaFILEIDS.ViewModel
         private string selectedConfig;
         private UIHelper uiHelper;
         private SwActiveDocument swActiveDoc;
-        private string configPartId;
+
         //Instancia de la vista.
         private MyAddinControl myView;
         #endregion
 
         #region Public properties
 
-        
-        //Partid de la configuracion seleccionada.
+        //Sw Model (GET and SET)
+        private ModelDoc2 SwModel
+        {
+            get { return swModel; }
+            set
+            {
+                swModel = value;
+                SwModelEventSubscriber();
+            }
+        }
+
+        //Partid de pieza (GET)
+        public string PartId
+        {
+            get
+            {
+                if (swActiveDoc != null)
+                {
+                    return swActiveDoc.getFormattedPartId("@");
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        //Partid de la configuracion seleccionada (GET)
         public string ConfigPartId
         {
             get
@@ -54,44 +83,8 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
-        //Identificador de la configuración seleccionada en el combobox.
-        public string SelectedConfig
-        {
-            set
-            {
-                selectedConfig = value;
-                OnPropertyChanged("SelectedConfig");
-                OnPropertyChanged("ConfigPartId");
-            }
-        }
-
-        public string PartId
-        {
-            get 
-            {
-                if (swActiveDoc != null)
-                {
-                    return swActiveDoc.getFormattedPartId();
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-        }
-
-        private ModelDoc2 SwModel
-        {
-            get { return swModel; }
-            set
-            {
-                swModel = value;
-                SwModelEventSubscriber();
-            }
-        }
-
-        //Lista de configuraciones del documento activo.
-        public ObservableCollection<string> LsConfigsActiveDoc
+        //Lista de configuraciones del documento activo. (GET)
+        public ObservableCollection<string> ListActiveDocumentConfigurations
         {
             get
             {
@@ -106,11 +99,37 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
-        //Documento activo.
+        //Identificador de la configuración seleccionada en el combobox. (SET + OnPropertyChanged)
+        public string SelectedConfiguration
+        {
+            set
+            {
+                selectedConfig = value;
+                OnPropertyChanged("SelectedConfiguration");
+                OnPropertyChanged("ConfigPartId");
+            }
+        }
+
+        //Documento activo. (GET)
         public SwActiveDocument SwActiveDoc
         {
             get { return swActiveDoc; }
         }
+
+        //Tabla de configuraciones y partids (GET)
+        public DataView DataViewConfigsAndPartids
+        {
+            get
+            {
+                if (swActiveDoc != null)
+                {
+                    return swActiveDoc.getConfigPartidList().DefaultView;
+                }
+                return new DataView();
+            }
+
+        }
+
         #endregion
 
         #region Inicializadores
@@ -127,6 +146,8 @@ namespace HormesaFILEIDS.ViewModel
                 uiHelper = new UIHelper();
                 //Instancia de la vista
                 myView = v;
+                //Inicializar elementos
+                
             }
             catch (Exception e)
             {
@@ -134,16 +155,41 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
-        private void refreshTaskPane()
+        //Refrescar componentes dinámicos de la UI 
+        private void updateCombosAndTables()
         {
-            //Fire onpropertychanged
+            //Inicialización de UI.
+
+            //Llenar combobox de configuraciones.
+            myView.cbConfiguraciones.ItemsSource = ListActiveDocumentConfigurations;
+            //Llenar tabla de resumen de configuraciones
+            myView.dgridPartids.ItemsSource = DataViewConfigsAndPartids;
+        }
+        public void updateTextBoxes()
+        {
             OnPropertyChanged("PartId");
             OnPropertyChanged("ConfigPartId");
-            OnPropertyChanged("LsConfigsActiveDoc");
-            //Actualizar vista
-            myView.fillComboBoxes();
         }
 
+        private void initComboboxes()
+        {
+            //Seleccionar primero.
+            myView.cbConfiguraciones.SelectedIndex = 0;
+
+        }
+
+        private void updateButtons()
+        {
+            myView.btNuevoPartIdComponente.IsEnabled = string.IsNullOrEmpty(PartId);
+        }
+
+        private void refreshUI()
+        {
+            updateCombosAndTables();
+            updateTextBoxes();
+            initComboboxes();
+            updateButtons();
+        }
         #endregion
 
         #region TaskPane Methods and listeners.
@@ -158,7 +204,9 @@ namespace HormesaFILEIDS.ViewModel
             {
                 if (swActiveDoc.assignPartIdToConfig(selectedConfig))
                 {
+                    //Evento
                     OnPropertyChanged("ConfigPartId");
+                    updateCombosAndTables();
                     return true;
                 }
                 else
@@ -173,7 +221,7 @@ namespace HormesaFILEIDS.ViewModel
                 return false;
             }
 
-    
+
         }
 
         //Asignar nuevo partid a la pieza, ensamblaje o plano.
@@ -203,7 +251,7 @@ namespace HormesaFILEIDS.ViewModel
 
         public void renombrarArchivo()
         {
-            //Renombrar archivo;
+            //Renombrar archivo, no implementado.
             swActiveDoc.renameFile();
 
         }
@@ -219,7 +267,7 @@ namespace HormesaFILEIDS.ViewModel
             swApp.FileOpenNotify -= SwApp_FileOpenNotify;
             swApp.FileNewNotify2 -= SwApp_FileNewNotify2;
             swApp.FileCloseNotify += SwApp_FileCloseNotify;
-           
+
             //Suscribir en limpio
             swApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             swApp.FileOpenNotify += SwApp_FileOpenNotify;
@@ -227,7 +275,7 @@ namespace HormesaFILEIDS.ViewModel
             swApp.FileCloseNotify += SwApp_FileCloseNotify;
 
         }
-        
+
         //Suscripción a los eventos de parte, pieza o ensamble mediante delegates (swModel)
         public void SwModelEventSubscriber()
         {
@@ -302,7 +350,7 @@ namespace HormesaFILEIDS.ViewModel
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel);
             //Actualizar taskpane
-            refreshTaskPane();
+            refreshUI();
             return 0;
         }
         #endregion
@@ -316,7 +364,7 @@ namespace HormesaFILEIDS.ViewModel
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel);
             //Actualizar taskpane
-            refreshTaskPane();
+            refreshUI();
             return 0;
         }
         #endregion
@@ -330,7 +378,7 @@ namespace HormesaFILEIDS.ViewModel
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel);
             //Actualizar taskpane
-            refreshTaskPane();
+            refreshUI();
             return 0;
         }
         #endregion
@@ -341,7 +389,7 @@ namespace HormesaFILEIDS.ViewModel
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-               refreshTaskPane();
+                updateCombosAndTables();
             }
 
             return 0;
@@ -354,7 +402,8 @@ namespace HormesaFILEIDS.ViewModel
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-                refreshTaskPane();
+                swActiveDoc.renameConfig(oldName, NewName);
+                refreshUI();
             }
             return 0;
         }
@@ -368,7 +417,8 @@ namespace HormesaFILEIDS.ViewModel
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-                refreshTaskPane();
+                swActiveDoc.deleteConfigurationFromDB(itemName);
+                updateCombosAndTables();
             }
             return 0;
         }
@@ -377,7 +427,7 @@ namespace HormesaFILEIDS.ViewModel
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
-                refreshTaskPane();
+                //Necesito una manera de bloquear el comando en este pre notify si el usuario dice que no.
             }
             return 0;
         }
@@ -389,7 +439,7 @@ namespace HormesaFILEIDS.ViewModel
         {
             if (propName.Equals("partid", StringComparison.OrdinalIgnoreCase))
             {
-                uiHelper.msgCreator(UIHelper.UserMessages.userDeletedPartid);
+                //Esto funciona erráticamente. El mensaje sale al abrir un archivo.
             }
             else
             {
@@ -402,7 +452,7 @@ namespace HormesaFILEIDS.ViewModel
         {
             if (propName.Equals("partid", StringComparison.OrdinalIgnoreCase))
             {
-                uiHelper.msgCreator(UIHelper.UserMessages.userDeletedPartid);
+                //Esto funciona erráticamente. El mensaje sale al abrir un archivo.
             }
             else
             {
@@ -418,7 +468,7 @@ namespace HormesaFILEIDS.ViewModel
 
         private int SwPart_ActiveConfigChangeNotify()
         {
-            refreshTaskPane();
+            //Esto puede hacerse obsoleto. No tiene un uso hasta ahora.
             return 0;
         }
         #endregion
@@ -426,7 +476,10 @@ namespace HormesaFILEIDS.ViewModel
         #region 10 - Se cierra el archivo.
         private int SwApp_FileCloseNotify(string FileName, int reason)
         {
+            //Escribir PartId al archivo
             swActiveDoc.writePartIdToFile();
+            //Escribir Partids a todas las configuraciones.
+            swActiveDoc.writePartIdToAllConfigs();
             return 0;
         }
 

@@ -285,8 +285,8 @@ ALTER PROCEDURE listConfigsFromFilePartID
     (@partid INT)
 AS
 BEGIN
-    SELECT configuraciones.nombre AS 'Configuración',
-        partids.id AS 'PARTID'
+    SELECT configuraciones.nombre AS 'CONFIGURACIÓN',
+        format(partids.id, '000-000') AS 'PARTID'
     FROM configuraciones
         INNER JOIN archivos ON configuraciones.id_archivo = ARCHIVOS.id
         LEFT JOIN partids ON partids.id = configuraciones.id_partid
@@ -540,13 +540,13 @@ BEGIN
             (0)
 
         SET @configpartid = SCOPE_IDENTITY()
-    END
 
-		/*Asignar el PARTID a la configuracion, se actualiza la tabla configuraciones.*/
-		UPDATE configuraciones
-		SET id_partid = @configpartid
-		WHERE id_archivo = @filepartid
-        AND nombre = @configname
+        /*Asignar el PARTID a la configuracion, se actualiza la tabla configuraciones.*/
+        UPDATE configuraciones
+			SET id_partid = @configpartid
+			WHERE id_archivo = @filepartid
+            AND nombre = @configname
+    END
 
 		COMMIT TRANSACTION REGISTRO
 	END TRY

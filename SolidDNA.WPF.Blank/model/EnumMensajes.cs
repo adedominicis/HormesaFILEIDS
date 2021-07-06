@@ -15,6 +15,7 @@
         registroEliminado,
         errorSubirArchivo,
         errorBorrarArchivo,
-        errorEnConexionDB
+        errorEnConexionDB,
+        metodoNoImplementado
     }
 }
