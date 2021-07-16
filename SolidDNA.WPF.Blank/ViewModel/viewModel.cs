@@ -24,6 +24,7 @@ namespace HormesaFILEIDS.ViewModel
         private ModelDoc2 swModel;
         private SelectionMgr selMgr;
         private Feature swFeat;
+
         #endregion
 
         #region Other private fields
@@ -31,6 +32,7 @@ namespace HormesaFILEIDS.ViewModel
         private string selectedConfig;
         private UIHelper uiHelper;
         private SwActiveDocument swActiveDoc;
+        private SwAttributeHandler swAttHandler;
 
         //Instancia de la vista.
         private MyAddinControl myView;
@@ -190,6 +192,8 @@ namespace HormesaFILEIDS.ViewModel
             initComboboxes();
             updateButtons();
         }
+
+        
         #endregion
 
         #region TaskPane Methods and listeners.
@@ -348,7 +352,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)NewDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel);
+            swActiveDoc = new SwActiveDocument(swModel,swApp);
             //Actualizar taskpane
             refreshUI();
             return 0;
@@ -362,7 +366,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)swApp.ActiveDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel);
+            swActiveDoc = new SwActiveDocument(swModel,swApp);
             //Actualizar taskpane
             refreshUI();
             return 0;
@@ -376,7 +380,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)swApp.ActiveDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel);
+            swActiveDoc = new SwActiveDocument(swModel,swApp);
             //Actualizar taskpane
             refreshUI();
             return 0;

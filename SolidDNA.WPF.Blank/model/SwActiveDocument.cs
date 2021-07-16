@@ -29,14 +29,19 @@ namespace HormesaFILEIDS.model
         private queryDump q;
         private string descriptorEs;
         private ErrorHandler err;
+        private SwAttributeHandler attHandler;
+        private SldWorks swApp;
+
         #endregion
 
         #region Constructor
 
-        public SwActiveDocument(ModelDoc2 swmodel)
+        public SwActiveDocument(ModelDoc2 swmodel, SldWorks swapp)
         {
             // Obtener el swModel.
             swModel = swmodel;
+            //Obtener la aplicacion solidworks.
+            swApp = swapp;
             //Modelo de acceso a datos.
             dao = new DAO();
             // Querydump
@@ -80,7 +85,7 @@ namespace HormesaFILEIDS.model
         {
             if (!string.IsNullOrEmpty(partId) && !string.IsNullOrEmpty(configName))
             {
-                if (string.Equals(configName,"@"))
+                if (string.Equals(configName, "@"))
                 {
                     return partId.ToString().PadLeft(6, '0').Insert(3, "-");
                 }
@@ -91,7 +96,7 @@ namespace HormesaFILEIDS.model
                     {
                         return configPartId.PadLeft(6, '0').Insert(3, "-");
                     }
-                    
+
                 }
             }
             return string.Empty;
@@ -115,7 +120,12 @@ namespace HormesaFILEIDS.model
         {
             //Insertar el archivo activo en la DB y guardar el partid local
             partId = dao.singleReturnQuery(q.insertFileFromPath(swModel.GetPathName()));
+            //Escribir el partid como custom property.
             writePartIdToFile();
+            //Escibir tambien en el atributo.
+            setPartIdAsAttribute();
+            //Reconstruir y guardar.
+  
             return !string.IsNullOrEmpty(partId);
         }
 
@@ -165,13 +175,13 @@ namespace HormesaFILEIDS.model
         public void writePartIdToFile()
         {
             custPropMgr = swModel.Extension.CustomPropertyManager[""];
-            custPropMgr.Add3("PARTID", (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId("@"), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd); ;
+            custPropMgr.Add3("PARTID", (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId("@"), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
+
         }
 
         //Asignar partid al property (archivo)
         public void writePartIdToConfig(string configName)
         {
-
             custPropMgr = swModel.Extension.CustomPropertyManager[configName];
             custPropMgr.Add3("PARTID", (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId(configName), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd); ;
         }
@@ -187,14 +197,14 @@ namespace HormesaFILEIDS.model
         {
             //Renombrar en la base de datos.
             dao.singleReturnQuery(q.renameConfigFromFilePartId(partId, oldName, newName));
-            
+
         }
 
         //Eliminar en la BD una configuración que fue eliminada en la interfaz
         internal void deleteConfigurationFromDatabase(string configName)
         {
             //Borrar de la BD
-            dao.singleReturnQuery(q.deleteConfigFromFilePartID(partId,configName));
+            dao.singleReturnQuery(q.deleteConfigFromFilePartID(partId, configName));
         }
         internal void renameFileOnDatabase(string oldName, string newName)
         {
@@ -207,6 +217,23 @@ namespace HormesaFILEIDS.model
             err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::writePartIdToAllConfigs()"));
         }
 
+        //Guardar atributos dentro del archivo
+        public void setPartIdAsAttribute()
+        {
+            //Attribute handler
+            attHandler = new SwAttributeHandler(swApp, swModel);
+            swModel.ForceRebuild3(true);
+            swModel.Save();
+            //Revisar si el partid existe, si no existe, crearlo.
+            if (attHandler.checkIfPartIdExists(partId, true))
+            {
+                err.thrower(string.Format("Se añadio el partid como atributo: {0}",attHandler.getPartIdFromAttribute()));
+            }
+            else
+            {
+                err.thrower(string.Format("No se añadio el partid como atributo, el valor es: {0}", attHandler.getPartIdFromAttribute()));
+            }
+        }
 
         #endregion
 

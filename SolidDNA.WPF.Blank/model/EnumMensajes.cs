@@ -16,6 +16,8 @@
         errorSubirArchivo,
         errorBorrarArchivo,
         errorEnConexionDB,
-        metodoNoImplementado
+        metodoNoImplementado,
+        errorMiscelaneo,
+        notificarUsuario
     }
 }

@@ -93,7 +93,15 @@ namespace HormesaFILEIDS.model
                     break;
                 case EnumMensajes.metodoNoImplementado:
                     // Mostrar mensaje de error 
-                    errorMsg = string.Format("El métodp {0} no ha sido implementado.", tail);
+                    errorMsg = string.Format("El método {0} no ha sido implementado.", tail);
+                    break;
+                case EnumMensajes.errorMiscelaneo:
+                    // Mostrar mensaje de error 
+                    errorMsg = string.Format("Errror desconocido: {0}", tail);
+                    break;
+                case EnumMensajes.notificarUsuario:
+                    // Mostrar mensaje de error 
+                    errorMsg = string.Format("Mensaje: {0}", tail);
                     break;
                 default:
                     errorMsg = "Error desconocido";

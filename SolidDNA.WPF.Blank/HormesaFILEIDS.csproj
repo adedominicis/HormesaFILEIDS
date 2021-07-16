@@ -88,6 +88,7 @@
     <Compile Include="model\ErrorHandler.cs" />
     <Compile Include="model\queryDump.cs" />
     <Compile Include="model\SwActiveDocument.cs" />
+    <Compile Include="model\SwAttributeHandler.cs" />
     <Compile Include="model\SwEventHandler.cs" />
     <Compile Include="model\UIHelper.cs" />
     <Compile Include="MyAddinControl.xaml.cs">
