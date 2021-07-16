@@ -39,13 +39,6 @@ namespace HormesaFILEIDS.model
             swModelDocExt = (ModelDocExtension)swModel.Extension;
             swSelMgr = (SelectionMgr)swModel.SelectionManager;
             err = new ErrorHandler();
-
-            //Inicialización: Inicializar el objeto AttDef, 
-            //agregar y registrar un contenedor, instanciar ese contenedor en el feature manager tree
-            initAttDef();
-            addAndRegisterParameter();
-            instanceParameter();
-
         }
         #endregion
 
@@ -87,11 +80,30 @@ namespace HormesaFILEIDS.model
         {
             try
             {
+                //Inicializar inserción de atributos.
+                initAttDef();
+                addAndRegisterParameter();
                 instanceParameter();
-                //Obtener objeto del parametro.
-                swParamPartid = (Parameter)swAtt.GetParameter(attInstanceName);
-                //Asignarle el valor
-                swParamPartid.SetStringValue2(id, (int)swInConfigurationOpts_e.swAllConfiguration, "");
+                //Reconstruir y guardar.
+                swModel.ForceRebuild3(false);
+                swModel.Save();
+                //Verificar si el atributo existe.
+                if (swAtt!=null)
+                {
+                    //Obtener objeto del parametro.
+                    swParamPartid = (Parameter)swAtt.GetParameter(attInstanceName);
+                    //Asignarle el valor
+                    swParamPartid.SetStringValue2(id, (int)swInConfigurationOpts_e.swAllConfiguration, "");
+                    //Notificar
+                    err.thrower(getPartIdFromAttribute());
+
+
+                }
+                else
+                {
+                    err.thrower(err.handler(EnumMensajes.errorMiscelaneo, "Falló SwAttributeHandler::writePartIdOnAttribute"));
+                }
+
             }
             catch (Exception ex)
             {
@@ -116,28 +128,7 @@ namespace HormesaFILEIDS.model
         #endregion
 
         #region Métodos públicos
-        //Verificar si el partid existe. Si no existe y se coloca el parametro opcional createIt, puede crearlo y si es exitoso retorna true.
-        public bool checkIfPartIdExists(string partId, bool createIt = false)
-        {
-            //Intentar seleccionar comparar el valor del partid con lo que existe.
 
-            swAtt = getSwAttFromFeatureTree();
-            swParamPartid = (Parameter)swAtt.GetParameter(attInstanceName);
-
-            if (swParamPartid != null)
-            {
-                return string.Equals(swParamPartid.GetStringValue(), partId);
-            }
-            else
-            {
-                if (createIt)
-                {
-                    writePartIdOnAttribute(partId);
-                    return checkIfPartIdExists(partId);
-                }
-                return false;
-            }
-        }
 
         //Obtener el partid desde el atributo.
         public string getPartIdFromAttribute()

@@ -125,7 +125,6 @@ namespace HormesaFILEIDS.model
             //Escibir tambien en el atributo.
             setPartIdAsAttribute();
             //Reconstruir y guardar.
-  
             return !string.IsNullOrEmpty(partId);
         }
 
@@ -222,17 +221,9 @@ namespace HormesaFILEIDS.model
         {
             //Attribute handler
             attHandler = new SwAttributeHandler(swApp, swModel);
-            swModel.ForceRebuild3(true);
-            swModel.Save();
-            //Revisar si el partid existe, si no existe, crearlo.
-            if (attHandler.checkIfPartIdExists(partId, true))
-            {
-                err.thrower(string.Format("Se añadio el partid como atributo: {0}",attHandler.getPartIdFromAttribute()));
-            }
-            else
-            {
-                err.thrower(string.Format("No se añadio el partid como atributo, el valor es: {0}", attHandler.getPartIdFromAttribute()));
-            }
+            //Escribir partid en los atributos.
+            attHandler.writePartIdOnAttribute(partId);
+
         }
 
         #endregion
