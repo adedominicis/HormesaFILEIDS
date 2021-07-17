@@ -79,6 +79,12 @@ namespace HormesaFILEIDS.model
         #endregion
 
         #region Methods
+        //Determinar si es un plano.
+        public bool isDrawing()
+        {
+            return swModel.GetType() == (int)swDocumentTypes_e.swDocDRAWING;
+
+        }
 
         //Obtener el partid formateado.
         public string getFormattedPartId(string configName)
@@ -163,9 +169,12 @@ namespace HormesaFILEIDS.model
         private ObservableCollection<string> arrayToObsCollection(string[] arr)
         {
             ObservableCollection<string> obsCol = new ObservableCollection<string>();
-            foreach (string row in arr)
+            if (arr!=null)
             {
-                obsCol.Add(row);
+                foreach (string row in arr)
+                {
+                    obsCol.Add(row);
+                }
             }
             return obsCol;
         }

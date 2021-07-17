@@ -108,7 +108,7 @@
 
                     <TextBlock Grid.Row="0" 
                        Style="{StaticResource txTitulo}"> 
-                       Propiedades de pieza (@)</TextBlock>
+                       Propiedades globales de documento (@)</TextBlock>
                 </Grid>
 
                 <Grid 
@@ -171,11 +171,11 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" 
+                    <TextBlock Grid.Row="0" Name="lblConfiguracion"
                        Style="{StaticResource txTitulo}"> 
                       PARTIDs de Configuración</TextBlock>
                 </Grid>
-                <Grid 
+                <Grid x:Name="gridConfiguraciones"
                     Height="160"
                     HorizontalAlignment="Stretch"
                     Margin="5 5 5 5"
@@ -231,7 +231,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" 
+                    <TextBlock Grid.Row="0" Name="lblResumen" 
                        Style="{StaticResource txTitulo}"> 
                       Configuraciones con PARTID asignado</TextBlock>
                 </Grid>

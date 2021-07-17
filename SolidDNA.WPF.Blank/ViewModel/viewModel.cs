@@ -130,7 +130,7 @@ namespace HormesaFILEIDS.ViewModel
 
         }
 
-        
+
 
         #endregion
 
@@ -149,7 +149,7 @@ namespace HormesaFILEIDS.ViewModel
                 //Instancia de la vista
                 myView = v;
                 //Inicializar elementos
-                
+
             }
             catch (Exception e)
             {
@@ -158,41 +158,63 @@ namespace HormesaFILEIDS.ViewModel
         }
 
         //Refrescar componentes dinámicos de la UI 
+
         private void updateCombosAndTables()
         {
-            //Inicialización de UI.
-
             //Llenar combobox de configuraciones.
             myView.cbConfiguraciones.ItemsSource = ListActiveDocumentConfigurations;
             //Llenar tabla de resumen de configuraciones
             myView.dgridPartids.ItemsSource = DataViewConfigsAndPartids;
+        }
+        private void toggleUIMode()
+        {
+            bool notDrawing = !swActiveDoc.isDrawing();
+            //Alternar entre el modo planos o modo ensamblajes/piezas. Esto puede hacerse a traves de un binding a una propiedad posiblemente, o de forma directa.
+            myView.gridConfiguraciones.IsEnabled = notDrawing;
+            myView.lblConfiguracion.IsEnabled= notDrawing;
+            myView.lblResumen.IsEnabled = notDrawing;
+            myView.dgridPartids.IsEnabled = notDrawing;
+            if (!swActiveDoc.isDrawing())
+            {
+                myView.gridConfiguraciones.Visibility = Visibility.Visible;
+                myView.gridConfiguraciones.Visibility = Visibility.Visible;
+                myView.lblConfiguracion.Visibility = Visibility.Visible;
+                myView.lblResumen.Visibility = Visibility.Visible;
+                myView.dgridPartids.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                myView.gridConfiguraciones.Visibility = Visibility.Hidden;
+                myView.gridConfiguraciones.Visibility = Visibility.Hidden;
+                myView.lblConfiguracion.Visibility = Visibility.Hidden;
+                myView.lblResumen.Visibility = Visibility.Hidden;
+                myView.dgridPartids.Visibility = Visibility.Hidden;
+            }
+           
         }
         public void updateTextBoxes()
         {
             OnPropertyChanged("PartId");
             OnPropertyChanged("ConfigPartId");
         }
-
         private void initComboboxes()
         {
             //Seleccionar primero.
             myView.cbConfiguraciones.SelectedIndex = 0;
 
         }
-
         private void updateButtons()
         {
             myView.btNuevoPartIdComponente.IsEnabled = string.IsNullOrEmpty(PartId);
         }
-
         private void refreshUI()
         {
+            toggleUIMode();
             updateCombosAndTables();
             updateTextBoxes();
             initComboboxes();
             updateButtons();
         }
-
         #endregion
 
         #region TaskPane Methods and listeners.
@@ -248,8 +270,6 @@ namespace HormesaFILEIDS.ViewModel
                 //Algun mensaje sobre archivo no disponible.
                 return false;
             }
-
-
         }
 
         public void renombrarArchivo()
@@ -329,7 +349,33 @@ namespace HormesaFILEIDS.ViewModel
             //Eventos de seleccion en ensamblajes
             if (swAssy != null)
             {
+                //Cambio de configuracion activa
+                swAssy.ActiveConfigChangePostNotify -= SwPart_ActiveConfigChangeNotify;
+                swAssy.ActiveConfigChangePostNotify += SwPart_ActiveConfigChangeNotify;
 
+                //Agregada configuracion
+                swAssy.AddItemNotify -= SwPart_AddItemNotify;
+                swAssy.AddItemNotify += SwPart_AddItemNotify;
+
+                //Antes de eliminar la configuración
+                swAssy.DeleteItemPreNotify -= SwPart_DeleteItemPreNotify;
+                swAssy.DeleteItemPreNotify += SwPart_DeleteItemPreNotify;
+
+                //Eliminada configuracion
+                swAssy.DeleteItemNotify -= SwPart_DeleteItemNotify;
+                swAssy.DeleteItemNotify += SwPart_DeleteItemNotify;
+
+                //Renombrada configuración
+                swAssy.RenameItemNotify -= SwPart_RenameItemNotify;
+                swAssy.RenameItemNotify += SwPart_RenameItemNotify;
+
+                //Eliminada una custom property
+                swAssy.DeleteCustomPropertyNotify -= SwPart_DeleteCustomPropertyNotify;
+                swAssy.DeleteCustomPropertyNotify += SwPart_DeleteCustomPropertyNotify;
+
+                //Cambio de un custom property
+                swAssy.ChangeCustomPropertyNotify -= SwPart_ChangeCustomPropertyNotify;
+                swAssy.ChangeCustomPropertyNotify += SwPart_ChangeCustomPropertyNotify;
             }
             //Eventos de seleccion en dibujos
             if (swDraw != null)
@@ -351,7 +397,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)NewDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel,swApp);
+            swActiveDoc = new SwActiveDocument(swModel, swApp);
             //Actualizar taskpane
             refreshUI();
             return 0;
@@ -365,7 +411,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)swApp.ActiveDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel,swApp);
+            swActiveDoc = new SwActiveDocument(swModel, swApp);
             //Revisar integridad de los datos entre el modelo y la BD.
             swActiveDoc.fixPathIntegrity();
             //Actualizar taskpane
@@ -381,7 +427,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)swApp.ActiveDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel,swApp);
+            swActiveDoc = new SwActiveDocument(swModel, swApp);
             //Actualizar taskpane
             refreshUI();
             return 0;
