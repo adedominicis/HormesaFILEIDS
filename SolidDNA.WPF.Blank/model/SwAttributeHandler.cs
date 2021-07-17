@@ -21,12 +21,14 @@ namespace HormesaFILEIDS.model
         private SelectionMgr swSelMgr;
         private Feature swFeat;
         private ErrorHandler err;
+        
         #endregion
 
         #region Constantes
         private const string swAttDefUniqueName = "pubHORMESAFILEIDSAttDef";
         private const string addParameterName = "HORMESAPARTID";
         private const string attInstanceName = "HORMESAPARTID";
+        private const int attInstanceInvisible = 1;
         #endregion
 
         #region Constructor.
@@ -66,7 +68,7 @@ namespace HormesaFILEIDS.model
             //Si el parámetro no existe en el arbol, hay que crearlo.
             if (swFeat == null)
             {
-                swAtt = swAttDef.CreateInstance5(swModel, null, attInstanceName, 0, (int)swInConfigurationOpts_e.swAllConfiguration);
+                swAtt = swAttDef.CreateInstance5(swModel, null, attInstanceName, attInstanceInvisible, (int)swInConfigurationOpts_e.swAllConfiguration);
             }
             //Si existe, se trae del arbol.
             else

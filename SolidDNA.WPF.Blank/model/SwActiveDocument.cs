@@ -226,11 +226,15 @@ namespace HormesaFILEIDS.model
         public bool fixPathIntegrity()
         {
             //Verificar si hay un partid en el atributo.
-            string attPartId = attHandler.getPartIdFromAttribute();
+            if (attHandler==null)
+            {
+                attHandler = new SwAttributeHandler(swApp, swModel);
+            }
+            partId = attHandler.getPartIdFromAttribute();
 
             //Faltaria verificar si el atributo es un partid.
 
-            if (!string.IsNullOrEmpty(attPartId))
+            if (!string.IsNullOrEmpty(partId))
             {
                 //Obtener el path de la BD y el del archivo
                 string modelPath=swModel.GetPathName();
