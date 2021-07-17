@@ -25,6 +25,17 @@ namespace HormesaFILEIDS.model
         {
             return string.Format("exec checkIfConfigExistsFromFilePartId '{0}','{1}' ", filePartid, configName);
         }
+        //Obtener el partid desde el path
+        public string getFilePartIdFromPath(string fullpath)
+        {
+            return string.Format("exec getFilePartIdFromPath '{0}'", fullpath);
+        }
+
+        //Obtener el path desde el partid.
+        public string getFilePathFromPartId(string partid)
+        {
+            return string.Format("exec getFilePathFromPartId {0}", partid);
+        }
         #endregion
 
         #region Procedimientos almacenados - Escrituras
@@ -53,10 +64,7 @@ namespace HormesaFILEIDS.model
             return string.Format("exec assignPartIdToConfigFromFileID '{0}','{1}' ", filePartid, configName);
         }
 
-        public string getFilePartIdFromPath(string fullpath)
-        {
-            return string.Format("exec getFilePartIdFromPath '{0}'", fullpath);
-        }
+
 
         //Asignar un partid a una configuracion que no lo tiene, usando como referencia el path del archivo
         //Por definir
@@ -93,5 +101,10 @@ namespace HormesaFILEIDS.model
         }
         #endregion
 
+        //Actualizar el path de un archivo desde el partid.
+        public string updatePathFromPartId(string filePartId,string newPath)
+        {
+            return string.Format("exec updatePathFromPartId '{0}','{1}' ", filePartId, newPath);
+        }
     }
 }

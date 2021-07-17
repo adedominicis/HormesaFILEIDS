@@ -22,8 +22,7 @@ namespace HormesaFILEIDS.ViewModel
         private AssemblyDoc swAssy;
         private DrawingDoc swDraw;
         private ModelDoc2 swModel;
-        private SelectionMgr selMgr;
-        private Feature swFeat;
+
 
         #endregion
 
@@ -32,7 +31,6 @@ namespace HormesaFILEIDS.ViewModel
         private string selectedConfig;
         private UIHelper uiHelper;
         private SwActiveDocument swActiveDoc;
-        private SwAttributeHandler swAttHandler;
 
         //Instancia de la vista.
         private MyAddinControl myView;
@@ -132,6 +130,8 @@ namespace HormesaFILEIDS.ViewModel
 
         }
 
+        
+
         #endregion
 
         #region Inicializadores
@@ -193,7 +193,6 @@ namespace HormesaFILEIDS.ViewModel
             updateButtons();
         }
 
-        
         #endregion
 
         #region TaskPane Methods and listeners.
@@ -367,6 +366,8 @@ namespace HormesaFILEIDS.ViewModel
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel,swApp);
+            //Revisar integridad de los datos entre el modelo y la BD.
+            swActiveDoc.fixPathIntegrity();
             //Actualizar taskpane
             refreshUI();
             return 0;
@@ -401,7 +402,7 @@ namespace HormesaFILEIDS.ViewModel
 
         #endregion
 
-        #region 5- Se renombra una configuración; 6-Se renombra el archivo
+        #region 5- Se renombra una configuración
         private int SwPart_RenameItemNotify(int EntityType, string oldName, string NewName)
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
@@ -409,17 +410,12 @@ namespace HormesaFILEIDS.ViewModel
                 swActiveDoc.renameConfigOnDatabase(oldName, NewName);
                 refreshUI();
             }
-            if ((int)swNotifyEntityType_e.swNotifyComponent == EntityType)
-            {
-                swActiveDoc.renameFileOnDatabase(oldName, NewName);
-                refreshUI();
-            }
             return 0;
         }
         #endregion
 
         #region 6- Archivo renombrado en SW
-
+        //Se considera el fix cuando se reabre el archivo.
 
         #endregion
 

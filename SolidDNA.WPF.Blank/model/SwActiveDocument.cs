@@ -205,10 +205,6 @@ namespace HormesaFILEIDS.model
             //Borrar de la BD
             dao.singleReturnQuery(q.deleteConfigFromFilePartID(partId, configName));
         }
-        internal void renameFileOnDatabase(string oldName, string newName)
-        {
-            err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::renameFileOnDatabase()"));
-        }
 
         //Reescribir en todas las configuraciones que tengan PARTID, el partid desde la DB.
         internal void writePartIdToAllConfigs()
@@ -225,7 +221,37 @@ namespace HormesaFILEIDS.model
             attHandler.writePartIdOnAttribute(partId);
 
         }
+        
+        //Arreglar inconsistencias entre la ruta del modelo y la ruta guardada en la DB. Se usa el atributo como "cookie" o identificador permanente.
+        public bool fixPathIntegrity()
+        {
+            //Verificar si hay un partid en el atributo.
+            string attPartId = attHandler.getPartIdFromAttribute();
 
+            //Faltaria verificar si el atributo es un partid.
+
+            if (!string.IsNullOrEmpty(attPartId))
+            {
+                //Obtener el path de la BD y el del archivo
+                string modelPath=swModel.GetPathName();
+                string dbPath = dao.singleReturnQuery(q.getFilePathFromPartId(partId));
+                
+                //
+                if (string.IsNullOrEmpty(dbPath) && string.Equals(dbPath, modelPath, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    //El path existe en la BD y coincide con el del modelo.
+                    return true;
+                }
+                else
+                {
+                    //El path no existe en la bd o no coincide con el del modelo. Se actualiza.
+                    dao.singleReturnQuery(q.updatePathFromPartId(partId, modelPath));
+                    return true;
+                }
+            }
+
+            return true;
+        }
         #endregion
 
     }

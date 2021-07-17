@@ -75,44 +75,6 @@ namespace HormesaFILEIDS.model
             }
         }
 
-        //Asignar valor al parámetro.
-        public void writePartIdOnAttribute(string id)
-        {
-            try
-            {
-                //Inicializar inserción de atributos.
-                initAttDef();
-                addAndRegisterParameter();
-                instanceParameter();
-                //Reconstruir y guardar.
-                swModel.ForceRebuild3(false);
-                swModel.Save();
-                //Verificar si el atributo existe.
-                if (swAtt!=null)
-                {
-                    //Obtener objeto del parametro.
-                    swParamPartid = (Parameter)swAtt.GetParameter(attInstanceName);
-                    //Asignarle el valor
-                    swParamPartid.SetStringValue2(id, (int)swInConfigurationOpts_e.swAllConfiguration, "");
-                    //Notificar
-                    err.thrower(getPartIdFromAttribute());
-
-
-                }
-                else
-                {
-                    err.thrower(err.handler(EnumMensajes.errorMiscelaneo, "Falló SwAttributeHandler::writePartIdOnAttribute"));
-                }
-
-            }
-            catch (Exception ex)
-            {
-                err.thrower(err.handler(EnumMensajes.errorMiscelaneo, ex.Message));
-            }
-
-        }
-
-
         //Eliminar atributo de partid.
         private void deletePartId()
         {
@@ -128,7 +90,40 @@ namespace HormesaFILEIDS.model
         #endregion
 
         #region Métodos públicos
+        //Asignar valor al parámetro.
+        public void writePartIdOnAttribute(string id)
+        {
+            try
+            {
+                //Inicializar inserción de atributos.
+                initAttDef();
+                addAndRegisterParameter();
+                instanceParameter();
+                //Reconstruir y guardar.
+                swModel.ForceRebuild3(false);
+                swModel.Save();
+                //Verificar si el atributo existe.
+                if (swAtt != null)
+                {
+                    //Obtener objeto del parametro.
+                    swParamPartid = (Parameter)swAtt.GetParameter(attInstanceName);
+                    //Asignarle el valor
+                    swParamPartid.SetStringValue2(id, (int)swInConfigurationOpts_e.swAllConfiguration, "");
+                    //Notificar
+                    err.thrower(getPartIdFromAttribute());
+                }
+                else
+                {
+                    err.thrower(err.handler(EnumMensajes.errorMiscelaneo, "Falló SwAttributeHandler::writePartIdOnAttribute"));
+                }
 
+            }
+            catch (Exception ex)
+            {
+                err.thrower(err.handler(EnumMensajes.errorMiscelaneo, ex.Message));
+            }
+
+        }
 
         //Obtener el partid desde el atributo.
         public string getPartIdFromAttribute()
