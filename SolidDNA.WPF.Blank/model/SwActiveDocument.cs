@@ -14,13 +14,14 @@ namespace HormesaFILEIDS.model
 {
     public class SwActiveDocument
     {
-        #region Delegates
-
+        #region Constantes
+        private const string CustomPropertyPartid = "PARTID";
+        private const string CustomPropertyDwgid = "DWGID";
 
         #endregion
 
         #region Private fields
-        private const string CustomPropertyPartid = "PARTID";
+
         private CustomPropertyManager custPropMgr;
         private string partId;
         private ModelDoc2 swModel;
@@ -56,7 +57,7 @@ namespace HormesaFILEIDS.model
 
         #endregion
 
-        #region Public Properties
+        #region Propiedades Publicas
         //Partid del componente.
         public string PartId
         {
@@ -78,7 +79,7 @@ namespace HormesaFILEIDS.model
 
         #endregion
 
-        #region Methods
+        #region Métodos
         //Determinar si es un plano.
         public bool isDrawing()
         {
@@ -183,7 +184,15 @@ namespace HormesaFILEIDS.model
         public void writePartIdToFile()
         {
             custPropMgr = swModel.Extension.CustomPropertyManager[""];
-            custPropMgr.Add3("PARTID", (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId("@"), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
+            if (isDrawing())
+            {
+                custPropMgr.Add3(CustomPropertyDwgid, (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId("@"), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
+            }
+            else
+            {
+                custPropMgr.Add3(CustomPropertyPartid, (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId("@"), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
+            }
+            
 
         }
 

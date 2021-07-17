@@ -22,16 +22,12 @@ namespace HormesaFILEIDS.ViewModel
         private AssemblyDoc swAssy;
         private DrawingDoc swDraw;
         private ModelDoc2 swModel;
-
-
         #endregion
 
         #region Other private fields
-
         private string selectedConfig;
         private UIHelper uiHelper;
         private SwActiveDocument swActiveDoc;
-
         //Instancia de la vista.
         private MyAddinControl myView;
         #endregion
@@ -289,7 +285,8 @@ namespace HormesaFILEIDS.ViewModel
             swApp.ActiveDocChangeNotify -= SwApp_ActiveDocChangeNotify;
             swApp.FileOpenNotify -= SwApp_FileOpenNotify;
             swApp.FileNewNotify2 -= SwApp_FileNewNotify2;
-            swApp.FileCloseNotify += SwApp_FileCloseNotify;
+            swApp.FileCloseNotify -= SwApp_FileCloseNotify;
+            
 
             //Suscribir en limpio
             swApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
@@ -345,6 +342,10 @@ namespace HormesaFILEIDS.ViewModel
                 //Cambio de un custom property
                 swPart.ChangeCustomPropertyNotify -= SwPart_ChangeCustomPropertyNotify;
                 swPart.ChangeCustomPropertyNotify += SwPart_ChangeCustomPropertyNotify;
+                
+                //Se guardó una pieza.
+                swPart.FileSaveNotify -= SwComponent_FileSaveNotify;
+                swPart.FileSaveNotify += SwComponent_FileSaveNotify;
             }
             //Eventos de seleccion en ensamblajes
             if (swAssy != null)
@@ -376,14 +377,20 @@ namespace HormesaFILEIDS.ViewModel
                 //Cambio de un custom property
                 swAssy.ChangeCustomPropertyNotify -= SwPart_ChangeCustomPropertyNotify;
                 swAssy.ChangeCustomPropertyNotify += SwPart_ChangeCustomPropertyNotify;
+
+                //Se guardó un ensamblaje
+                swAssy.FileSaveNotify -= SwComponent_FileSaveNotify;
+                swAssy.FileSaveNotify += SwComponent_FileSaveNotify;
             }
             //Eventos de seleccion en dibujos
             if (swDraw != null)
             {
-
-
+                //Se guardó un plano
+                swDraw.FileSaveNotify -= SwDraw_FileSaveNotify;
+                swDraw.FileSaveNotify += SwDraw_FileSaveNotify;
             }
         }
+
 
         #endregion
 
@@ -398,6 +405,8 @@ namespace HormesaFILEIDS.ViewModel
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel, swApp);
+            //Actualizar subscripciones (esto es mejorable)
+            SwModelEventSubscriber();
             //Actualizar taskpane
             refreshUI();
             return 0;
@@ -412,6 +421,8 @@ namespace HormesaFILEIDS.ViewModel
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel, swApp);
+            //Actualizar subscripciones (esto es mejorable)
+            SwModelEventSubscriber();
             //Revisar integridad de los datos entre el modelo y la BD.
             swActiveDoc.fixPathIntegrity();
             //Actualizar taskpane
@@ -428,6 +439,8 @@ namespace HormesaFILEIDS.ViewModel
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel, swApp);
+            //Actualizar subscripciones (esto es mejorable)
+            SwModelEventSubscriber();
             //Actualizar taskpane
             refreshUI();
             return 0;
@@ -538,6 +551,29 @@ namespace HormesaFILEIDS.ViewModel
             return 0;
         }
 
+        #endregion
+
+        #region 11 - Se guarda el archivo
+
+        private int SwDraw_FileSaveNotify(string FileName)
+        {
+            //Escribir PartId al archivo
+            swActiveDoc.writePartIdToFile();
+            //Limpiar todo
+            refreshUI();
+            return 0;
+        }
+
+        private int SwComponent_FileSaveNotify(string FileName)
+        {
+            //Escribir PartId al archivo
+            swActiveDoc.writePartIdToFile();
+            //Escribir Partids a todas las configuraciones.
+            swActiveDoc.writePartIdToAllConfigs();
+            //Limpiar todo
+            refreshUI();
+            return 0;
+        }
         #endregion
 
         #region Implementar la interfaz InotifyPropertyChanged
