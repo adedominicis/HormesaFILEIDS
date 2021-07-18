@@ -37,6 +37,9 @@ namespace HormesaFILEIDS.model
 
             switch (err)
             {
+                case EnumMensajes.excepcionInterna:
+                    errorMsg =string.Format("Excepcion interna en: {0}",tail);
+                    break;
                 case EnumMensajes.loginError:
                     errorMsg = "Usuario o contraseña invalidos";
                     break;

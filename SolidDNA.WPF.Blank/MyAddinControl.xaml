@@ -98,7 +98,7 @@
 
     </UserControl.Resources>
 
-    <TabControl>
+    <TabControl Name="tabControl">
         <TabItem Header="SOLIDWORKS">
             <StackPanel Orientation="Vertical" Background="WhiteSmoke">
                 <Grid Height="30" Margin="5 5 5 5">

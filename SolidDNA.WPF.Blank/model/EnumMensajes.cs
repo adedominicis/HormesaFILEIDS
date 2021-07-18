@@ -18,6 +18,7 @@
         errorEnConexionDB,
         metodoNoImplementado,
         errorMiscelaneo,
-        notificarUsuario
+        notificarUsuario,
+        excepcionInterna
     }
 }

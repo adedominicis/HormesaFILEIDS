@@ -28,6 +28,7 @@ namespace HormesaFILEIDS.ViewModel
         private string selectedConfig;
         private UIHelper uiHelper;
         private SwActiveDocument swActiveDoc;
+        private ErrorHandler err;
         //Instancia de la vista.
         private MyAddinControl myView;
         #endregion
@@ -126,8 +127,6 @@ namespace HormesaFILEIDS.ViewModel
 
         }
 
-
-
         #endregion
 
         #region Inicializadores
@@ -144,12 +143,13 @@ namespace HormesaFILEIDS.ViewModel
                 uiHelper = new UIHelper();
                 //Instancia de la vista
                 myView = v;
-                //Inicializar elementos
+                //Error handler
+                err = new ErrorHandler();
 
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error en inicializacion de viewModel: " + e.Message);
+                err.thrower(err.handler(EnumMensajes.excepcionInterna, "Error en inicializacion de viewModel: " + e.Message));
             }
         }
 
@@ -210,6 +210,7 @@ namespace HormesaFILEIDS.ViewModel
             updateTextBoxes();
             initComboboxes();
             updateButtons();
+            myView.tabControl.IsEnabled = !swModel.IsOpenedReadOnly();
         }
         #endregion
 
@@ -299,96 +300,80 @@ namespace HormesaFILEIDS.ViewModel
         //Suscripción a los eventos de parte, pieza o ensamble mediante delegates (swModel)
         public void SwModelEventSubscriber()
         {
-            //Crear objetos swDoc
-            if (swModel.GetType() == (int)swDocumentTypes_e.swDocPART)
+            try
             {
-                swPart = (PartDoc)swModel;
+
+                //Crear objetos swDoc
+                if (swModel.GetType() == (int)swDocumentTypes_e.swDocPART)
+                {
+                    swPart = (PartDoc)swModel;
+
+                    //Cambio de configuracion activa
+                    swPart.ActiveConfigChangePostNotify -= SwComponent_ActiveConfigChangeNotify;
+                    swPart.ActiveConfigChangePostNotify += SwComponent_ActiveConfigChangeNotify;
+
+                    //Agregada configuracion
+                    swPart.AddItemNotify -= SwComponent_AddItemNotify;
+                    swPart.AddItemNotify += SwComponent_AddItemNotify;
+
+                    //Antes de eliminar la configuración
+                    swPart.DeleteItemPreNotify -= SwComponent_DeleteItemPreNotify;
+                    swPart.DeleteItemPreNotify += SwComponent_DeleteItemPreNotify;
+
+                    //Eliminada configuracion
+                    swPart.DeleteItemNotify -= SwComponent_DeleteItemNotify;
+                    swPart.DeleteItemNotify += SwComponent_DeleteItemNotify;
+
+                    //Renombrada configuración
+                    swPart.RenameItemNotify -= SwComponent_RenameItemNotify;
+                    swPart.RenameItemNotify += SwComponent_RenameItemNotify;
+
+
+                    //Se guardó una pieza.
+                    swPart.FileSaveNotify -= SwComponent_FileSaveNotify;
+                    swPart.FileSaveNotify += SwComponent_FileSaveNotify;
+                }
+                else if (swModel.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY)
+                {
+                    swAssy = (AssemblyDoc)swModel;
+
+                    //Cambio de configuracion activa
+                    swAssy.ActiveConfigChangePostNotify -= SwComponent_ActiveConfigChangeNotify;
+                    swAssy.ActiveConfigChangePostNotify += SwComponent_ActiveConfigChangeNotify;
+
+                    //Agregada configuracion
+                    swAssy.AddItemNotify -= SwComponent_AddItemNotify;
+                    swAssy.AddItemNotify += SwComponent_AddItemNotify;
+
+                    //Antes de eliminar la configuración
+                    swAssy.DeleteItemPreNotify -= SwComponent_DeleteItemPreNotify;
+                    swAssy.DeleteItemPreNotify += SwComponent_DeleteItemPreNotify;
+
+                    //Eliminada configuracion
+                    swAssy.DeleteItemNotify -= SwComponent_DeleteItemNotify;
+                    swAssy.DeleteItemNotify += SwComponent_DeleteItemNotify;
+
+                    //Renombrada configuración
+                    swAssy.RenameItemNotify -= SwComponent_RenameItemNotify;
+                    swAssy.RenameItemNotify += SwComponent_RenameItemNotify;
+
+                    //Se guardó un ensamblaje
+                    swAssy.FileSaveNotify -= SwComponent_FileSaveNotify;
+                    swAssy.FileSaveNotify += SwComponent_FileSaveNotify;
+                }
+                else if (swModel.GetType() == (int)swDocumentTypes_e.swDocDRAWING)
+                {
+                    swDraw = (DrawingDoc)swModel;
+                    //Se guardó un plano
+                    swDraw.FileSaveNotify -= SwDraw_FileSaveNotify;
+                    swDraw.FileSaveNotify += SwDraw_FileSaveNotify;
+                }
             }
-            else if (swModel.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY)
+            catch (Exception ex)
             {
-                swAssy = (AssemblyDoc)swModel;
+                err.thrower(err.handler(EnumMensajes.excepcionInterna, ex.Message + "en viewModel::SwModelEventSubscriber"));
             }
-            else if (swModel.GetType() == (int)swDocumentTypes_e.swDocDRAWING)
-            {
-                swDraw = (DrawingDoc)swModel;
-            }
-            //Eventos de seleccion en partes
-            if (swPart != null)
-            {
-                //Cambio de configuracion activa
-                swPart.ActiveConfigChangePostNotify -= SwPart_ActiveConfigChangeNotify;
-                swPart.ActiveConfigChangePostNotify += SwPart_ActiveConfigChangeNotify;
-
-                //Agregada configuracion
-                swPart.AddItemNotify -= SwPart_AddItemNotify;
-                swPart.AddItemNotify += SwPart_AddItemNotify;
-
-                //Antes de eliminar la configuración
-                swPart.DeleteItemPreNotify -= SwPart_DeleteItemPreNotify;
-                swPart.DeleteItemPreNotify += SwPart_DeleteItemPreNotify;
-
-                //Eliminada configuracion
-                swPart.DeleteItemNotify -= SwPart_DeleteItemNotify;
-                swPart.DeleteItemNotify += SwPart_DeleteItemNotify;
-
-                //Renombrada configuración
-                swPart.RenameItemNotify -= SwPart_RenameItemNotify;
-                swPart.RenameItemNotify += SwPart_RenameItemNotify;
-
-                //Eliminada una custom property
-                swPart.DeleteCustomPropertyNotify -= SwPart_DeleteCustomPropertyNotify;
-                swPart.DeleteCustomPropertyNotify += SwPart_DeleteCustomPropertyNotify;
-
-                //Cambio de un custom property
-                swPart.ChangeCustomPropertyNotify -= SwPart_ChangeCustomPropertyNotify;
-                swPart.ChangeCustomPropertyNotify += SwPart_ChangeCustomPropertyNotify;
-                
-                //Se guardó una pieza.
-                swPart.FileSaveNotify -= SwComponent_FileSaveNotify;
-                swPart.FileSaveNotify += SwComponent_FileSaveNotify;
-            }
-            //Eventos de seleccion en ensamblajes
-            if (swAssy != null)
-            {
-                //Cambio de configuracion activa
-                swAssy.ActiveConfigChangePostNotify -= SwPart_ActiveConfigChangeNotify;
-                swAssy.ActiveConfigChangePostNotify += SwPart_ActiveConfigChangeNotify;
-
-                //Agregada configuracion
-                swAssy.AddItemNotify -= SwPart_AddItemNotify;
-                swAssy.AddItemNotify += SwPart_AddItemNotify;
-
-                //Antes de eliminar la configuración
-                swAssy.DeleteItemPreNotify -= SwPart_DeleteItemPreNotify;
-                swAssy.DeleteItemPreNotify += SwPart_DeleteItemPreNotify;
-
-                //Eliminada configuracion
-                swAssy.DeleteItemNotify -= SwPart_DeleteItemNotify;
-                swAssy.DeleteItemNotify += SwPart_DeleteItemNotify;
-
-                //Renombrada configuración
-                swAssy.RenameItemNotify -= SwPart_RenameItemNotify;
-                swAssy.RenameItemNotify += SwPart_RenameItemNotify;
-
-                //Eliminada una custom property
-                swAssy.DeleteCustomPropertyNotify -= SwPart_DeleteCustomPropertyNotify;
-                swAssy.DeleteCustomPropertyNotify += SwPart_DeleteCustomPropertyNotify;
-
-                //Cambio de un custom property
-                swAssy.ChangeCustomPropertyNotify -= SwPart_ChangeCustomPropertyNotify;
-                swAssy.ChangeCustomPropertyNotify += SwPart_ChangeCustomPropertyNotify;
-
-                //Se guardó un ensamblaje
-                swAssy.FileSaveNotify -= SwComponent_FileSaveNotify;
-                swAssy.FileSaveNotify += SwComponent_FileSaveNotify;
-            }
-            //Eventos de seleccion en dibujos
-            if (swDraw != null)
-            {
-                //Se guardó un plano
-                swDraw.FileSaveNotify -= SwDraw_FileSaveNotify;
-                swDraw.FileSaveNotify += SwDraw_FileSaveNotify;
-            }
+            
         }
 
 
@@ -405,8 +390,6 @@ namespace HormesaFILEIDS.ViewModel
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel, swApp);
-            //Actualizar subscripciones (esto es mejorable)
-            SwModelEventSubscriber();
             //Actualizar taskpane
             refreshUI();
             return 0;
@@ -421,8 +404,6 @@ namespace HormesaFILEIDS.ViewModel
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel, swApp);
-            //Actualizar subscripciones (esto es mejorable)
-            SwModelEventSubscriber();
             //Revisar integridad de los datos entre el modelo y la BD.
             swActiveDoc.fixPathIntegrity();
             //Actualizar taskpane
@@ -439,8 +420,6 @@ namespace HormesaFILEIDS.ViewModel
             //Instanciar documento activo.
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel, swApp);
-            //Actualizar subscripciones (esto es mejorable)
-            SwModelEventSubscriber();
             //Actualizar taskpane
             refreshUI();
             return 0;
@@ -449,7 +428,7 @@ namespace HormesaFILEIDS.ViewModel
 
         #region 4- Se añadió una nueva config
 
-        private int SwPart_AddItemNotify(int EntityType, string itemName)
+        private int SwComponent_AddItemNotify(int EntityType, string itemName)
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
@@ -462,7 +441,7 @@ namespace HormesaFILEIDS.ViewModel
         #endregion
 
         #region 5- Se renombra una configuración
-        private int SwPart_RenameItemNotify(int EntityType, string oldName, string NewName)
+        private int SwComponent_RenameItemNotify(int EntityType, string oldName, string NewName)
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
@@ -479,7 +458,7 @@ namespace HormesaFILEIDS.ViewModel
         #endregion
 
         #region 7- Se eliminó una config
-        private int SwPart_DeleteItemNotify(int EntityType, string itemName)
+        private int SwComponent_DeleteItemNotify(int EntityType, string itemName)
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
@@ -489,7 +468,7 @@ namespace HormesaFILEIDS.ViewModel
             return 0;
         }
 
-        private int SwPart_DeleteItemPreNotify(int EntityType, string itemName)
+        private int SwComponent_DeleteItemPreNotify(int EntityType, string itemName)
         {
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
@@ -500,46 +479,16 @@ namespace HormesaFILEIDS.ViewModel
 
         #endregion
 
-        #region 8- Se cambió el partid manualmente. (Esto no está funcionando)
-        private int SwPart_DeleteCustomPropertyNotify(string propName, string Configuration, string Value, int valueType)
-        {
-            if (propName.Equals("partid", StringComparison.OrdinalIgnoreCase))
-            {
-                //Esto funciona erráticamente. El mensaje sale al abrir un archivo.
-            }
-            else
-            {
-                MessageBox.Show("Borró otra propiedad.");
-            }
-            return 0;
-        }
+        #region 8- Cambio de configuración activa.
 
-        private int SwPart_ChangeCustomPropertyNotify(string propName, string Configuration, string oldValue, string NewValue, int valueType)
-        {
-            if (propName.Equals("partid", StringComparison.OrdinalIgnoreCase))
-            {
-                //Esto funciona erráticamente. El mensaje sale al abrir un archivo.
-            }
-            else
-            {
-                MessageBox.Show("Modifió otra propiedad.");
-            }
-            return 0;
-        }
-
-
-        #endregion
-
-        #region 9- Cambio de configuración activa.
-
-        private int SwPart_ActiveConfigChangeNotify()
+        private int SwComponent_ActiveConfigChangeNotify()
         {
             //Esto puede hacerse obsoleto. No tiene un uso hasta ahora.
             return 0;
         }
         #endregion
 
-        #region 10 - Se cierra el archivo.
+        #region 9 - Se cierra el archivo.
         private int SwApp_FileCloseNotify(string FileName, int reason)
         {
             //Escribir PartId al archivo
@@ -553,7 +502,7 @@ namespace HormesaFILEIDS.ViewModel
 
         #endregion
 
-        #region 11 - Se guarda el archivo
+        #region 10 - Se guarda el archivo
 
         private int SwDraw_FileSaveNotify(string FileName)
         {
