@@ -64,19 +64,17 @@ namespace HormesaFILEIDS.model
             get { return partId; }
         }
 
-        //Descriptor ES
-        public string DescriptorEs
-        {
-            get { return descriptorEs; }
-            set { descriptorEs = value; }
-        }
-
         //La configuración activa.
         public string ActiveConfigName
         {
             get { return getActiveConfigName(); }
         }
 
+        //El descriptorEs
+        public string DescriptorEs
+        {
+            set { descriptorEs = value; }
+        }
         #endregion
 
         #region Métodos
@@ -133,6 +131,15 @@ namespace HormesaFILEIDS.model
             setPartIdAsAttribute();
             //Reconstruir y guardar.
             return !string.IsNullOrEmpty(partId);
+        }
+
+        //Leer propiedad por nombre
+        internal string getPropertyByName(string propertyName)
+        {
+            string valOut, resolvedValOut;
+            swModel.Extension.CustomPropertyManager[""].Get2(propertyName, out valOut, out resolvedValOut);
+
+            return valOut;
         }
 
         //Obtener listado de partids por configuracion.
@@ -192,8 +199,20 @@ namespace HormesaFILEIDS.model
             {
                 custPropMgr.Add3(CustomPropertyPartid, (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId("@"), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
             }
-            
+        }
 
+        //Escribir cualquier propiedad en el archivo
+        public void writePropertyToFile(string propertyName,string propertyValue)
+        {
+            custPropMgr = swModel.Extension.CustomPropertyManager[""];
+            if (isDrawing())
+            {
+                custPropMgr.Add3(propertyName, (int)swCustomInfoType_e.swCustomInfoText, propertyValue, (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
+            }
+            else
+            {
+                custPropMgr.Add3(propertyName, (int)swCustomInfoType_e.swCustomInfoText, propertyValue, (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
+            }
         }
 
         //Asignar partid al property (archivo)
@@ -206,7 +225,10 @@ namespace HormesaFILEIDS.model
         //Renombrar el archivo.
         internal void renameFile()
         {
-            err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::renameFile()"));
+            //Renombrar documento. Usar el descriptor que esta guardado en el documento
+            swModel.Extension.RenameDocument(string.Format("{0} - {1}",getFormattedPartId(""),getPropertyByName("DESCRIPTORES")));
+            //Actualizar la base de datos.
+            fixPathIntegrity();
         }
 
         //Renombrar en la BD una configuración que fue renombrada en la interfaz.

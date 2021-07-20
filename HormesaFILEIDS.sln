@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HormesaFILEIDS", "SolidDNA.WPF.Blank\HormesaFILEIDS.csproj", "{19BCBD7C-1518-4180-B118-7DF731D40E5C}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{2A88F191-5AF6-41E0-95A6-3648B7A98C4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{19BCBD7C-1518-4180-B118-7DF731D40E5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19BCBD7C-1518-4180-B118-7DF731D40E5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19BCBD7C-1518-4180-B118-7DF731D40E5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A88F191-5AF6-41E0-95A6-3648B7A98C4A}.Debug|Any CPU.ActiveCfg = Debug
+		{2A88F191-5AF6-41E0-95A6-3648B7A98C4A}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

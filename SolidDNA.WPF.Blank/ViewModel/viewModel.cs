@@ -127,6 +127,33 @@ namespace HormesaFILEIDS.ViewModel
 
         }
 
+        //DescriptorES
+
+        //Descriptor ES
+        public string DescriptorEs
+        {
+            get
+            {
+                if (swActiveDoc != null)
+                {
+                    return swActiveDoc.getPropertyByName("DESCRIPTORES");
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            set 
+            {
+                if (swActiveDoc != null)
+                {
+                    swActiveDoc.writePropertyToFile("DESCRIPTORES", value);
+                    swActiveDoc.DescriptorEs = value;
+                    OnPropertyChanged("DescriptorEs");
+                }
+            }
+        }
+
         #endregion
 
         #region Inicializadores

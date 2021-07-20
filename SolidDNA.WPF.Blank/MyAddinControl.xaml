@@ -145,7 +145,9 @@
                        Text="{Binding PartId, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                        HorizontalAlignment="Left"></TextBox>
                     
-                    <TextBox Grid.Row="1" 
+                    <TextBox 
+                        Name="txDescriptorEs"
+                        Grid.Row="1" 
                              Grid.Column="1"
                              MaxLength="100"
                        Style="{StaticResource txID}"
