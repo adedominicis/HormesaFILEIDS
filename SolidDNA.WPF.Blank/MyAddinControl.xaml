@@ -251,44 +251,7 @@
             </StackPanel>
 
         </TabItem>
-        <TabItem Header="AJUSTES" Background="WhiteSmoke">
-
-            <StackPanel Orientation="Vertical" Background="WhiteSmoke">
-                <Grid Height="40" Margin="10 10 10 10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="9*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Style="{StaticResource txTitulo}">Habilitar consulta a PDM SQL</TextBlock>
-                    <CheckBox 
-                        Grid.Column="1" Style="{StaticResource cmPdmSql}"
-                        Name="cbPdmSql"></CheckBox>
-                </Grid>
-
-                <Grid Height="150" Margin="10 10 10 10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Style="{StaticResource txItem}">Nombre de la base datos Almacen PDM</TextBlock>
-                    <TextBox Grid.Row="1" Style="{StaticResource txSqlPdm}"></TextBox>
-                    <TextBlock Grid.Row="2" Style="{StaticResource txItem}">Nombre o IP del servidor de base de datos PDM</TextBlock>
-                    <TextBox Grid.Row="3" Style="{StaticResource txSqlPdm}"></TextBox>
-                    <TextBlock Grid.Row="4" Style="{StaticResource txItem}">Contraseña del SA (PDM DB)</TextBlock>
-                    <PasswordBox Grid.Row="5" Style="{StaticResource pwSqlPdm}" ></PasswordBox>
-                </Grid>
-
-
-            </StackPanel>
-        </TabItem>
+        
     </TabControl>
 
 </UserControl>
