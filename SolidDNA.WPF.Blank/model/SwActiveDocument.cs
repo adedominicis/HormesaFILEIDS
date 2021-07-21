@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.IO;
 
 namespace HormesaFILEIDS.model
 {
@@ -53,6 +54,8 @@ namespace HormesaFILEIDS.model
             writePartIdToFile();
             //Error handler
             err = new ErrorHandler();
+            //Leer descriptorES desde el archivo.
+            descriptorEs = swModel.Extension.CustomPropertyManager[""].Get("DESCRIPTORES");
         }
 
         #endregion
@@ -73,7 +76,15 @@ namespace HormesaFILEIDS.model
         //El descriptorEs
         public string DescriptorEs
         {
-            set { descriptorEs = value; }
+            set
+            {
+                descriptorEs = value;
+                writePropertyToFile("DESCRIPTORES", descriptorEs);
+            }
+            get
+            {
+                return descriptorEs;
+            }
         }
         #endregion
 
@@ -177,7 +188,7 @@ namespace HormesaFILEIDS.model
         private ObservableCollection<string> arrayToObsCollection(string[] arr)
         {
             ObservableCollection<string> obsCol = new ObservableCollection<string>();
-            if (arr!=null)
+            if (arr != null)
             {
                 foreach (string row in arr)
                 {
@@ -202,7 +213,7 @@ namespace HormesaFILEIDS.model
         }
 
         //Escribir cualquier propiedad en el archivo
-        public void writePropertyToFile(string propertyName,string propertyValue)
+        public void writePropertyToFile(string propertyName, string propertyValue)
         {
             custPropMgr = swModel.Extension.CustomPropertyManager[""];
             if (isDrawing())
@@ -223,10 +234,14 @@ namespace HormesaFILEIDS.model
         }
 
         //Renombrar el archivo.
-        internal void renameFile()
+        internal void renameFile(string descriptorEs)
         {
+            //Obtener la extensión actual del archivo.
+            string fileExtension = Path.GetExtension(swModel.GetPathName());
             //Renombrar documento. Usar el descriptor que esta guardado en el documento
-            swModel.Extension.RenameDocument(string.Format("{0} - {1}",getFormattedPartId(""),getPropertyByName("DESCRIPTORES")));
+            int errors = 0;
+            int warnings = 0;
+            swModel.Extension.SaveAs(string.Format("{0} - {1}{2}", getFormattedPartId("@"), descriptorEs, fileExtension), 0, 0, null, errors, warnings);
             //Actualizar la base de datos.
             fixPathIntegrity();
         }
@@ -249,7 +264,15 @@ namespace HormesaFILEIDS.model
         //Reescribir en todas las configuraciones que tengan PARTID, el partid desde la DB.
         internal void writePartIdToAllConfigs()
         {
-            err.thrower(err.handler(EnumMensajes.metodoNoImplementado, "SwActiveDocument::writePartIdToAllConfigs()"));
+            //Obtener listado de partids y configs
+            DataTable configList = getConfigPartidList();
+            if (configList.Rows != null)
+            {
+                foreach (DataRow row in configList.Rows)
+                {
+                    writePartIdToConfig(row[0].ToString());
+                }
+            }
         }
 
         //Guardar atributos dentro del archivo
@@ -261,12 +284,12 @@ namespace HormesaFILEIDS.model
             attHandler.writePartIdOnAttribute(partId);
 
         }
-        
+
         //Arreglar inconsistencias entre la ruta del modelo y la ruta guardada en la DB. Se usa el atributo como "cookie" o identificador permanente.
         public bool fixPathIntegrity()
         {
             //Verificar si hay un partid en el atributo.
-            if (attHandler==null)
+            if (attHandler == null)
             {
                 attHandler = new SwAttributeHandler(swApp, swModel);
             }
@@ -277,9 +300,9 @@ namespace HormesaFILEIDS.model
             if (!string.IsNullOrEmpty(partId))
             {
                 //Obtener el path de la BD y el del archivo
-                string modelPath=swModel.GetPathName();
+                string modelPath = swModel.GetPathName();
                 string dbPath = dao.singleReturnQuery(q.getFilePathFromPartId(partId));
-                
+
                 //
                 if (string.IsNullOrEmpty(dbPath) && string.Equals(dbPath, modelPath, StringComparison.InvariantCultureIgnoreCase))
                 {

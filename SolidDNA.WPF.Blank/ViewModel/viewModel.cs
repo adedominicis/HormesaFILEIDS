@@ -46,6 +46,7 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
+
         //Partid de pieza (GET)
         public string PartId
         {
@@ -136,18 +137,17 @@ namespace HormesaFILEIDS.ViewModel
             {
                 if (swActiveDoc != null)
                 {
-                    return swActiveDoc.getPropertyByName("DESCRIPTORES");
+                    return swActiveDoc.DescriptorEs;
                 }
                 else
                 {
                     return string.Empty;
                 }
             }
-            set 
+            set
             {
                 if (swActiveDoc != null)
                 {
-                    swActiveDoc.writePropertyToFile("DESCRIPTORES", value);
                     swActiveDoc.DescriptorEs = value;
                     OnPropertyChanged("DescriptorEs");
                 }
@@ -194,7 +194,7 @@ namespace HormesaFILEIDS.ViewModel
             bool notDrawing = !swActiveDoc.isDrawing();
             //Alternar entre el modo planos o modo ensamblajes/piezas. Esto puede hacerse a traves de un binding a una propiedad posiblemente, o de forma directa.
             myView.gridConfiguraciones.IsEnabled = notDrawing;
-            myView.lblConfiguracion.IsEnabled= notDrawing;
+            myView.lblConfiguracion.IsEnabled = notDrawing;
             myView.lblResumen.IsEnabled = notDrawing;
             myView.dgridPartids.IsEnabled = notDrawing;
             if (!swActiveDoc.isDrawing())
@@ -213,12 +213,13 @@ namespace HormesaFILEIDS.ViewModel
                 myView.lblResumen.Visibility = Visibility.Hidden;
                 myView.dgridPartids.Visibility = Visibility.Hidden;
             }
-           
+
         }
         public void updateTextBoxes()
         {
             OnPropertyChanged("PartId");
             OnPropertyChanged("ConfigPartId");
+            OnPropertyChanged("DescriptorEs");
         }
         private void initComboboxes()
         {
@@ -296,12 +297,15 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
-        public void renombrarArchivo()
+        //Renombrar archivo
+        internal void renombrarArchivo()
         {
-            //Renombrar archivo, no implementado.
-            swActiveDoc.renameFile();
-
+            if (swActiveDoc != null)
+            {
+                swActiveDoc.renameFile(DescriptorEs);
+            }
         }
+
         #endregion
 
         #region Solidworks Event Subscribers
@@ -313,14 +317,11 @@ namespace HormesaFILEIDS.ViewModel
             swApp.ActiveDocChangeNotify -= SwApp_ActiveDocChangeNotify;
             swApp.FileOpenNotify -= SwApp_FileOpenNotify;
             swApp.FileNewNotify2 -= SwApp_FileNewNotify2;
-            swApp.FileCloseNotify -= SwApp_FileCloseNotify;
-            
 
             //Suscribir en limpio
             swApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             swApp.FileOpenNotify += SwApp_FileOpenNotify;
             swApp.FileNewNotify2 += SwApp_FileNewNotify2;
-            swApp.FileCloseNotify += SwApp_FileCloseNotify;
 
         }
 
@@ -329,7 +330,6 @@ namespace HormesaFILEIDS.ViewModel
         {
             try
             {
-
                 //Crear objetos swDoc
                 if (swModel.GetType() == (int)swDocumentTypes_e.swDocPART)
                 {
@@ -354,7 +354,6 @@ namespace HormesaFILEIDS.ViewModel
                     //Renombrada configuración
                     swPart.RenameItemNotify -= SwComponent_RenameItemNotify;
                     swPart.RenameItemNotify += SwComponent_RenameItemNotify;
-
 
                     //Se guardó una pieza.
                     swPart.FileSaveNotify -= SwComponent_FileSaveNotify;
@@ -400,8 +399,10 @@ namespace HormesaFILEIDS.ViewModel
             {
                 err.thrower(err.handler(EnumMensajes.excepcionInterna, ex.Message + "en viewModel::SwModelEventSubscriber"));
             }
-            
+
         }
+
+
 
 
         #endregion
@@ -515,21 +516,7 @@ namespace HormesaFILEIDS.ViewModel
         }
         #endregion
 
-        #region 9 - Se cierra el archivo.
-        private int SwApp_FileCloseNotify(string FileName, int reason)
-        {
-            //Escribir PartId al archivo
-            swActiveDoc.writePartIdToFile();
-            //Escribir Partids a todas las configuraciones.
-            swActiveDoc.writePartIdToAllConfigs();
-            //Limpiar todo
-            refreshUI();
-            return 0;
-        }
-
-        #endregion
-
-        #region 10 - Se guarda el archivo
+        #region 9 - Se guarda el archivo
 
         private int SwDraw_FileSaveNotify(string FileName)
         {
@@ -539,7 +526,6 @@ namespace HormesaFILEIDS.ViewModel
             refreshUI();
             return 0;
         }
-
         private int SwComponent_FileSaveNotify(string FileName)
         {
             //Escribir PartId al archivo

@@ -2175,7 +2175,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\Installer.msi"
+        "OutputFilename" = "8:Debug\\FILEIDS.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -6689,13 +6689,13 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FILEIDS"
         "ProductCode" = "8:{7D3D402D-5B18-45BD-AFB1-2831BAD5C68B}"
-        "PackageCode" = "8:{59459D62-6787-4549-B001-79459AEB3691}"
+        "PackageCode" = "8:{6CD90B23-EACE-4E29-96ED-96184C2698FB}"
         "UpgradeCode" = "8:{142A4A32-8A03-4417-A38E-718AA6C9705D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
+        "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:ADDR"
         "ARPHELPTELEPHONE" = "8:"
@@ -6752,8 +6752,8 @@
                                             {
                                             "Name" = "8:{19BCBD7C-1518-4180-B118-7DF731D40E5C}"
                                             "Condition" = "8:"
-                                            "AlwaysCreate" = "11:FALSE"
-                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "AlwaysCreate" = "11:TRUE"
+                                            "DeleteAtUninstall" = "11:TRUE"
                                             "Transitive" = "11:FALSE"
                                                 "Keys"
                                                 {
@@ -6766,7 +6766,7 @@
                                                     "Condition" = "8:"
                                                     "Transitive" = "11:FALSE"
                                                     "ValueTypes" = "3:1"
-                                                    "Value" = "8:HORMESAFILEIDS"
+                                                    "Value" = "8:NUMEROS DE PARTE - HORMESA"
                                                     }
                                                     "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_3D171B93A8744E9D9979B154B78F0A18"
                                                     {
@@ -6782,7 +6782,7 @@
                                                     "Condition" = "8:"
                                                     "Transitive" = "11:FALSE"
                                                     "ValueTypes" = "3:1"
-                                                    "Value" = "8:Numeros de parte HORMESA"
+                                                    "Value" = "8:Generador de numeros de parte. HORMESA"
                                                     }
                                                 }
                                             }
@@ -6838,8 +6838,8 @@
                                             {
                                             "Name" = "8:{19BCBD7C-1518-4180-B118-7DF731D40E5C}"
                                             "Condition" = "8:"
-                                            "AlwaysCreate" = "11:FALSE"
-                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "AlwaysCreate" = "11:TRUE"
+                                            "DeleteAtUninstall" = "11:TRUE"
                                             "Transitive" = "11:FALSE"
                                                 "Keys"
                                                 {
@@ -7315,7 +7315,7 @@
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
+            "ProjectOutputGroupRegister" = "3:2"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{19BCBD7C-1518-4180-B118-7DF731D40E5C}"

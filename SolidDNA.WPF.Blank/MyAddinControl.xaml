@@ -119,8 +119,8 @@
                     Background="#baefef">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -140,10 +140,11 @@
                     <TextBox Grid.Row="0" 
                              Grid.Column="1"
                              MaxLength="7"
-                       Style="{StaticResource txID}"
-                       IsReadOnly="True"
-                       Text="{Binding PartId, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                       HorizontalAlignment="Left"></TextBox>
+                             Style="{StaticResource txID}"
+                             IsReadOnly="True"
+                             Text="{Binding PartId, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                             HorizontalAlignment="Stretch" 
+                             Margin="2,6,2,6"></TextBox>
                     
                     <TextBox 
                         Name="txDescriptorEs"
@@ -152,19 +153,19 @@
                              MaxLength="100"
                        Style="{StaticResource txID}"
                        Text="{Binding DescriptorEs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       HorizontalAlignment="Left"></TextBox>
+                       Margin="2,6,2,6" HorizontalAlignment="Stretch"></TextBox>
 
                     <Button Name="btNuevoPartIdComponente"
                         Style="{StaticResource btID}"
                         Grid.Row="3"
                         Grid.Column="0"
-                        Click="btNuevoPartIdComponente_Click">ASIGNAR PARTID @</Button>
+                        Click="btNuevoPartIdComponente_Click">ASIGNAR PARTID</Button>
 
                     <Button Name="btRenombrarArchivo"
                         Style="{StaticResource btID}"
                         Grid.Row="3"
                         Grid.Column="1"
-                        Click="btRenombrarArchivo_Click">RENOMBRAR</Button>
+                        Click="btRenombrarArchivo_Click">RENOMBRAR ARCHIVO</Button>
 
                 </Grid>
 

@@ -43,6 +43,7 @@ namespace HormesaFILEIDS
 
         private void btRenombrarArchivo_Click(object sender, RoutedEventArgs e)
         {
+
             vm.renombrarArchivo();
         }
 
