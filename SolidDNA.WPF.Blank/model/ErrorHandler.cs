@@ -22,7 +22,7 @@ namespace HormesaFILEIDS.model
 
         public void thrower(string msg)
         {
-            MessageBox.Show(msg);
+            MessageBox.Show(msg,"HORMESA FILEIDS");
         }
 
 

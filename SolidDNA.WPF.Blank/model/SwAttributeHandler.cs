@@ -122,7 +122,7 @@ namespace HormesaFILEIDS.model
                     //Asignarle el valor
                     swParamPartid.SetStringValue2(id, (int)swInConfigurationOpts_e.swAllConfiguration, "");
                     //Notificar
-                    err.thrower(getPartIdFromAttribute());
+                    err.thrower(err.handler(EnumMensajes.registroExitoso,"PARTID: "+getPartIdFromAttribute()));
                 }
                 else
                 {

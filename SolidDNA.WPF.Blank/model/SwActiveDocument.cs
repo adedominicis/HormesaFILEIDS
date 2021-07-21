@@ -238,10 +238,12 @@ namespace HormesaFILEIDS.model
         {
             //Obtener la extensión actual del archivo.
             string fileExtension = Path.GetExtension(swModel.GetPathName());
+            //Obtener directorio del archivo.
+            string filePath = Path.GetDirectoryName(swModel.GetPathName());
             //Renombrar documento. Usar el descriptor que esta guardado en el documento
             int errors = 0;
             int warnings = 0;
-            swModel.Extension.SaveAs(string.Format("{0} - {1}{2}", getFormattedPartId("@"), descriptorEs, fileExtension), 0, 0, null, errors, warnings);
+            swModel.Extension.SaveAs(string.Format("{0}\\{1} - {2}{3}",  filePath, getFormattedPartId("@"), descriptorEs, fileExtension), 0, 0, null, errors, warnings);
             //Actualizar la base de datos.
             fixPathIntegrity();
         }
@@ -282,7 +284,6 @@ namespace HormesaFILEIDS.model
             attHandler = new SwAttributeHandler(swApp, swModel);
             //Escribir partid en los atributos.
             attHandler.writePartIdOnAttribute(partId);
-
         }
 
         //Arreglar inconsistencias entre la ruta del modelo y la ruta guardada en la DB. Se usa el atributo como "cookie" o identificador permanente.
