@@ -7,22 +7,37 @@ using System.Windows;
 
 namespace HormesaFILEIDS.model
 {
-    public class DAO
+    internal class DAO
 
     {
+        #region Private fields
         // Data access object.
-        private string conStr;
+
         private SqlConnection connection;
         private string conName;
+        private string conStr;
         private queryDump q = new queryDump();
         public event EventHandler<string> exceptionRaised;
         private ErrorHandler err;
+
+        //Propiedades de conexión
+
+        #endregion
 
         #region Conexión a DB
         // Database index:  1:localtest,  2: azureproductionmirs
 
         private int dbIndex = 1;
 
+        //constructor de producción
+        public DAO(string serverName)
+        {
+            AuthenticationHandler authHdlr = new AuthenticationHandler(serverName);
+            conStr = string.Format("Server={0};Initial Catalog={1};User Id={2};Password={3};", authHdlr.DbServerName, authHdlr.DbName, authHdlr.DbUser, authHdlr.DbPassword);
+            err = new ErrorHandler();
+        }
+
+        //Constructor para testing.
         public DAO(int dbindex = 1)
         {
             dbIndex = dbindex;
@@ -41,7 +56,7 @@ namespace HormesaFILEIDS.model
                         break;
                     case 2:
                         conName = "hormesaproduccion";
-                        conStr = "Server=.;Initial Catalog=HORMESAFILEIDS;Integrated Security=true";
+                        conStr = "Data Source=192.168.2.48.;Initial Catalog=HORMESAFILEIDS;Integrated Security=true";
                         break;
                     default:
                         conName = "localtest";

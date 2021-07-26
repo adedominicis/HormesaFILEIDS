@@ -8,7 +8,7 @@ using SolidWorks.Interop.swconst;
 
 namespace HormesaFILEIDS.model
 {
-    public class SwAttributeHandler
+    internal class SwAttributeHandler
     {
         #region Privados.
 

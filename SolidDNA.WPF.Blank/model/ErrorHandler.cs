@@ -2,7 +2,7 @@
 
 namespace HormesaFILEIDS.model
 {
-    public class ErrorHandler
+    internal class ErrorHandler
     {
 
         //public ErrorHandler()

@@ -1438,12 +1438,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5601D4BB58E3454200B04FDDFACDC299"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -2167,6 +2161,12 @@
         "OwnerKey" = "8:_E9973E5011E15DB542D8923FE1E47D07"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5601D4BB58E3454200B04FDDFACDC299"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -2185,13 +2185,29 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\Installer.msi"
+        "OutputFilename" = "8:Release\\HORMESAFILEIDS_VSSP.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -2201,6 +2217,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -3342,7 +3374,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -6688,19 +6720,19 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FILEIDS"
-        "ProductCode" = "8:{7D3D402D-5B18-45BD-AFB1-2831BAD5C68B}"
-        "PackageCode" = "8:{6CD90B23-EACE-4E29-96ED-96184C2698FB}"
+        "ProductCode" = "8:{FC03317E-FF82-4106-A34E-176EB191D2B0}"
+        "PackageCode" = "8:{287EECEF-5121-4044-BA99-188956887979}"
         "UpgradeCode" = "8:{142A4A32-8A03-4417-A38E-718AA6C9705D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:ADDR"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Installer"
+        "Title" = "8:HormesaFILEIDS"
         "Subject" = "8:"
         "ARPCONTACT" = "8:ADDR"
         "Keywords" = "8:"
@@ -6721,16 +6753,16 @@
             {
                 "Keys"
                 {
-                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_FADD74203E8A4925897E1FF4663FEB4C"
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_1DADC85590074CE5A7BDFC165D787318"
                     {
-                    "Name" = "8:Software"
+                    "Name" = "8:SOFTWARE"
                     "Condition" = "8:"
                     "AlwaysCreate" = "11:FALSE"
                     "DeleteAtUninstall" = "11:FALSE"
                     "Transitive" = "11:FALSE"
                         "Keys"
                         {
-                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_8EECD119D0A34E0B9DA4594F4F8B3540"
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_475A5B36849F47B0A6F9B3E6836C7797"
                             {
                             "Name" = "8:SolidWorks"
                             "Condition" = "8:"
@@ -6739,7 +6771,7 @@
                             "Transitive" = "11:FALSE"
                                 "Keys"
                                 {
-                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_BF2EFE566A4E4696B09B877B6FBF30A9"
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_BE5CAFFC8EEB42268A84B42D54A4DCC8"
                                     {
                                     "Name" = "8:AddIns"
                                     "Condition" = "8:"
@@ -6748,41 +6780,41 @@
                                     "Transitive" = "11:FALSE"
                                         "Keys"
                                         {
-                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_28E3EFDFC7444303BE7E6990BC03B696"
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_6FDEE8E559B74073A96CE63A26D7D7C0"
                                             {
                                             "Name" = "8:{19BCBD7C-1518-4180-B118-7DF731D40E5C}"
                                             "Condition" = "8:"
-                                            "AlwaysCreate" = "11:TRUE"
-                                            "DeleteAtUninstall" = "11:TRUE"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
                                             "Transitive" = "11:FALSE"
                                                 "Keys"
                                                 {
                                                 }
                                                 "Values"
                                                 {
-                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_0CEECA8DCDB94B4B882BD3ECBB039B4D"
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_2B7B04805E794ED8A13694611FA56E92"
+                                                    {
+                                                    "Name" = "8:Description"
+                                                    "Condition" = "8:"
+                                                    "Transitive" = "11:FALSE"
+                                                    "ValueTypes" = "3:1"
+                                                    "Value" = "8:HORMESA FILEIDS"
+                                                    }
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_45D23DA346A143518052F06AA5F19D1D"
                                                     {
                                                     "Name" = "8:Title"
                                                     "Condition" = "8:"
                                                     "Transitive" = "11:FALSE"
                                                     "ValueTypes" = "3:1"
-                                                    "Value" = "8:NUMEROS DE PARTE - HORMESA"
+                                                    "Value" = "8:HORMESA FILIEIDS"
                                                     }
-                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_3D171B93A8744E9D9979B154B78F0A18"
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_9532C3C0DF9A454581C6AF60D3C3E6C6"
                                                     {
                                                     "Name" = "8:(Default)"
                                                     "Condition" = "8:"
                                                     "Transitive" = "11:FALSE"
                                                     "ValueTypes" = "3:3"
                                                     "Value" = "3:1"
-                                                    }
-                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_EC07C901FA214A93B36032F048CBA4A8"
-                                                    {
-                                                    "Name" = "8:Description"
-                                                    "Condition" = "8:"
-                                                    "Transitive" = "11:FALSE"
-                                                    "ValueTypes" = "3:1"
-                                                    "Value" = "8:Generador de numeros de parte. HORMESA"
                                                     }
                                                 }
                                             }
@@ -6807,70 +6839,6 @@
             {
                 "Keys"
                 {
-                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_5372F4CC76BE42B882E12FBB2C61A623"
-                    {
-                    "Name" = "8:Software"
-                    "Condition" = "8:"
-                    "AlwaysCreate" = "11:FALSE"
-                    "DeleteAtUninstall" = "11:FALSE"
-                    "Transitive" = "11:FALSE"
-                        "Keys"
-                        {
-                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_19D971810F01423BAF175448E988F371"
-                            {
-                            "Name" = "8:SolidWorks"
-                            "Condition" = "8:"
-                            "AlwaysCreate" = "11:FALSE"
-                            "DeleteAtUninstall" = "11:FALSE"
-                            "Transitive" = "11:FALSE"
-                                "Keys"
-                                {
-                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_D2646AABA4A14F5E879C61FF69035FEC"
-                                    {
-                                    "Name" = "8:AddInsStartup"
-                                    "Condition" = "8:"
-                                    "AlwaysCreate" = "11:FALSE"
-                                    "DeleteAtUninstall" = "11:FALSE"
-                                    "Transitive" = "11:FALSE"
-                                        "Keys"
-                                        {
-                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_B77DC8243DCA4BB0BB9043A01CD06578"
-                                            {
-                                            "Name" = "8:{19BCBD7C-1518-4180-B118-7DF731D40E5C}"
-                                            "Condition" = "8:"
-                                            "AlwaysCreate" = "11:TRUE"
-                                            "DeleteAtUninstall" = "11:TRUE"
-                                            "Transitive" = "11:FALSE"
-                                                "Keys"
-                                                {
-                                                }
-                                                "Values"
-                                                {
-                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_B048CB7FC3D24B479474819FA0DABFC3"
-                                                    {
-                                                    "Name" = "8:(Default)"
-                                                    "Condition" = "8:"
-                                                    "Transitive" = "11:FALSE"
-                                                    "ValueTypes" = "3:3"
-                                                    "Value" = "3:1"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        "Values"
-                                        {
-                                        }
-                                    }
-                                }
-                                "Values"
-                                {
-                                }
-                            }
-                        }
-                        "Values"
-                        {
-                        }
-                    }
                 }
             }
             "HKCR"
@@ -7298,7 +7266,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5C3D332208CA46D2B6777E60ACDFDF30"
             {
-            "SourcePath" = "8:..\\SolidDNA.WPF.Blank\\obj\\Debug\\HormesaFILEIDS.dll"
+            "SourcePath" = "8:..\\SolidDNA.WPF.Blank\\obj\\Release\\HormesaFILEIDS.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"

@@ -13,7 +13,7 @@ using System.Windows.Controls;
 namespace HormesaFILEIDS.ViewModel
 {
 
-    public class viewModel : INotifyPropertyChanged
+    internal class viewModel : INotifyPropertyChanged
     {
 
         #region SolidWorks API Private Fields

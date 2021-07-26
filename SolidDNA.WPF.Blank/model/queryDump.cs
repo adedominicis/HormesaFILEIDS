@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HormesaFILEIDS.model
 {
-    public class queryDump
+    internal class queryDump
     {
         #region Procedimientos almacenados - Lecturas
         // Listar todas las configuraciones de un archivo, con referencia al PARTID

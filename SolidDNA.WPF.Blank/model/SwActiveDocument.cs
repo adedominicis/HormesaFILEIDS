@@ -13,7 +13,7 @@ using System.IO;
 
 namespace HormesaFILEIDS.model
 {
-    public class SwActiveDocument
+    internal class SwActiveDocument
     {
         #region Constantes
         private const string CustomPropertyPartid = "PARTID";

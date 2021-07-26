@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace HormesaFILEIDS.model
 {
-    public class UIHelper
+    internal class UIHelper
     {
         public enum UserMessages
         {

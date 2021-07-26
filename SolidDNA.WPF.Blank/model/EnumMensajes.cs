@@ -1,6 +1,6 @@
 ﻿namespace HormesaFILEIDS.model
 {
-    public enum EnumMensajes
+    internal enum EnumMensajes
     {
         loginError,
         camposRequeridos,

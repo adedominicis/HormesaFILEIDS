@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -83,13 +84,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="model\AuthenticationHandler.cs" />
     <Compile Include="model\DAO.cs" />
     <Compile Include="model\EnumMensajes.cs" />
     <Compile Include="model\ErrorHandler.cs" />
     <Compile Include="model\queryDump.cs" />
     <Compile Include="model\SwActiveDocument.cs" />
     <Compile Include="model\SwAttributeHandler.cs" />
-    <Compile Include="model\SwEventHandler.cs" />
     <Compile Include="model\UIHelper.cs" />
     <Compile Include="MyAddinControl.xaml.cs">
       <DependentUpon>MyAddinControl.xaml</DependentUpon>
@@ -107,10 +108,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="logo-small.png">
+    <Content Include="Resources\logo-small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="logo.png" />
     <Content Include="References\SolidWorks.Interop.sldworks.dll" />
     <Content Include="References\SolidWorks.Interop.sw3dprinter.dll" />
     <Content Include="References\SolidWorks.Interop.swcommands.dll" />
@@ -124,6 +124,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\SolidWorksAddinInstaller.exe" />
+    <Content Include="scripts\HORMESAFILEIDS-TESTING.sql" />
+    <Content Include="scripts\HORMESAFILEIDS-USERS.sql" />
     <Content Include="scripts\HORMESAFILEIDS.sql" />
   </ItemGroup>
   <ItemGroup>
