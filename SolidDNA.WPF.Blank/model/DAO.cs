@@ -12,12 +12,9 @@ namespace HormesaFILEIDS.model
     {
         #region Private fields
         // Data access object.
-
-        private SqlConnection connection;
         private string conName;
         private string conStr;
         private queryDump q = new queryDump();
-        public event EventHandler<string> exceptionRaised;
         private ErrorHandler err;
 
         //Propiedades de conexión
@@ -25,61 +22,55 @@ namespace HormesaFILEIDS.model
         #endregion
 
         #region Conexión a DB
-        // Database index:  1:localtest,  2: azureproductionmirs
-
-        private int dbIndex = 1;
 
         //constructor de producción
-        public DAO(string serverName)
+        public DAO(AuthenticationHandler authHdlr)
         {
-            AuthenticationHandler authHdlr = new AuthenticationHandler(serverName);
-            conStr = string.Format("Server={0};Initial Catalog={1};User Id={2};Password={3};", authHdlr.DbServerName, authHdlr.DbName, authHdlr.DbUser, authHdlr.DbPassword);
+            conStr = string.Format("Server={0};Initial Catalog={1};User Id={2};Password={3};Connect Timeout=5", authHdlr.DbServerIp, authHdlr.DbName, authHdlr.DbLogin, authHdlr.DbPassword);
             err = new ErrorHandler();
+            conName = authHdlr.DbServerIp;
         }
 
         //Constructor para testing.
-        public DAO(int dbindex = 1)
+        public DAO()
         {
-            dbIndex = dbindex;
+            conStr = "Server=.;Initial Catalog=HORMESAFILEIDS;Integrated Security=true";
             err = new ErrorHandler();
         }
 
-        public void startConnection()
+        //Probar la conexión a la DB
+        public bool IsServerConnected()
+        {
+            using (SqlConnection tempConn = new SqlConnection(conStr))
+            {
+                try
+                {
+                    tempConn.Open();
+                    return true;
+                }
+                catch (SqlException)
+                {
+                    return false;
+                }
+            }
+        }
+
+        //Iniciar conexión.
+        private SqlConnection instanceConnection()
         {
             try
             {
-                switch (dbIndex)
-                {
-                    case 1:
-                        conName = "localtest";
-                        conStr = "Server=.;Initial Catalog=HORMESAFILEIDS;Integrated Security=true";
-                        break;
-                    case 2:
-                        conName = "hormesaproduccion";
-                        conStr = "Data Source=192.168.2.48.;Initial Catalog=HORMESAFILEIDS;Integrated Security=true";
-                        break;
-                    default:
-                        conName = "localtest";
-                        conStr = "Server=.;Initial Catalog=HORMESAFILEIDS;Integrated Security=true";
-                        break;
-                }
-
-                connection = new SqlConnection(conStr);
+                SqlConnection connection = new SqlConnection(conStr);
                 connection.Open();
+                return connection;
             }
             catch (Exception ex)
             {
-                err.sqlThrower(conName, conStr, "DAO.startConnection()", ex.Message);
-                //exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorEnConexionDB) + conName + "\\n" + e.Message);
+                //Esta excepcion ocurre si no es posible establecer una conexión. Es necesario manejarla silenciosamente.
             }
+            return null;
         }
 
-
-        // Get connection name
-        public string getConnectionName()
-        {
-            return conName;
-        }
         #endregion
 
         #region Core queries
@@ -90,32 +81,24 @@ namespace HormesaFILEIDS.model
         // Consulta generica "select" que retorna un solo string.
         public string singleReturnQuery(string query)
         {
-
             try
             {
-                // Check for an available connection
-                startConnection();
-
-                SqlCommand command = new SqlCommand(query, connection);
-                var dbResponse = command.ExecuteScalar();
-                if (dbResponse != null)
+                //Crear nuevo objeto de conexion
+                SqlConnection connection = instanceConnection();
+                if (connection != null)
                 {
-                    return dbResponse.ToString();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    var dbResponse = command.ExecuteScalar();
+                    if (dbResponse != null)
+                    {
+                        return dbResponse.ToString();
+                    }
                 }
-                else
-                {
-                    return string.Empty;
-                }
-
+                return string.Empty;
             }
             catch (Exception ex)
             {
                 err.sqlThrower(conName, query, "DAO.singleReturnQuery", ex.Message);
-                //exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.singleReturnQuery");
-            }
-            finally
-            {
-                connection.Close();
             }
             return string.Empty;
         }
@@ -127,45 +110,47 @@ namespace HormesaFILEIDS.model
             try
             {
                 // Check for an available connection
-                startConnection();
-                //Dataset
-                DataSet ds = new DataSet();
-                //Data adapter
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(query, connection);
-                //Llenar dataset con el resultado de dataAdapter
-                dataAdapter.Fill(ds, "genericSelectQuery");
-                DataTable tbl = ds.Tables["genericSelectQuery"];
-                ds = null;
-                return tbl;
+                SqlConnection connection = instanceConnection();
+                if (connection != null)
+                {
+                    //Dataset
+                    DataSet ds = new DataSet();
+                    //Data adapter
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter(query, connection);
+                    //Llenar dataset con el resultado de dataAdapter
+                    dataAdapter.Fill(ds, "genericSelectQuery");
+                    DataTable tbl = ds.Tables["genericSelectQuery"];
+                    ds = null;
+                    return tbl;
+                }
+                return new DataTable();
             }
             catch (Exception ex)
             {
                 err.sqlThrower(conName, query, "DAO.tableReturnQuery", ex.Message);
-                //exceptionRaised?.Invoke(this, err.handler(EnumMensajes.errorSQL) + " " + conName + " " + ex.Message + "DAO.genericSelectQuery");
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return new DataTable();
         }
 
         // Consulta genérica que retorna una lista vertical.
         public ObservableCollection<string> verticalCollectionReturnQuery(string query)
         {
-            startConnection();
+            //Crear nuevo objeto de conexion
+            SqlConnection connection = instanceConnection();
             ObservableCollection<string> lista = new ObservableCollection<string>();
-            DataTable tabla = tableReturnQuery(query);
-
-            if (tabla != null)
+            if (connection != null)
             {
-                foreach (DataRow row in tabla.Rows)
+                DataTable tabla = tableReturnQuery(query);
+                if (tabla != null)
                 {
-                    lista.Add(row[0].ToString());
+                    foreach (DataRow row in tabla.Rows)
+                    {
+                        lista.Add(row[0].ToString());
+                    }
                 }
             }
-
             return lista;
+
         }
 
         #endregion

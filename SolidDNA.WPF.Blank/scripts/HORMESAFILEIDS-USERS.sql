@@ -15,4 +15,6 @@ GO
 create user FILEIDSUSER for login FILEIDS
 
 
-
+/*
+Data Source=WIN-R4UH0T15AB7\SQLEXPRESS;Initial Catalog=HORMESAFILEIDS;User ID=FILEIDS; Password=HfIdS1000210721
+*/

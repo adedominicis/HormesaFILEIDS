@@ -31,6 +31,8 @@ namespace HormesaFILEIDS.ViewModel
         private ErrorHandler err;
         //Instancia de la vista.
         private MyAddinControl myView;
+        private AuthenticationHandler authHdlr;
+        private string taskPaneMsg;
         #endregion
 
         #region Public properties
@@ -114,7 +116,7 @@ namespace HormesaFILEIDS.ViewModel
             get { return swActiveDoc; }
         }
 
-        //Tabla de configuraciones y partids (GET)
+        //Tabla de configuraciones y partids (GET) //Esto falla con unhandled exception cuando la base de datos está caida
         public DataView DataViewConfigsAndPartids
         {
             get
@@ -127,8 +129,6 @@ namespace HormesaFILEIDS.ViewModel
             }
 
         }
-
-        //DescriptorES
 
         //Descriptor ES
         public string DescriptorEs
@@ -154,6 +154,24 @@ namespace HormesaFILEIDS.ViewModel
             }
         }
 
+        //Auth Handler  
+        public AuthenticationHandler AuthHldr
+        {
+            get { return authHdlr; }
+        }
+
+        //Mensajes
+        public string TaskPaneMsg
+        {
+            set 
+            {
+                taskPaneMsg = value;
+                OnPropertyChanged("TaskPaneMsg");
+            }
+            get { return taskPaneMsg; }
+            
+        }
+
         #endregion
 
         #region Inicializadores
@@ -172,7 +190,8 @@ namespace HormesaFILEIDS.ViewModel
                 myView = v;
                 //Error handler
                 err = new ErrorHandler();
-
+                //Autenticador
+                authHdlr = new AuthenticationHandler();
             }
             catch (Exception e)
             {
@@ -215,11 +234,15 @@ namespace HormesaFILEIDS.ViewModel
             }
 
         }
-        public void updateTextBoxes()
+        private void updateTextBoxes()
         {
             OnPropertyChanged("PartId");
             OnPropertyChanged("ConfigPartId");
             OnPropertyChanged("DescriptorEs");
+
+            //Campos sin databinding: ip del servidor.
+            myView.txServerData.Text = authHdlr.DbServerIp;
+
         }
         private void initComboboxes()
         {
@@ -231,14 +254,26 @@ namespace HormesaFILEIDS.ViewModel
         {
             myView.btNuevoPartIdComponente.IsEnabled = string.IsNullOrEmpty(PartId);
         }
-        private void refreshUI()
+        public void refreshUI()
         {
-            toggleUIMode();
-            updateCombosAndTables();
-            updateTextBoxes();
-            initComboboxes();
-            updateButtons();
-            myView.tabControl.IsEnabled = !swModel.IsOpenedReadOnly();
+            //El primer tab del UI se deshabilita si se cae la conexión. Se habilita de nuevo si vuelve la conexión. Seems clever.
+
+            if (authHdlr.Dao.IsServerConnected())
+            {
+                TaskPaneMsg = string.Empty;
+                //Si la aplicación está abierta en read only, hay que deshabilitar el panel.
+                myView.swStackPanel.IsEnabled = !swModel.IsOpenedReadOnly();
+                toggleUIMode();
+                updateCombosAndTables();
+                updateTextBoxes();
+                initComboboxes();
+                updateButtons();
+            }
+            else
+            {
+                TaskPaneMsg = "Problemas de conexión con la base de datos...";
+                myView.swStackPanel.IsEnabled = false;
+            }
         }
         #endregion
 
@@ -402,9 +437,6 @@ namespace HormesaFILEIDS.ViewModel
 
         }
 
-
-
-
         #endregion
 
         // Delegate Methods suscritos a eventos de SolidWorks
@@ -417,7 +449,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)NewDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel, swApp);
+            swActiveDoc = new SwActiveDocument(swModel, swApp,authHdlr.Dao);
             //Actualizar taskpane
             refreshUI();
             return 0;
@@ -431,7 +463,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)swApp.ActiveDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel, swApp);
+            swActiveDoc = new SwActiveDocument(swModel, swApp,authHdlr.Dao);
             //Revisar integridad de los datos entre el modelo y la BD.
             swActiveDoc.fixPathIntegrity();
             //Actualizar taskpane
@@ -447,7 +479,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)swApp.ActiveDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel, swApp);
+            swActiveDoc = new SwActiveDocument(swModel, swApp,authHdlr.Dao);
             //Actualizar taskpane
             refreshUI();
             return 0;

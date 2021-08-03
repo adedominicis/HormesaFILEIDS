@@ -63,6 +63,16 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="txErrorMessageBox" TargetType="TextBox">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="Padding" Value="5 5 5 5" />
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="BorderBrush" Value="WhiteSmoke" />
+        </Style>
         <Style x:Key="pwSqlPdm" TargetType="PasswordBox">
             <Setter Property="FontSize" Value="9"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -100,7 +110,7 @@
 
     <TabControl Name="tabControl">
         <TabItem Header="SOLIDWORKS">
-            <StackPanel Orientation="Vertical" Background="WhiteSmoke">
+            <StackPanel Orientation="Vertical" Background="WhiteSmoke" Name="swStackPanel">
                 <Grid Height="30" Margin="5 5 5 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -253,7 +263,13 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Label>FILEIDS 1.0.0.0</Label>
+                <Label>FILEIDS 1.0.0.2</Label>
+                <TextBox 
+                    Style="{StaticResource txErrorMessageBox}"
+                    Name="txTaskPaneMsg" 
+                    IsReadOnly="True"
+
+                    Text="{Binding TaskPaneMsg, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
             </StackPanel>
 
 
@@ -263,7 +279,8 @@
             <StackPanel>
                 <Grid 
                     
-                    Height="80"
+                    Height="220
+                    "
                     HorizontalAlignment="Stretch"
                     Margin="5 5 5 5"
                     Background="#baefef">
@@ -274,22 +291,41 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
 
 
                     </Grid.RowDefinitions>
 
                     <TextBlock Style="{StaticResource txSubTitulo}"
-                               Grid.Row="0">Nombre del servidor de base de datos</TextBlock>
-
+                               Grid.Row="0">IP del servidor SQL, puerto</TextBlock>
                     <TextBox 
-                        Name="txServerName"
+                        Name="txServerData"
+                        IsReadOnly="true"
                         Grid.Row="1" 
                              Grid.Column="1"
                              MaxLength="100"
                        Style="{StaticResource txID}"
-                       Text="{Binding DescriptorEs, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
                        Margin="2,6,2,6" HorizontalAlignment="Stretch"></TextBox>
+                    
+                    <PasswordBox
+                        Name="pwbAppPass"
+                        Grid.Row="2" 
+                        MaxLength="100"
+                        Margin="2,6,2,6"
+                        Visibility="Hidden"></PasswordBox>
 
+
+                    <Button Name="btActualizarServerName"
+                        Style="{StaticResource btID}"
+                        Grid.Row="3"
+                        Click="btActualizarServerName_Click">Editar IP del servidor</Button>
+
+                    <Button Name="btProbarConexion"
+                        Style="{StaticResource btID}"
+                        Grid.Row="4"
+                        Click="btProbarConexion_Click">Probar Conexión</Button>
                 </Grid>
             </StackPanel>
 

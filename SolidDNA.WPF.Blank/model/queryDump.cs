@@ -99,12 +99,13 @@ namespace HormesaFILEIDS.model
         {
             return string.Format("exec renameConfigFromFilePartId '{0}','{1}','{2}' ", filePartid, oldConfigName, newConfigName);
         }
-        #endregion
 
         //Actualizar el path de un archivo desde el partid.
-        public string updatePathFromPartId(string filePartId,string newPath)
+        public string updatePathFromPartId(string filePartId, string newPath)
         {
             return string.Format("exec updatePathFromPartId '{0}','{1}' ", filePartId, newPath);
         }
+        #endregion
+
     }
 }

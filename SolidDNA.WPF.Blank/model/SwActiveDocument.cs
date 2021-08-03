@@ -38,14 +38,14 @@ namespace HormesaFILEIDS.model
 
         #region Constructor
 
-        public SwActiveDocument(ModelDoc2 swmodel, SldWorks swapp)
+        public SwActiveDocument(ModelDoc2 swmodel, SldWorks swapp, DAO daObject)
         {
             // Obtener el swModel.
             swModel = swmodel;
             //Obtener la aplicacion solidworks.
             swApp = swapp;
             //Modelo de acceso a datos.
-            dao = new DAO();
+            dao = daObject;
             // Querydump
             q = new queryDump();
             //Si el archivo actual está en la DB, setear el partid interno de la clase para tener identificado el archivo.
@@ -125,7 +125,7 @@ namespace HormesaFILEIDS.model
             return dao.tableReturnQuery(q.listConfigsFromFilePartID(partId));
         }
 
-        //Obtener las configuraciones de este archivo
+        //Obtener las configuraciones de este archivo (Desde el archivo)
         public ObservableCollection<string> getFileConfigList()
         {
             return (arrayToObsCollection((string[])swModel.GetConfigurationNames()));
