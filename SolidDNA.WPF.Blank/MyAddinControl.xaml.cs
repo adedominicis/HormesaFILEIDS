@@ -34,7 +34,7 @@ namespace HormesaFILEIDS
             //Is admin logged?
             adminIsLogged = false;
             //Llenar info del server.
-            vm.refreshUI();
+            vm.refreshUI(true);
         }
 
         #endregion
@@ -99,7 +99,7 @@ namespace HormesaFILEIDS
             {
                 toggleSettingsPane(2);
             }
-            vm.refreshUI();
+            vm.refreshUI(true);
             adminIsLogged = false;
         }
         private void btVerificarPass_Click(object sender, RoutedEventArgs e)
@@ -116,7 +116,7 @@ namespace HormesaFILEIDS
                 adminIsLogged = false;
                 err.thrower(err.handler(EnumMensajes.passIncorrecto));
             }
-            vm.refreshUI();
+            vm.refreshUI(true);
 
         }
 

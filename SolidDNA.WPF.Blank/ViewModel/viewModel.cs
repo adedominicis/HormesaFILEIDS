@@ -240,22 +240,20 @@ namespace HormesaFILEIDS.ViewModel
             OnPropertyChanged("ConfigPartId");
             OnPropertyChanged("DescriptorEs");
         }
-        private void initComboboxes()
+        public void initComboboxes()
         {
             //Seleccionar primero.
             myView.cbConfiguraciones.SelectedIndex = 0;
-
         }
         private void updateButtons()
         {
             myView.btNuevoPartIdComponente.IsEnabled = string.IsNullOrEmpty(PartId);
         }
-        public void refreshUI()
+        public void refreshUI(bool initCombos=false)
         {
 
             //Campos sin databinding: ip del servidor se obtiene de un archivo local.
             myView.txServerData.Text = authHdlr.DbServerIp;
-            
             
             if (swModel != null)
             {
@@ -268,8 +266,11 @@ namespace HormesaFILEIDS.ViewModel
                     toggleUIMode();
                     updateCombosAndTables();
                     updateTextBoxes();
-                    initComboboxes();
                     updateButtons();
+                    if (initCombos)
+                    {
+                        initComboboxes();
+                    }
                 }
                 else
                 {
@@ -460,7 +461,7 @@ namespace HormesaFILEIDS.ViewModel
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel, swApp,authHdlr.Dao);
             //Actualizar taskpane
-            refreshUI();
+            refreshUI(true);
             return 0;
         }
         #endregion
@@ -476,7 +477,7 @@ namespace HormesaFILEIDS.ViewModel
             //Revisar integridad de los datos entre el modelo y la BD.
             swActiveDoc.fixPathIntegrity();
             //Actualizar taskpane
-            refreshUI();
+            refreshUI(true);
             return 0;
         }
         #endregion
@@ -490,7 +491,7 @@ namespace HormesaFILEIDS.ViewModel
             swActiveDoc = null;
             swActiveDoc = new SwActiveDocument(swModel, swApp,authHdlr.Dao);
             //Actualizar taskpane
-            refreshUI();
+            refreshUI(true);
             return 0;
         }
         #endregion
@@ -515,7 +516,7 @@ namespace HormesaFILEIDS.ViewModel
             if ((int)swNotifyEntityType_e.swNotifyConfiguration == EntityType)
             {
                 swActiveDoc.renameConfigOnDatabase(oldName, NewName);
-                refreshUI();
+                refreshUI(true);
             }
             return 0;
         }
@@ -574,7 +575,7 @@ namespace HormesaFILEIDS.ViewModel
             //Escribir Partids a todas las configuraciones.
             swActiveDoc.writePartIdToAllConfigs();
             //Limpiar todo
-            refreshUI();
+            refreshUI(true);
             return 0;
         }
         #endregion
