@@ -14,6 +14,7 @@ namespace HormesaFILEIDS
         //DATACONTEXT.
         private viewModel vm;
         private ErrorHandler err;
+        private bool adminIsLogged = false;
 
 
         #region Constructor
@@ -30,6 +31,10 @@ namespace HormesaFILEIDS
             InitializeComponent();
             //Error handler.
             err = new ErrorHandler();
+            //Is admin logged?
+            adminIsLogged = false;
+            //Llenar info del server.
+            vm.refreshUI();
         }
 
         #endregion
@@ -73,53 +78,104 @@ namespace HormesaFILEIDS
             }
             btProbarConexion.Content = "Probar conexión";
 
-
         }
 
         //Actualizar nombre del servidor
         private void btActualizarServerName_Click(object sender, RoutedEventArgs e)
         {
-            if (pwbAppPass.IsVisible)
+            if (adminIsLogged)
             {
-                //Password visible.
-                if (vm.AuthHldr.validateAdmin(pwbAppPass.Password))
+                if (vm.AuthHldr.updateServerIp(txServerData.Text))
                 {
-                    //Admin admitido
-                    if (vm.AuthHldr.updateServerIp(txServerData.Text))
-                    {
-                        err.thrower(err.handler(EnumMensajes.ipActualizada, txServerData.Text));
-                    }
-                    else
-                    {
-                        err.thrower(err.handler(EnumMensajes.errorEscribiendoArchivoServer, txServerData.Text));
-                    }
-                    vm.refreshUI();
+                    err.thrower(err.handler(EnumMensajes.ipActualizada, txServerData.Text)); 
                 }
                 else
                 {
-                    err.thrower(err.handler(EnumMensajes.passIncorrecto));
-                    
+                    err.thrower(err.handler(EnumMensajes.errorEscribiendoArchivoServer, txServerData.Text));
                 }
-                pwbAppPass.Visibility = Visibility.Hidden;
-                btActualizarServerName.Content = "Editar IP del servidor";
+                toggleSettingsPane(1);
             }
             else
             {
-                //Password no es visible.
-                pwbAppPass.Visibility = Visibility.Visible;
-                btActualizarServerName.Content = "Guardar nueva IP del servidor";
+                toggleSettingsPane(2);
             }
+            vm.refreshUI();
+            adminIsLogged = false;
+        }
+        private void btVerificarPass_Click(object sender, RoutedEventArgs e)
+        {
+            if (vm.AuthHldr.validateAdmin(pwbAppPass.Password))
+            {
+                //Flag de administrador logeado.
+                adminIsLogged = true;
+                toggleSettingsPane(3);
+            }
+            else
+            {
+                toggleSettingsPane(1);
+                adminIsLogged = false;
+                err.thrower(err.handler(EnumMensajes.passIncorrecto));
+            }
+            vm.refreshUI();
 
-            pwbAppPass.Password = string.Empty;
         }
 
         #endregion
 
         #region Metodos de estado e inicializacion
+        /// <summary>
+        /// Este metodo alterna los estados del tab "Ajustes"
+        /// En el estado inicial se ve el control de IP como solo lectura. El botón "btActualizarServerName" está habilitado.
+        /// En el segundo estado, se muestran controles para contraseña y se deshabilita el boton "btActualizarServerName"
+        /// </summary>
+        private void toggleSettingsPane(int estado)
+        {
+            switch (estado)
+            {
+                case 1:
+                    //Ocultar caja de contraseña, borrar password
+                    btLogin.Visibility = Visibility.Hidden;
+                    pwbAppPass.Visibility = Visibility.Hidden;
+                    lblPassword.Visibility = Visibility.Hidden;
+                    pwbAppPass.Password = string.Empty;
+                    // txServerData es read only
+                    txServerData.IsReadOnly = true;
+                    //El boton btActualizarServerName tiene texto por defecto y está habilitado
+                    btActualizarServerName.Content = "Editar IP";
+                    btActualizarServerName.IsEnabled = true;
+                    break;
+                case 2:
+                    //Mostrar caja de contraseñas
+                    pwbAppPass.Password = string.Empty;
+                    btLogin.Visibility = Visibility.Visible;
+                    pwbAppPass.Visibility = Visibility.Visible;
+                    lblPassword.Visibility = Visibility.Visible;
 
+                    //Habilitar boton de contraseña
+                    btLogin.Visibility = Visibility.Visible;
+                    btLogin.IsEnabled = true;
 
+                    //Desahabilitar boton btActualizarServerName
+                    btActualizarServerName.IsEnabled = false;
+
+                    break;
+                case 3:
+                    //Habilitar escritura en txServerData, modificar texto del boton btActualizarServerName
+                    txServerData.IsReadOnly = false;
+                    btActualizarServerName.IsEnabled = true;
+                    btActualizarServerName.Content = "Edite la IP y haga clic aqui para guardar...";
+                    //Ocultar caja de contraseña, borrar password
+                    btLogin.Visibility = Visibility.Hidden;
+                    pwbAppPass.Visibility = Visibility.Hidden;
+                    lblPassword.Visibility = Visibility.Hidden;
+                    pwbAppPass.Password = string.Empty;
+                    break;
+
+                default:
+                    break;
+            }
+        }
         #endregion
-
 
 
     }

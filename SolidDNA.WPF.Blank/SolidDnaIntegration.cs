@@ -1,6 +1,7 @@
 ﻿using AngelSix.SolidDna;
 using Dna;
 using System.IO;
+using System.Runtime.InteropServices;
 using static AngelSix.SolidDna.SolidWorksEnvironment;
 
 namespace HormesaFILEIDS
@@ -66,6 +67,10 @@ namespace HormesaFILEIDS
     /// <summary>
     /// Register as a SolidWorks Add-In
     /// </summary>
+
+    //Se integra el GUID con el que se registra el assembly en el registro.
+
+    [Guid("19BCBD7C-1518-4180-B118-7DF731D40E5C"),ComVisible(true)]
     public class MyAddinIntegration : AddInIntegration
     {
         /// <summary>

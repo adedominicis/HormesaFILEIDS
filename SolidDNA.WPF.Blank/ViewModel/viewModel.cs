@@ -239,10 +239,6 @@ namespace HormesaFILEIDS.ViewModel
             OnPropertyChanged("PartId");
             OnPropertyChanged("ConfigPartId");
             OnPropertyChanged("DescriptorEs");
-
-            //Campos sin databinding: ip del servidor.
-            myView.txServerData.Text = authHdlr.DbServerIp;
-
         }
         private void initComboboxes()
         {
@@ -256,24 +252,37 @@ namespace HormesaFILEIDS.ViewModel
         }
         public void refreshUI()
         {
-            //El primer tab del UI se deshabilita si se cae la conexión. Se habilita de nuevo si vuelve la conexión. Seems clever.
 
-            if (authHdlr.Dao.IsServerConnected())
+            //Campos sin databinding: ip del servidor se obtiene de un archivo local.
+            myView.txServerData.Text = authHdlr.DbServerIp;
+            
+            
+            if (swModel != null)
             {
-                TaskPaneMsg = string.Empty;
-                //Si la aplicación está abierta en read only, hay que deshabilitar el panel.
+                //Si el archivo está abierto en read only, hay que deshabilitar el panel principal
                 myView.swStackPanel.IsEnabled = !swModel.IsOpenedReadOnly();
-                toggleUIMode();
-                updateCombosAndTables();
-                updateTextBoxes();
-                initComboboxes();
-                updateButtons();
+                //Si el servidor está conectado, se puede actualizar.
+                if (authHdlr.Dao.IsServerConnected())
+                {
+                    TaskPaneMsg = string.Empty;
+                    toggleUIMode();
+                    updateCombosAndTables();
+                    updateTextBoxes();
+                    initComboboxes();
+                    updateButtons();
+                }
+                else
+                {
+                    TaskPaneMsg = "Problemas de conexión con la base de datos...";
+                    myView.swStackPanel.IsEnabled = false;
+                }
             }
             else
             {
-                TaskPaneMsg = "Problemas de conexión con la base de datos...";
                 myView.swStackPanel.IsEnabled = false;
             }
+           
+
         }
         #endregion
 

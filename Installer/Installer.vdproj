@@ -87,6 +87,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_060E9C586E1045B88A32370B607C7848"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0B0F1490BA41D5A14B58C8A0E11545D8"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
@@ -1067,6 +1073,12 @@
         {
         "MsmKey" = "8:_BB06F3D3DEA4370B83A1AED847E0D8BA"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C3A544390C39494AA6B417D9E220D772"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2207,7 +2219,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\HORMESAFILEIDS_VSSP.msi"
+        "OutputFilename" = "8:Release\\HORMESAFILEIDS_1.0.2.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -2446,6 +2458,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_060E9C586E1045B88A32370B607C7848"
+            {
+            "SourcePath" = "8:..\\SolidDNA.WPF.Blank\\Resources\\server"
+            "TargetName" = "8:server"
+            "Tag" = "8:"
+            "Folder" = "8:_9470D2EC06664363A1D31C5405D1E874"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0B0F1490BA41D5A14B58C8A0E11545D8"
@@ -5672,6 +5704,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C3A544390C39494AA6B417D9E220D772"
+            {
+            "SourcePath" = "8:..\\SolidDNA.WPF.Blank\\Resources\\logo.png"
+            "TargetName" = "8:logo.png"
+            "Tag" = "8:"
+            "Folder" = "8:_9470D2EC06664363A1D31C5405D1E874"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C961B5D0133F1972851DC36D0B380D4A"
             {
             "AssemblyRegister" = "3:1"
@@ -6680,6 +6732,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_9470D2EC06664363A1D31C5405D1E874"
+                    {
+                    "Name" = "8:Resources"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_BE0B2280614D42ED867D36C8F7C1E4F6"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_A13CE2B1CE894FF2B0FF6DF902946601"
@@ -6720,15 +6783,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FILEIDS"
-        "ProductCode" = "8:{FC03317E-FF82-4106-A34E-176EB191D2B0}"
-        "PackageCode" = "8:{287EECEF-5121-4044-BA99-188956887979}"
+        "ProductCode" = "8:{2426A9F1-AEC2-4AA3-A86F-9A8C09CC8EF3}"
+        "PackageCode" = "8:{6652C48B-90AB-4D8C-8F14-7B3CCA80ECE8}"
         "UpgradeCode" = "8:{142A4A32-8A03-4417-A38E-718AA6C9705D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.1"
+        "ProductVersion" = "8:1.0.2"
         "Manufacturer" = "8:ADDR"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -6784,8 +6847,8 @@
                                             {
                                             "Name" = "8:{19BCBD7C-1518-4180-B118-7DF731D40E5C}"
                                             "Condition" = "8:"
-                                            "AlwaysCreate" = "11:FALSE"
-                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "AlwaysCreate" = "11:TRUE"
+                                            "DeleteAtUninstall" = "11:TRUE"
                                             "Transitive" = "11:FALSE"
                                                 "Keys"
                                                 {

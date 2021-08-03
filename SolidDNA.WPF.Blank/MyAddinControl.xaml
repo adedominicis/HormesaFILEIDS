@@ -279,16 +279,19 @@
             <StackPanel>
                 <Grid 
                     
-                    Height="220
-                    "
+                    Height="240"
                     HorizontalAlignment="Stretch"
                     Margin="5 5 5 5"
                     Background="#baefef">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
+
+
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -299,32 +302,46 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Style="{StaticResource txSubTitulo}"
-                               Grid.Row="0">IP del servidor SQL, puerto</TextBlock>
+                               Grid.Row="0">IP del servidor</TextBlock>
                     <TextBox 
-                        Name="txServerData"
-                        IsReadOnly="true"
-                        Grid.Row="1" 
-                             Grid.Column="1"
-                             MaxLength="100"
+                            Name="txServerData"
+                            IsReadOnly="true"
+                            Grid.Row="0" 
+                            Grid.Column="1"
+                            MaxLength="100"
                        Style="{StaticResource txID}"
                        Margin="2,6,2,6" HorizontalAlignment="Stretch"></TextBox>
-                    
+
+                    <TextBlock Style="{StaticResource txSubTitulo}"
+                               Grid.Row="2"
+                               Visibility="Hidden"
+                               Name="lblPassword">Contraseña:</TextBlock>
+
                     <PasswordBox
                         Name="pwbAppPass"
                         Grid.Row="2" 
+                        Grid.Column="1"
                         MaxLength="100"
                         Margin="2,6,2,6"
                         Visibility="Hidden"></PasswordBox>
 
-
                     <Button Name="btActualizarServerName"
                         Style="{StaticResource btID}"
-                        Grid.Row="3"
+                        Grid.Row="1"
+                            Grid.ColumnSpan="2"
                         Click="btActualizarServerName_Click">Editar IP del servidor</Button>
+                    
+                    <Button Name="btLogin"
+                        Style="{StaticResource btID}"
+                            Grid.ColumnSpan="2"
+                        Grid.Row="3"
+                            Visibility="Hidden"
+                        Click="btVerificarPass_Click">Login</Button>
 
                     <Button Name="btProbarConexion"
                         Style="{StaticResource btID}"
-                        Grid.Row="4"
+                        Grid.Row="5"
+                            Grid.ColumnSpan="2"
                         Click="btProbarConexion_Click">Probar Conexión</Button>
                 </Grid>
             </StackPanel>

@@ -65,6 +65,10 @@ namespace HormesaFILEIDS.model
                     // Clave de administrador incorrecta.
                     errorMsg = "Clave incorrecta: Admin";
                     break;
+                case EnumMensajes.errorEscribiendoArchivoServer:
+                    // Error al escribir el archivo
+                    errorMsg = string.Format("Error al intentar escribir el archivo {0}\nRevise los privilegios de escritura o inicie SolidWorks como Administrador",tail);
+                    break;
                 default:
                     errorMsg = "Error desconocido";
                     break;
