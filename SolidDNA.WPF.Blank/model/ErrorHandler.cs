@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Forms;
 
 namespace HormesaFILEIDS.model
 {
@@ -7,10 +8,14 @@ namespace HormesaFILEIDS.model
 
         public void thrower(string msg)
         {
-            MessageBox.Show(msg,"HORMESA FILEIDS");
+            System.Windows.Forms.MessageBox.Show(msg, "HORMESA FILEIDS");
         }
 
-
+        public bool yesNoThrower(string msg)
+        {
+            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show(msg, "HORMESA FILEIDS", MessageBoxButtons.YesNo);
+            return dialogResult == DialogResult.Yes;
+        }
         public void sqlThrower(string connection, string query, string method, string exmsg)
         {
             thrower(string.Format("Ha ocurrido un error de base de datos\n" +
@@ -23,7 +28,7 @@ namespace HormesaFILEIDS.model
             switch (err)
             {
                 case EnumMensajes.excepcionInterna:
-                    errorMsg =string.Format("Excepcion interna en: {0}",tail);
+                    errorMsg = string.Format("Excepcion interna en: {0}", tail);
                     break;
                 case EnumMensajes.errorSQL:
                     // Error en una consulta sql
@@ -67,8 +72,17 @@ namespace HormesaFILEIDS.model
                     break;
                 case EnumMensajes.errorEscribiendoArchivoServer:
                     // Error al escribir el archivo
-                    errorMsg = string.Format("Error al intentar escribir el archivo {0}\nRevise los privilegios de escritura o inicie SolidWorks como Administrador",tail);
+                    errorMsg = string.Format("Error al intentar escribir el archivo {0}\nRevise los privilegios de escritura o inicie SolidWorks como Administrador", tail);
                     break;
+                case EnumMensajes.yaTienePartid:
+                    // Error al escribir el archivo
+                    errorMsg = string.Format("Este archivo ya ha sido registrado bajo el PARTID: {0}\n¿Desea crear una nueva copia limpia sin numero asignado?", tail);
+                    break;
+                case EnumMensajes.noHayDocumentoActivo:
+                    // Error al escribir el archivo
+                    errorMsg = string.Format("No hay un documento activo.");
+                    break;
+
                 default:
                     errorMsg = "Error desconocido";
                     break;

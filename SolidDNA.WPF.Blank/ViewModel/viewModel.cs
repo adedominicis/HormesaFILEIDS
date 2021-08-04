@@ -247,7 +247,14 @@ namespace HormesaFILEIDS.ViewModel
         }
         private void updateButtons()
         {
-            myView.btNuevoPartIdComponente.IsEnabled = string.IsNullOrEmpty(PartId);
+            if (string.IsNullOrEmpty(PartId))
+            {
+                myView.btNuevoPartIdComponente.Content = "ASIGNAR PARTID";
+            }
+            else
+            {
+                myView.btNuevoPartIdComponente.Content = "DESCONECTAR Y COPIAR";
+            }
         }
         public void refreshUI(bool initCombos=false)
         {
@@ -331,13 +338,21 @@ namespace HormesaFILEIDS.ViewModel
                 }
                 else
                 {
-                    //Algun mensaje aqui. No pudo asignarse partid.
+                    if (err.yesNoThrower(err.handler(EnumMensajes.yaTienePartid, SwActiveDoc.getFormattedPartId("@"))))
+                    {
+                        //Usuario requiere resetear el partid
+                        swActiveDoc.saveDecoupledFile();
+                        //Refrescar interfaz.
+                        refreshUI(true);
+                        return true;
+                    }
+
                     return false;
                 }
             }
             else
             {
-                //Algun mensaje sobre archivo no disponible.
+                err.thrower(err.handler(EnumMensajes.noHayDocumentoActivo));
                 return false;
             }
         }
@@ -347,7 +362,8 @@ namespace HormesaFILEIDS.ViewModel
         {
             if (swActiveDoc != null)
             {
-                swActiveDoc.renameFile(DescriptorEs);
+                //Esta funcionalidad está rota. Crea copias en lugar de renombrar. Estará desactivada hasta que se repare.
+                //swActiveDoc.saveFileCopyAs(DescriptorEs);
             }
         }
 

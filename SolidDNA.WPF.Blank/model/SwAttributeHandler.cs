@@ -77,18 +77,6 @@ namespace HormesaFILEIDS.model
             }
         }
 
-        //Eliminar atributo de partid.
-        private void deletePartId()
-        {
-            SolidWorks.Interop.sldworks.Attribute swAtt = getSwAttFromFeatureTree();
-            if (swAtt!=null)
-            {
-                getSwAttFromFeatureTree().Delete(true);
-            }
-            
-        }
-
-        
         private SolidWorks.Interop.sldworks.Attribute getSwAttFromFeatureTree()
         {
             swModelDocExt.SelectByID2(attInstanceName, "ATTRIBUTE", 0, 0, 0, false, 0, null, 0);
@@ -147,6 +135,17 @@ namespace HormesaFILEIDS.model
                 return swParamPartid.GetStringValue();
             }
             return string.Empty;
+        }
+
+        //Eliminar atributo de partid.
+        public void deletePartIdAttribute()
+        {
+            SolidWorks.Interop.sldworks.Attribute swAtt = getSwAttFromFeatureTree();
+            if (swAtt != null)
+            {
+                getSwAttFromFeatureTree().Delete(true);
+            }
+
         }
         #endregion
 

@@ -42,8 +42,8 @@ namespace HormesaFILEIDS
         #region Metodos accionados desde la interfaz.
         private void btNuevoPartIdComponente_Click(object sender, RoutedEventArgs e)
         {
-            //Deshabilitar botón.
-            btNuevoPartIdComponente.IsEnabled = !vm.asignarPartid();
+            vm.asignarPartid();
+            
         }
 
         private void btRenombrarArchivo_Click(object sender, RoutedEventArgs e)

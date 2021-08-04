@@ -131,17 +131,24 @@ namespace HormesaFILEIDS.model
             return (arrayToObsCollection((string[])swModel.GetConfigurationNames()));
         }
 
-        //Inserta archivo en la DB y le asigna partid.
+        //Inserta archivo en la DB y le asigna partid. Si el archivo ya existe, retorna falso. Si el archivo es nuevo, retorna verdadero.
+
         public bool insertFileOnDb()
         {
             //Insertar el archivo activo en la DB y guardar el partid local
-            partId = dao.singleReturnQuery(q.insertFileFromPath(swModel.GetPathName()));
-            //Escribir el partid como custom property.
-            writePartIdToFile();
-            //Escibir tambien en el atributo.
-            setPartIdAsAttribute();
-            //Reconstruir y guardar.
-            return !string.IsNullOrEmpty(partId);
+            string tempPartId= dao.singleReturnQuery(q.insertFileFromPath(swModel.GetPathName()));
+             
+            if (!string.IsNullOrEmpty(tempPartId))
+            {
+                //Asignar el nuevo partid.
+                partId = tempPartId;
+                //Escribir el partid como custom property.
+                writePartIdToFile();
+                //Escibir tambien en el atributo.
+                setPartIdAsAttribute();
+                return true;
+            }
+            return false;
         }
 
         //Leer propiedad por nombre
@@ -245,7 +252,7 @@ namespace HormesaFILEIDS.model
             int warnings = 0;
             swModel.Extension.SaveAs(string.Format("{0}\\{1} - {2}{3}",  filePath, getFormattedPartId("@"), descriptorEs, fileExtension), 0, 0, null, errors, warnings);
             //Actualizar la base de datos.
-            fixPathIntegrity();
+            //fixPathIntegrity();
         }
 
         //Renombrar en la BD una configuración que fue renombrada en la interfaz.
@@ -319,6 +326,29 @@ namespace HormesaFILEIDS.model
             }
 
             return true;
+        }
+
+        //Guardar una copia del archivo actual, desacoplandolo de la base de datos al eliminar su atributo PARTID y cambiar su nombre.
+        //Es posible registrarlo de nuevo despues.
+        internal void saveDecoupledFile()
+        {
+            //Obtener la extensión actual del archivo.
+            string fileExtension = Path.GetExtension(swModel.GetPathName());
+            //Obtener directorio del archivo.
+            string filePath = Path.GetDirectoryName(swModel.GetPathName());
+            //Renombrar documento. Usar el descriptor que esta guardado en el documento
+            int errors = 0;
+            int warnings = 0;
+            //Guardar el archivo como copia con nuevo nombre
+            swModel.Extension.SaveAs(string.Format("{0}\\{1} {2}{3}", filePath,"Copia de" , getFormattedPartId("@"), fileExtension), 0, 0, null, errors, warnings);
+            //Borrar partid.
+            partId = string.Empty;
+            //Eliminar el atributo.
+            if (attHandler == null)
+            {
+                attHandler = new SwAttributeHandler(swApp, swModel);
+            }
+            attHandler.deletePartIdAttribute();
         }
         #endregion
 

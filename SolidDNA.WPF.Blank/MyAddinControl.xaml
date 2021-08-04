@@ -175,6 +175,7 @@
                         Style="{StaticResource btID}"
                         Grid.Row="3"
                         Grid.Column="1"
+                        IsEnabled="false"
                         Click="btRenombrarArchivo_Click">RENOMBRAR ARCHIVO</Button>
 
                 </Grid>
@@ -263,7 +264,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Label>FILEIDS 1.0.0.2</Label>
+                <Label Content="FILEIDS 1.0.0.3"/>
                 <TextBox 
                     Style="{StaticResource txErrorMessageBox}"
                     Name="txTaskPaneMsg" 

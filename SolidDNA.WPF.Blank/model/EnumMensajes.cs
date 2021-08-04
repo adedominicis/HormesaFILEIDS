@@ -15,6 +15,8 @@
         errorEscribiendoArchivoServer,
         conexionFallida,
         conexionEstablecida,
-        passIncorrecto
+        passIncorrecto,
+        yaTienePartid,
+        noHayDocumentoActivo
     }
 }
