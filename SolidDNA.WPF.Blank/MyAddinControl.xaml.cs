@@ -15,7 +15,7 @@ namespace HormesaFILEIDS
         private viewModel vm;
         private ErrorHandler err;
         private bool adminIsLogged = false;
-
+        private DAO dao = new DAO();
 
         #region Constructor
 
@@ -30,20 +30,34 @@ namespace HormesaFILEIDS
             //Inicializar taskpane en solidworks
             InitializeComponent();
             //Error handler.
-            err = new ErrorHandler();
+            err = vm.err;
             //Is admin logged?
             adminIsLogged = false;
             //Llenar info del server.
             vm.refreshUI(true);
+
         }
 
         #endregion
 
         #region Metodos accionados desde la interfaz.
+
+        /// <summary>
+        /// Muestra ventana de log de errores.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btLogErrores_Click(object sender, RoutedEventArgs e)
+        {
+            ErrorLogWindow logWindow = new ErrorLogWindow();
+            logWindow.ShowDialog();
+            logWindow.refreshData();
+
+        }
         private void btNuevoPartIdComponente_Click(object sender, RoutedEventArgs e)
         {
             vm.asignarPartid();
-            
+
         }
 
         private void btRenombrarArchivo_Click(object sender, RoutedEventArgs e)
@@ -68,7 +82,7 @@ namespace HormesaFILEIDS
         private void btProbarConexion_Click(object sender, RoutedEventArgs e)
         {
             btProbarConexion.Content = "Conectando con el servidor...";
-            if (vm.AuthHldr.Dao.IsServerConnected())
+            if (dao.IsServerConnected())
             {
                 err.thrower(err.handler(EnumMensajes.conexionEstablecida, txServerData.Text));
             }
@@ -87,7 +101,7 @@ namespace HormesaFILEIDS
             {
                 if (vm.AuthHldr.updateServerIp(txServerData.Text))
                 {
-                    err.thrower(err.handler(EnumMensajes.ipActualizada, txServerData.Text)); 
+                    err.thrower(err.handler(EnumMensajes.ipActualizada, txServerData.Text));
                 }
                 else
                 {
@@ -175,6 +189,8 @@ namespace HormesaFILEIDS
                     break;
             }
         }
+
+
         #endregion
 
 

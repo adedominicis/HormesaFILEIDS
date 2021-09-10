@@ -86,9 +86,20 @@ namespace HormesaFILEIDS.model
                 return descriptorEs;
             }
         }
+
         #endregion
 
+
         #region Métodos
+        //Mostrar atributo.
+        public void toggleAttVisibility(bool isVisible)
+        {
+            if (attHandler != null)
+            {
+                attHandler.toggleAttVisibility(isVisible);
+            }
+
+        }
         //Determinar si es un plano.
         public bool isDrawing()
         {
@@ -131,13 +142,14 @@ namespace HormesaFILEIDS.model
             return (arrayToObsCollection((string[])swModel.GetConfigurationNames()));
         }
 
-        //Inserta archivo en la DB y le asigna partid. Si el archivo ya existe, retorna falso. Si el archivo es nuevo, retorna verdadero.
+        //Inserta archivo en la DB
 
         public bool insertFileOnDb()
         {
             //Insertar el archivo activo en la DB y guardar el partid local
-            string tempPartId= dao.singleReturnQuery(q.insertFileFromPath(swModel.GetPathName()));
-             
+
+            string tempPartId = dao.singleReturnQuery(q.insertFileFromPath(swModel.GetPathName()));
+            //Si el registro fue exitoso...
             if (!string.IsNullOrEmpty(tempPartId))
             {
                 //Asignar el nuevo partid.
@@ -146,6 +158,8 @@ namespace HormesaFILEIDS.model
                 writePartIdToFile();
                 //Escibir tambien en el atributo.
                 setPartIdAsAttribute();
+                //Notificar
+                err.thrower(err.handler(EnumMensajes.registroExitoso, "PARTID: " + attHandler.getPartIdFromAttribute()));
                 return true;
             }
             return false;
@@ -240,21 +254,6 @@ namespace HormesaFILEIDS.model
             custPropMgr.Add3("PARTID", (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId(configName), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd); ;
         }
 
-        //Renombrar el archivo.
-        internal void renameFile(string descriptorEs)
-        {
-            //Obtener la extensión actual del archivo.
-            string fileExtension = Path.GetExtension(swModel.GetPathName());
-            //Obtener directorio del archivo.
-            string filePath = Path.GetDirectoryName(swModel.GetPathName());
-            //Renombrar documento. Usar el descriptor que esta guardado en el documento
-            int errors = 0;
-            int warnings = 0;
-            swModel.Extension.SaveAs(string.Format("{0}\\{1} - {2}{3}",  filePath, getFormattedPartId("@"), descriptorEs, fileExtension), 0, 0, null, errors, warnings);
-            //Actualizar la base de datos.
-            //fixPathIntegrity();
-        }
-
         //Renombrar en la BD una configuración que fue renombrada en la interfaz.
         internal void renameConfigOnDatabase(string oldName, string newName)
         {
@@ -292,40 +291,72 @@ namespace HormesaFILEIDS.model
             //Escribir partid en los atributos.
             attHandler.writePartIdOnAttribute(partId);
         }
-
+        /// <summary>
+        /// Este método corrige inconsistencias con la data cuando un atributo se corrompe
+        /// 
+        /// </summary>
+        /// <returns></returns>
         //Arreglar inconsistencias entre la ruta del modelo y la ruta guardada en la DB. Se usa el atributo como "cookie" o identificador permanente.
         public bool fixPathIntegrity()
         {
-            //Verificar si hay un partid en el atributo.
+
             if (attHandler == null)
             {
                 attHandler = new SwAttributeHandler(swApp, swModel);
             }
-            partId = attHandler.getPartIdFromAttribute();
 
-            //Faltaria verificar si el atributo es un partid.
+            //Obtener PATH del archivo y el que existe en la BD para el partid interno
+            string modelPath = swModel.GetPathName();
+            //El partid almacenado en el atributo
+            string attPartId = attHandler.getPartIdFromAttribute();
+            //El partid almacenado en la DB.
+            string dbPartid = dao.singleReturnQuery(q.getFilePartIdFromPath(modelPath));
 
-            if (!string.IsNullOrEmpty(partId))
+            //Caso 1- El atributo tiene PARTID,la BD no. Posible archivo movido.
+            if (string.IsNullOrEmpty(dbPartid) && !string.IsNullOrEmpty(attPartId))
             {
-                //Obtener el path de la BD y el del archivo
-                string modelPath = swModel.GetPathName();
-                string dbPath = dao.singleReturnQuery(q.getFilePathFromPartId(partId));
-
-                //
-                if (string.IsNullOrEmpty(dbPath) && string.Equals(dbPath, modelPath, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    //El path existe en la BD y coincide con el del modelo.
-                    return true;
-                }
-                else
-                {
-                    //El path no existe en la bd o no coincide con el del modelo. Se actualiza.
-                    dao.singleReturnQuery(q.updatePathFromPartId(partId, modelPath));
-                    return true;
-                }
+                //Reasignar partid  
+                partId = attPartId;
+                //Actualizar base de datos.
+                dao.singleReturnQuery(q.updatePathFromPartId(partId, modelPath));
+                return true;
+            }
+            //Caso 2- El atributo tiene partid, la BD tambien y son iguales y no vacios.
+            if (string.Equals(dbPartid, attPartId) && !string.IsNullOrEmpty(attPartId) && !string.IsNullOrEmpty(dbPartid))
+            {
+                //Todo correcto.
+                partId = attPartId;
+                return true;
             }
 
-            return true;
+            //Caso 3 - El atributo no tiene partid, la BD si tiene
+            if (string.IsNullOrEmpty(attPartId) && !string.IsNullOrEmpty(dbPartid))
+            {
+                //Reasignar partid  
+                partId = dbPartid;
+                //Reescribir atributo
+                attHandler.writePartIdOnAttribute(partId);
+                return true;
+            }
+
+            //Caso 4 - El atributo no tiene partid, la BD tampoco
+
+            if (string.IsNullOrEmpty(attPartId) && string.IsNullOrEmpty(dbPartid))
+            {
+                err.yesNoThrower(err.handler(EnumMensajes.atributoVacio));
+                return false;
+            }
+
+            //Caso 5 - Ambos partids son diferentes y no vacios.
+            //if (!string.Equals(dbPartid, attPartId) && !string.IsNullOrEmpty(attPartId) && !string.IsNullOrEmpty(dbPartid))
+            //{
+            //    //Todo correcto.
+            //    partId = attPartId;
+            //    //Actualizar base de datos.
+            //    dao.singleReturnQuery(q.updatePathFromPartId(partId, modelPath));
+            //    return true;
+            //}
+            return false;
         }
 
         //Guardar una copia del archivo actual, desacoplandolo de la base de datos al eliminar su atributo PARTID y cambiar su nombre.
@@ -340,7 +371,7 @@ namespace HormesaFILEIDS.model
             int errors = 0;
             int warnings = 0;
             //Guardar el archivo como copia con nuevo nombre
-            swModel.Extension.SaveAs(string.Format("{0}\\{1} {2}{3}", filePath,"Copia de" , getFormattedPartId("@"), fileExtension), 0, 0, null, errors, warnings);
+            swModel.Extension.SaveAs(string.Format("{0}\\{1} {2}{3}", filePath, "Copia de", getFormattedPartId("@"), fileExtension), 0, 0, null, errors, warnings);
             //Borrar partid.
             partId = string.Empty;
             //Eliminar el atributo.

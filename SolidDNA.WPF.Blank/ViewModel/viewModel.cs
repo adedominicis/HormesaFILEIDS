@@ -28,15 +28,16 @@ namespace HormesaFILEIDS.ViewModel
         private string selectedConfig;
         private UIHelper uiHelper;
         private SwActiveDocument swActiveDoc;
-        private ErrorHandler err;
         //Instancia de la vista.
         private MyAddinControl myView;
+        private DAO dao = new DAO();
         private AuthenticationHandler authHdlr;
         private string taskPaneMsg;
         #endregion
 
         #region Public properties
 
+        public ErrorHandler err;
         //Sw Model (GET and SET)
         private ModelDoc2 SwModel
         {
@@ -163,13 +164,22 @@ namespace HormesaFILEIDS.ViewModel
         //Mensajes
         public string TaskPaneMsg
         {
-            set 
+            set
             {
                 taskPaneMsg = value;
                 OnPropertyChanged("TaskPaneMsg");
             }
             get { return taskPaneMsg; }
-            
+
+        }
+        //Mostrar atributo
+        public bool CbShowAttribute
+        {
+            set
+            {
+                swActiveDoc.toggleAttVisibility(value);
+                OnPropertyChanged("CbShowAttribute");
+            }
         }
 
         #endregion
@@ -188,15 +198,24 @@ namespace HormesaFILEIDS.ViewModel
                 uiHelper = new UIHelper();
                 //Instancia de la vista
                 myView = v;
-                //Error handler
-                err = new ErrorHandler();
                 //Autenticador
                 authHdlr = new AuthenticationHandler();
+                //Error handler
+                err = new ErrorHandler();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                err.thrower(err.handler(EnumMensajes.excepcionInterna, "Error en inicializacion de viewModel: " + e.Message));
+                err.thrower(err.handler(EnumMensajes.excepcionInterna, "Error en inicializacion de viewModel: " + ex.Message,ex));
             }
+        }
+        /// <summary>
+        /// Obtener del DAO una tabla con los errores logeados.
+        /// </summary>
+        /// <param name="errorLogWindow"></param>
+        public void loadErrorLogWindowData(ErrorLogWindow errorLogWindow)
+        {
+            DataTable dtLogErrores = dao.getErrorLogs();
+            errorLogWindow.dgridLogErrores.ItemsSource = dtLogErrores.DefaultView;
         }
 
         //Refrescar componentes dinámicos de la UI 
@@ -256,24 +275,34 @@ namespace HormesaFILEIDS.ViewModel
                 myView.btNuevoPartIdComponente.Content = "DESCONECTAR Y COPIAR";
             }
         }
-        public void refreshUI(bool initCombos=false)
+        private void initCheckboxes()
+        {
+            if (swActiveDoc!=null)
+            {
+                //El atributo se muestra en funcion de que el checkbox esté activo.
+                swActiveDoc.toggleAttVisibility((bool)myView.cbMostrarAtributo.IsChecked);
+            }
+  
+        }
+        public void refreshUI(bool initCombos = false)
         {
 
             //Campos sin databinding: ip del servidor se obtiene de un archivo local.
             myView.txServerData.Text = authHdlr.DbServerIp;
-            
+
             if (swModel != null)
             {
                 //Si el archivo está abierto en read only, hay que deshabilitar el panel principal
                 myView.swStackPanel.IsEnabled = !swModel.IsOpenedReadOnly();
                 //Si el servidor está conectado, se puede actualizar.
-                if (authHdlr.Dao.IsServerConnected())
+                if (dao.IsServerConnected())
                 {
                     TaskPaneMsg = string.Empty;
                     toggleUIMode();
                     updateCombosAndTables();
                     updateTextBoxes();
                     updateButtons();
+                    initCheckboxes();
                     if (initCombos)
                     {
                         initComboboxes();
@@ -289,7 +318,7 @@ namespace HormesaFILEIDS.ViewModel
             {
                 myView.swStackPanel.IsEnabled = false;
             }
-           
+
 
         }
         #endregion
@@ -329,29 +358,35 @@ namespace HormesaFILEIDS.ViewModel
         //Asignar nuevo partid a la pieza, ensamblaje o plano.
         public bool asignarPartid()
         {
+            //Existe un archivo abierto y activo.
             if (swModel != null && swActiveDoc != null)
             {
+                //El archivo no ha sido guardado por primera vez.
+                if (string.IsNullOrEmpty(swModel.GetPathName()))
+                {
+                    err.thrower(err.handler(EnumMensajes.archivoNoGuardado));
+                    return false;
+                }
+                //De lo contrario, se intenta insertar el archivo en la DB
                 if (swActiveDoc.insertFileOnDb())
                 {
                     OnPropertyChanged("PartId");
                     return true;
                 }
-                else
+                //Si no se puede insertar el archivo por estar repetido, se ofrece desconexión.
+                else if (err.yesNoThrower(err.handler(EnumMensajes.yaTienePartid, SwActiveDoc.getFormattedPartId("@"))))
                 {
-                    if (err.yesNoThrower(err.handler(EnumMensajes.yaTienePartid, SwActiveDoc.getFormattedPartId("@"))))
-                    {
-                        //Usuario requiere resetear el partid
-                        swActiveDoc.saveDecoupledFile();
-                        //Refrescar interfaz.
-                        refreshUI(true);
-                        return true;
-                    }
-
-                    return false;
+                    //Usuario quiere resetear el partid
+                    swActiveDoc.saveDecoupledFile();
+                    //Refrescar interfaz.
+                    refreshUI(true);
+                    return true;
                 }
+                return false;
             }
             else
             {
+                //No hay un documento activo.
                 err.thrower(err.handler(EnumMensajes.noHayDocumentoActivo));
                 return false;
             }
@@ -458,7 +493,7 @@ namespace HormesaFILEIDS.ViewModel
             }
             catch (Exception ex)
             {
-                err.thrower(err.handler(EnumMensajes.excepcionInterna, ex.Message + "en viewModel::SwModelEventSubscriber"));
+                err.thrower(err.handler(EnumMensajes.excepcionInterna, ex.Message + "en viewModel::SwModelEventSubscriber",ex));
             }
 
         }
@@ -475,7 +510,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)NewDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel, swApp,authHdlr.Dao);
+            swActiveDoc = new SwActiveDocument(swModel, swApp, dao);
             //Actualizar taskpane
             refreshUI(true);
             return 0;
@@ -489,7 +524,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)swApp.ActiveDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel, swApp,authHdlr.Dao);
+            swActiveDoc = new SwActiveDocument(swModel, swApp, dao);
             //Revisar integridad de los datos entre el modelo y la BD.
             swActiveDoc.fixPathIntegrity();
             //Actualizar taskpane
@@ -505,7 +540,7 @@ namespace HormesaFILEIDS.ViewModel
             SwModel = (ModelDoc2)swApp.ActiveDoc;
             //Instanciar documento activo.
             swActiveDoc = null;
-            swActiveDoc = new SwActiveDocument(swModel, swApp,authHdlr.Dao);
+            swActiveDoc = new SwActiveDocument(swModel, swApp, dao);
             //Actualizar taskpane
             refreshUI(true);
             return 0;

@@ -21,19 +21,19 @@ namespace HormesaFILEIDS.model
         private SelectionMgr swSelMgr;
         private Feature swFeat;
         private ErrorHandler err;
-        
+
         #endregion
 
         #region Constantes
         private const string swAttDefUniqueName = "pubHORMESAFILEIDSAttDef";
         private const string addParameterName = "HORMESAPARTID";
         private const string attInstanceName = "HORMESAPARTID";
-        private const int attInstanceInvisible = 1;
+        private int attInstanceInvisible = 1;
         #endregion
 
         #region Constructor.
 
-        public SwAttributeHandler(SldWorks swapp, ModelDoc2 swmodel)
+        public SwAttributeHandler(SldWorks swapp, ModelDoc2 swmodel, bool showAttribute = false)
         {
             //Conectar app de solidworks y modelo activo.
             swApp = swapp;
@@ -41,10 +41,13 @@ namespace HormesaFILEIDS.model
             swModelDocExt = (ModelDocExtension)swModel.Extension;
             swSelMgr = (SelectionMgr)swModel.SelectionManager;
             err = new ErrorHandler();
+            attInstanceInvisible = Convert.ToInt32(!showAttribute);
+
         }
+
         #endregion
 
-        #region Métodos
+        #region Métodos privados
 
         //Inicializar definición de atributo.
         private void initAttDef()
@@ -81,15 +84,56 @@ namespace HormesaFILEIDS.model
         {
             swModelDocExt.SelectByID2(attInstanceName, "ATTRIBUTE", 0, 0, 0, false, 0, null, 0);
             swFeat = (Feature)swSelMgr.GetSelectedObject6(1, -1);
-            if (swFeat!=null)
+            if (swFeat != null)
             {
                 return (SolidWorks.Interop.sldworks.Attribute)swFeat.GetSpecificFeature2();
             }
             return null;
         }
+
+        //Formatear PARTID. Esto deberia ser un helper function ya que se pide en dos lugares.
+        private string formatPartId(string partId)
+        {
+            if (!string.IsNullOrEmpty(partId))
+            {
+                return partId.ToString().PadLeft(6, '0').Insert(3, "-");
+            }
+            return string.Empty;  
+        }
+
         #endregion
 
         #region Métodos públicos
+        //Cambiar visibilidad del atributo en el property manager.
+        public void toggleAttVisibility(bool isVisible)
+        {
+            try
+            {
+                swModelDocExt.SelectByID2(attInstanceName, "ATTRIBUTE", 0, 0, 0, false, 0, null, 0);
+                swFeat = (Feature)swSelMgr.GetSelectedObject6(1, -1);
+                if (swFeat != null)
+                {
+                    swFeat.SetUIState((int)swUIStates_e.swIsHiddenInFeatureMgr, !isVisible);
+                    swModel.EditRebuild3();
+                    if (isVisible)
+                    {
+                        //Mostrar el partid almacenado internamente.
+                        err.thrower("El PARTID almacenado es: " + formatPartId(getPartIdFromAttribute()));
+                    }
+
+                }
+                else if(isVisible)
+                {
+                    err.thrower("El atributo no existe!");
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                err.handler(EnumMensajes.excepcionInterna, "Error al mostrar u ocultar atributo", ex);
+            }
+
+        }
         //Asignar valor al parámetro.
         public void writePartIdOnAttribute(string id)
         {
@@ -109,8 +153,6 @@ namespace HormesaFILEIDS.model
                     swParamPartid = (Parameter)swAtt.GetParameter(attInstanceName);
                     //Asignarle el valor
                     swParamPartid.SetStringValue2(id, (int)swInConfigurationOpts_e.swAllConfiguration, "");
-                    //Notificar
-                    err.thrower(err.handler(EnumMensajes.registroExitoso,"PARTID: "+getPartIdFromAttribute()));
                 }
                 else
                 {
@@ -120,7 +162,7 @@ namespace HormesaFILEIDS.model
             }
             catch (Exception ex)
             {
-                err.thrower(err.handler(EnumMensajes.errorMiscelaneo, ex.Message));
+                err.thrower(err.handler(EnumMensajes.errorMiscelaneo, ex.Message,ex));
             }
 
         }
@@ -129,7 +171,7 @@ namespace HormesaFILEIDS.model
         public string getPartIdFromAttribute()
         {
             swAtt = getSwAttFromFeatureTree();
-            if (swAtt!=null)
+            if (swAtt != null)
             {
                 swParamPartid = (Parameter)swAtt.GetParameter(attInstanceName);
                 return swParamPartid.GetStringValue();

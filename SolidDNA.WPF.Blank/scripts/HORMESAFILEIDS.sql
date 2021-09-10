@@ -7,7 +7,17 @@ DROP TABLE extensiones;
 
 DROP TABLE partids;
 
+drop table errorlogs
+
 /*Script de destruccion*/
+create table errorLogs(
+id int identity(1,1) primary key,
+exceptionType varchar(50),
+exceptionMessage varchar(500),
+stackTrace varchar(2000),
+exceptionDateTime varchar(50)
+);
+
 CREATE TABLE EXTENSIONES
 (
     id INT identity(1, 1) PRIMARY KEY,
@@ -630,3 +640,32 @@ VALUES
         'slddrw'
 	);
 
+    --Ampliacion V.1.0.5
+    -- Insertar nuevo error.
+
+create table errorLogs(
+id int identity(1,1) primary key,
+exceptionType varchar(50),
+exceptionMessage varchar(500),
+stackTrace varchar(2000),
+exceptionDateTime varchar(50)
+);
+
+go
+create or alter procedure logErrores(
+@exceptionType varchar(50),
+@exceptionMessage varchar(500),
+@stackTrace varchar(2000)
+)
+as begin
+insert into errorLogs values(@exceptionType,@exceptionMessage,@stackTrace,GETDATE())
+end
+go
+
+create view mostrarLogErrores as
+select id as "ID",
+exceptionType as "TIPO",
+exceptionMessage as "MENSAJE",
+stackTrace as "STACKTRACE",
+exceptionDateTime as "FECHA"
+from errorLogs order by id desc

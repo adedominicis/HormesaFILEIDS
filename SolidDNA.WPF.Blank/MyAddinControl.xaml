@@ -264,7 +264,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Label Content="FILEIDS 1.0.0.3"/>
+                <Label Content="FILEIDS 1.0.0.4"/>
                 <TextBox 
                     Style="{StaticResource txErrorMessageBox}"
                     Name="txTaskPaneMsg" 
@@ -344,6 +344,39 @@
                         Grid.Row="5"
                             Grid.ColumnSpan="2"
                         Click="btProbarConexion_Click">Probar Conexión</Button>
+                </Grid>
+                <Grid 
+                    
+                    Height="60"
+                    HorizontalAlignment="Stretch"
+                    Margin="5 5 5 5"
+                    Background="#baefef">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Style="{StaticResource txSubTitulo}"
+                               Grid.Row="0">Mostrar atributo</TextBlock>
+                    <TextBlock Style="{StaticResource txSubTitulo}"
+                               Grid.Row="1">Log de errores</TextBlock>
+                    <Button Name="btLogErrores"
+                        Style="{StaticResource btID}"
+                        Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                        Click="btLogErrores_Click">Log de errores</Button>
+                    <CheckBox Grid.Column="1"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Name="cbMostrarAtributo"
+                              IsChecked="{Binding Path=CbShowAttribute}"></CheckBox>
                 </Grid>
             </StackPanel>
 

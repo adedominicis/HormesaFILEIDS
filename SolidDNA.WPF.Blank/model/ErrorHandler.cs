@@ -1,27 +1,47 @@
-﻿using System.Windows;
+﻿using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace HormesaFILEIDS.model
 {
     internal class ErrorHandler
     {
+        DAO dao = new DAO();
+        //Acceso a datos para logging
+        queryDump q = new queryDump();
 
+
+        /// <summary>
+        /// Muestra mensajes de error en pantalla.
+        /// </summary>
+        /// <param name="msg"></param>
         public void thrower(string msg)
         {
-            System.Windows.Forms.MessageBox.Show(msg, "HORMESA FILEIDS");
+            string version = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
+            System.Windows.Forms.MessageBox.Show(msg, "HORMESA FILEIDS v"+version);
         }
 
+        /// <summary>
+        /// Dialogo si o no
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns>true si el usuario marca si, false de lo contrario</returns>
         public bool yesNoThrower(string msg)
         {
             DialogResult dialogResult = System.Windows.Forms.MessageBox.Show(msg, "HORMESA FILEIDS", MessageBoxButtons.YesNo);
             return dialogResult == DialogResult.Yes;
         }
-        public void sqlThrower(string connection, string query, string method, string exmsg)
-        {
-            thrower(string.Format("Ha ocurrido un error de base de datos\n" +
-                "Conexión: {0}\nConsulta: {1}\nCaller: {2}\nExcepción: {3}", connection, query, method, exmsg));
-        }
-        public string handler(EnumMensajes err, string tail = "")
+
+        /// <summary>
+        /// Genera un mensaje de error desde el enum ErrorHandler
+        /// </summary>
+        /// <param name="err">EnumMensajes codigos de mensaje de error</param>
+        /// <param name="tail">Mensaje adicional o suplementario</param>
+        /// <param name="ex">Excepción de origen</param>
+        /// <returns></returns>
+        public string handler(EnumMensajes err, string tail = "", Exception ex = null)
         {
             string errorMsg;
 
@@ -81,6 +101,14 @@ namespace HormesaFILEIDS.model
                 case EnumMensajes.noHayDocumentoActivo:
                     // Error al escribir el archivo
                     errorMsg = string.Format("No hay un documento activo.");
+                    break;
+                case EnumMensajes.archivoNoGuardado:
+                    // El archivo no se ha guardado
+                    errorMsg = string.Format("No puede asignar un PARTID a un archivo no guardado.\nGuarde el archivo e intente de nuevo");
+                    break;
+                case EnumMensajes.atributoVacio:
+                    // El archivo no se ha guardado
+                    errorMsg = string.Format("El PARTID almacenado se encuentra vacío.\n¿Desea actualizar desde la base de datos?");
                     break;
 
                 default:

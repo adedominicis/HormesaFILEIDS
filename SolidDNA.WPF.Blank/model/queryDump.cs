@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace HormesaFILEIDS.model
         {
             return string.Format("exec listConfigsFromFilePartID '{0}'", partid);
         }
+
+
         // Retornar el partid de una configuracion suministrando el partid del archivo y el nombre de la configuración.
         public string getConfigPartIdFromConfigName(string filePartid, string configName)
         {
@@ -25,6 +28,8 @@ namespace HormesaFILEIDS.model
         {
             return string.Format("exec checkIfConfigExistsFromFilePartId '{0}','{1}' ", filePartid, configName);
         }
+
+
         //Obtener el partid desde el path
         public string getFilePartIdFromPath(string fullpath)
         {
@@ -104,6 +109,29 @@ namespace HormesaFILEIDS.model
         public string updatePathFromPartId(string filePartId, string newPath)
         {
             return string.Format("exec updatePathFromPartId '{0}','{1}' ", filePartId, newPath);
+        }
+        #endregion
+
+        #region Procedimientos Almacenados - Logging.
+        //Logear excepciones comunes
+        public string logErrores(Exception ex)
+        {
+            return string.Format("exec logErrores '{0}','{1}','{2}' ", ex.GetType().ToString(), ex.Message,ex.StackTrace);
+        }
+        //Logear excepciones SQL
+        internal string logSQLErrores(SqlException ex)
+        {
+            
+            return string.Format("exec logErrores '{0}','{1}','{2}' ", ex.GetType().ToString(), ex.Message, ex.StackTrace);
+        }
+        /// <summary>
+        /// Consulta la vista mostrarLogErrores en orden inverso, ultimos primero.
+        /// mostrarLogErrores
+        /// </summary>
+        /// <returns></returns>
+        internal string mostrarLogErrores()
+        {
+            return "select * from mostrarLogErrores order by id desc";
         }
         #endregion
 

@@ -17,6 +17,8 @@
         conexionEstablecida,
         passIncorrecto,
         yaTienePartid,
-        noHayDocumentoActivo
+        noHayDocumentoActivo,
+        archivoNoGuardado,
+        atributoVacio
     }
 }

@@ -26,16 +26,7 @@ namespace HormesaFILEIDS.model
         #endregion
 
         #region Campos privados
-        private DAO dao;
         private ErrorHandler err;
-        #endregion
-
-        #region Constructor
-        public AuthenticationHandler()
-        {
-            dao = new DAO(this);
-            err = new ErrorHandler();
-        }
         #endregion
 
         #region Properties
@@ -59,13 +50,7 @@ namespace HormesaFILEIDS.model
         {
             get { return readServerFile(); }
         }
-
-        //Objeto de acceso a datos.
-        public DAO Dao
-        {
-            get { return dao; }
-        }
-        #endregion
+#endregion
 
         #region Métodos
         //Setear la IP del servidor en el archivo local.
@@ -81,12 +66,11 @@ namespace HormesaFILEIDS.model
                 {
                     writer.Write(newIp);
                 }
-                //Actualizar el DAO
+                //Actualizar IP
                 string updatedIp = readServerFile();
                 //Verificar si de verdad se pudo escribir el archivo.
                 if (string.Equals(updatedIp, newIp))
                 {
-                    dao = new DAO(this);
                     return true;
                 }
                 else
@@ -97,7 +81,7 @@ namespace HormesaFILEIDS.model
             }
             catch (Exception ex)
             {
-                err.handler(EnumMensajes.errorEscribiendoArchivoServer, ex.Message);
+                err.handler(EnumMensajes.errorEscribiendoArchivoServer, ex.Message,ex);
             }
             return false;
         }
@@ -120,9 +104,9 @@ namespace HormesaFILEIDS.model
                 serverFilePath = string.Format("{0}\\Resources\\{1}", installFolder, serverFileName);
                 return File.ReadAllText(serverFilePath);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                err.handler(EnumMensajes.errorLeyendoArchivoServer, serverFilePath);
+                err.handler(EnumMensajes.errorLeyendoArchivoServer, serverFilePath,ex);
             }
             return string.Empty;
         }

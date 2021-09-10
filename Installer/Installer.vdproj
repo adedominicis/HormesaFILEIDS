@@ -45,18 +45,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_04BA36DF500CD6E8294A24F075328338"
-        "OwnerKey" = "8:_D0E4C55DBE78E3F04D463820540773A6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_04BA36DF500CD6E8294A24F075328338"
-        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_054439CE4C42E38D3721C29F930405C9"
         "OwnerKey" = "8:_6E73309F6E164BED343FD4D0BF95DCA8"
         "MsmSig" = "8:_UNDEFINED"
@@ -165,18 +153,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_14C322742A42D99D4FC21F59E9470705"
-        "OwnerKey" = "8:_D0E4C55DBE78E3F04D463820540773A6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_14C322742A42D99D4FC21F59E9470705"
-        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_1646D2086F08DBEDC05A6BB950BD7A47"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
@@ -227,12 +203,6 @@
         {
         "MsmKey" = "8:_1CC4D8B86B2A957E17FE24F9F5582177"
         "OwnerKey" = "8:_DD72C61D8D61DDE631E455351EB42F17"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1F69DEB76A680D67B59442C2EF512059"
-        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -412,18 +382,6 @@
         "Entry"
         {
         "MsmKey" = "8:_3603A1EF792CA247F48E5298549158D3"
-        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_37088DE30420E507722AE42FAE20FD66"
-        "OwnerKey" = "8:_D0E4C55DBE78E3F04D463820540773A6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_37088DE30420E507722AE42FAE20FD66"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -843,12 +801,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_87C2E265A08B99126D1B96D3FC1C8AC3"
-        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_8AD4546101DDCFE48DE7E6F66E660E5D"
         "OwnerKey" = "8:_54A66C5458B8CB9CB848BC8078A27D23"
         "MsmSig" = "8:_UNDEFINED"
@@ -987,6 +939,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A87547D31FE1D3D1CDC8285561FE3D2D"
+        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A9234EF8D4792230C15E394FF5E4A9BE"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
@@ -1079,18 +1037,6 @@
         {
         "MsmKey" = "8:_C3A544390C39494AA6B417D9E220D772"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C961B5D0133F1972851DC36D0B380D4A"
-        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C9D471632FE35B03791107176CA98740"
-        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1287,6 +1233,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D82A70D47855180076FDDE537913B128"
+        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D91CDA9D45BE8A6A656A82E9E5F87A44"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
@@ -1323,6 +1275,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_DF01DCA6A53E21F4ADBADC6A8E29B4EE"
+        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_DF2E815624664E79702E8D79C9334352"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
@@ -1347,18 +1305,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E1A0081BB9E0884AD899F7A66BE86A0B"
-        "OwnerKey" = "8:_D0E4C55DBE78E3F04D463820540773A6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E1A0081BB9E0884AD899F7A66BE86A0B"
-        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_E24D8A45DCF09BF463A67A47B4ED0F73"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
@@ -1366,6 +1312,12 @@
         "Entry"
         {
         "MsmKey" = "8:_E2FBB5939108378072A136C0A870137E"
+        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E742A6E68A2506AB2C20AFF283C39FE2"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1437,12 +1389,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_FC00D5DF94AB8A6140EDB8D44609C5C6"
-        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_FDD9E4E1592C29FE71FF6D50C0B3AFC2"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
@@ -1456,61 +1402,31 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1F69DEB76A680D67B59442C2EF512059"
+        "OwnerKey" = "8:_A87547D31FE1D3D1CDC8285561FE3D2D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FC00D5DF94AB8A6140EDB8D44609C5C6"
+        "OwnerKey" = "8:_DF01DCA6A53E21F4ADBADC6A8E29B4EE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C9D471632FE35B03791107176CA98740"
+        "OwnerKey" = "8:_D82A70D47855180076FDDE537913B128"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C961B5D0133F1972851DC36D0B380D4A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_87C2E265A08B99126D1B96D3FC1C8AC3"
+        "OwnerKey" = "8:_E742A6E68A2506AB2C20AFF283C39FE2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D0E4C55DBE78E3F04D463820540773A6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_04BA36DF500CD6E8294A24F075328338"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_14C322742A42D99D4FC21F59E9470705"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_37088DE30420E507722AE42FAE20FD66"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E1A0081BB9E0884AD899F7A66BE86A0B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2398,37 +2314,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_04BA36DF500CD6E8294A24F075328338"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.swpublished, Version=27.1.0.72, Culture=neutral, PublicKeyToken=89a97bdc5284e6d8, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_04BA36DF500CD6E8294A24F075328338"
-                    {
-                    "Name" = "8:SolidWorks.Interop.swpublished.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SolidWorks.Interop.swpublished.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_054439CE4C42E38D3721C29F930405C9"
             {
             "AssemblyRegister" = "3:1"
@@ -2666,37 +2551,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_14C322742A42D99D4FC21F59E9470705"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.swmotionstudy, Version=27.1.0.72, Culture=neutral, PublicKeyToken=034d56e16c5ef330, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_14C322742A42D99D4FC21F59E9470705"
-                    {
-                    "Name" = "8:SolidWorks.Interop.swmotionstudy.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SolidWorks.Interop.swmotionstudy.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1646D2086F08DBEDC05A6BB950BD7A47"
             {
             "AssemblyRegister" = "3:1"
@@ -2835,37 +2689,6 @@
                     }
                 }
             "SourcePath" = "8:Microsoft.Extensions.Options.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1F69DEB76A680D67B59442C2EF512059"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.SWRoutingLib, Version=27.1.0.72, Culture=neutral, PublicKeyToken=1439c4c051169f7b, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_1F69DEB76A680D67B59442C2EF512059"
-                    {
-                    "Name" = "8:SolidWorks.Interop.SWRoutingLib.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SolidWorks.Interop.SWRoutingLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
@@ -3176,37 +2999,6 @@
                     }
                 }
             "SourcePath" = "8:System.Security.Cryptography.Primitives.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_37088DE30420E507722AE42FAE20FD66"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.swconst, Version=27.1.0.72, Culture=neutral, PublicKeyToken=19f43e188e4269d8, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_37088DE30420E507722AE42FAE20FD66"
-                    {
-                    "Name" = "8:SolidWorks.Interop.swconst.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SolidWorks.Interop.swconst.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
@@ -4712,37 +4504,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_87C2E265A08B99126D1B96D3FC1C8AC3"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.sw3dprinter, Version=27.1.0.72, Culture=neutral, PublicKeyToken=752e44715eff0bce, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_87C2E265A08B99126D1B96D3FC1C8AC3"
-                    {
-                    "Name" = "8:SolidWorks.Interop.sw3dprinter.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SolidWorks.Interop.sw3dprinter.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8AD4546101DDCFE48DE7E6F66E660E5D"
             {
             "AssemblyRegister" = "3:1"
@@ -5332,6 +5093,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A87547D31FE1D3D1CDC8285561FE3D2D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.swpublished, Version=28.4.0.50, Culture=neutral, PublicKeyToken=89a97bdc5284e6d8, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A87547D31FE1D3D1CDC8285561FE3D2D"
+                    {
+                    "Name" = "8:SolidWorks.Interop.swpublished.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:SolidWorks.Interop.swpublished.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A9234EF8D4792230C15E394FF5E4A9BE"
             {
             "AssemblyRegister" = "3:1"
@@ -5724,68 +5516,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C961B5D0133F1972851DC36D0B380D4A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.swcommands, Version=27.1.0.72, Culture=neutral, PublicKeyToken=0fda92720ba7919f, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_C961B5D0133F1972851DC36D0B380D4A"
-                    {
-                    "Name" = "8:SolidWorks.Interop.swcommands.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SolidWorks.Interop.swcommands.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C9D471632FE35B03791107176CA98740"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.swdimxpert, Version=27.1.0.72, Culture=neutral, PublicKeyToken=5e9cf5ab4ebec26a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_C9D471632FE35B03791107176CA98740"
-                    {
-                    "Name" = "8:SolidWorks.Interop.swdimxpert.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SolidWorks.Interop.swdimxpert.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CA4B1C1C045DA154838EA15988FB6ED3"
             {
             "AssemblyRegister" = "3:1"
@@ -6065,6 +5795,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D82A70D47855180076FDDE537913B128"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.swcommands, Version=28.4.0.50, Culture=neutral, PublicKeyToken=0fda92720ba7919f, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_D82A70D47855180076FDDE537913B128"
+                    {
+                    "Name" = "8:SolidWorks.Interop.swcommands.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:SolidWorks.Interop.swcommands.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D91CDA9D45BE8A6A656A82E9E5F87A44"
             {
             "AssemblyRegister" = "3:1"
@@ -6220,6 +5981,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DF01DCA6A53E21F4ADBADC6A8E29B4EE"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.swconst, Version=28.4.0.50, Culture=neutral, PublicKeyToken=19f43e188e4269d8, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_DF01DCA6A53E21F4ADBADC6A8E29B4EE"
+                    {
+                    "Name" = "8:SolidWorks.Interop.swconst.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:SolidWorks.Interop.swconst.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DF2E815624664E79702E8D79C9334352"
             {
             "AssemblyRegister" = "3:1"
@@ -6344,37 +6136,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E1A0081BB9E0884AD899F7A66BE86A0B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.sldworks, Version=27.1.0.72, Culture=neutral, PublicKeyToken=7c4797c3e4eeac03, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_E1A0081BB9E0884AD899F7A66BE86A0B"
-                    {
-                    "Name" = "8:SolidWorks.Interop.sldworks.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SolidWorks.Interop.sldworks.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E24D8A45DCF09BF463A67A47B4ED0F73"
             {
             "AssemblyRegister" = "3:1"
@@ -6420,6 +6181,37 @@
                     }
                 }
             "SourcePath" = "8:System.ServiceModel.Duplex.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E742A6E68A2506AB2C20AFF283C39FE2"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.sldworks, Version=28.4.0.50, Culture=neutral, PublicKeyToken=7c4797c3e4eeac03, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E742A6E68A2506AB2C20AFF283C39FE2"
+                    {
+                    "Name" = "8:SolidWorks.Interop.sldworks.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:SolidWorks.Interop.sldworks.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
@@ -6654,37 +6446,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FC00D5DF94AB8A6140EDB8D44609C5C6"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SolidWorks.Interop.swdocumentmgr, Version=27.1.0.72, Culture=neutral, PublicKeyToken=e52dfa2d3a1e978a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_FC00D5DF94AB8A6140EDB8D44609C5C6"
-                    {
-                    "Name" = "8:SolidWorks.Interop.swdocumentmgr.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:SolidWorks.Interop.swdocumentmgr.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FDD9E4E1592C29FE71FF6D50C0B3AFC2"
             {
             "AssemblyRegister" = "3:1"
@@ -6783,15 +6544,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FILEIDS"
-        "ProductCode" = "8:{3028B6A2-E83F-4B9D-8ED6-50A0D5C83C95}"
-        "PackageCode" = "8:{66CC8F21-0AD7-4B1E-9D2C-C354285F9E6F}"
+        "ProductCode" = "8:{1797FEFB-8CDC-430B-B853-16B45BDBFA0F}"
+        "PackageCode" = "8:{5736F522-C3F8-4CC9-A3A7-383411063112}"
         "UpgradeCode" = "8:{142A4A32-8A03-4417-A38E-718AA6C9705D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.3"
+        "ProductVersion" = "8:1.0.4"
         "Manufacturer" = "8:ADDR"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -7329,7 +7090,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5C3D332208CA46D2B6777E60ACDFDF30"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\SolidDNA.WPF.Blank\\obj\\Debug\\HormesaFILEIDS.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"

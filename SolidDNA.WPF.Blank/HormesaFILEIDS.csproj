@@ -32,41 +32,50 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SolidWorks.Interop.sldworks">
+    <Reference Include="SolidWorks.Interop.sldworks, Version=28.1.0.74, Culture=neutral, PublicKeyToken=7c4797c3e4eeac03, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
-      <HintPath>References\SolidWorks.Interop.sldworks.dll</HintPath>
+      <HintPath>..\..\..\TOOLS\solidworks-api\References\2019\SolidWorks.Interop.sldworks.dll</HintPath>
     </Reference>
-    <Reference Include="SolidWorks.Interop.sw3dprinter">
-      <HintPath>References\SolidWorks.Interop.sw3dprinter.dll</HintPath>
+    <Reference Include="SolidWorks.Interop.sw3dprinter, Version=28.1.0.74, Culture=neutral, PublicKeyToken=752e44715eff0bce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\TOOLS\solidworks-api\References\2019\SolidWorks.Interop.sw3dprinter.dll</HintPath>
     </Reference>
-    <Reference Include="SolidWorks.Interop.swcommands">
-      <HintPath>References\SolidWorks.Interop.swcommands.dll</HintPath>
+    <Reference Include="SolidWorks.Interop.swcommands, Version=28.1.0.74, Culture=neutral, PublicKeyToken=0fda92720ba7919f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\TOOLS\solidworks-api\References\2019\SolidWorks.Interop.swcommands.dll</HintPath>
     </Reference>
-    <Reference Include="SolidWorks.Interop.swconst">
+    <Reference Include="SolidWorks.Interop.swconst, Version=28.1.0.74, Culture=neutral, PublicKeyToken=19f43e188e4269d8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
-      <HintPath>References\SolidWorks.Interop.swconst.dll</HintPath>
+      <HintPath>..\..\..\TOOLS\solidworks-api\References\2019\SolidWorks.Interop.swconst.dll</HintPath>
     </Reference>
-    <Reference Include="SolidWorks.Interop.swdimxpert">
-      <HintPath>References\SolidWorks.Interop.swdimxpert.dll</HintPath>
+    <Reference Include="SolidWorks.Interop.swdimxpert, Version=28.1.0.74, Culture=neutral, PublicKeyToken=5e9cf5ab4ebec26a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\TOOLS\solidworks-api\References\2019\SolidWorks.Interop.swdimxpert.dll</HintPath>
     </Reference>
-    <Reference Include="SolidWorks.Interop.swdocumentmgr">
-      <HintPath>References\SolidWorks.Interop.swdocumentmgr.dll</HintPath>
+    <Reference Include="SolidWorks.Interop.swdocumentmgr, Version=28.1.0.74, Culture=neutral, PublicKeyToken=e52dfa2d3a1e978a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\TOOLS\solidworks-api\References\2019\SolidWorks.Interop.swdocumentmgr.dll</HintPath>
     </Reference>
-    <Reference Include="SolidWorks.Interop.swmotionstudy">
-      <HintPath>References\SolidWorks.Interop.swmotionstudy.dll</HintPath>
+    <Reference Include="SolidWorks.Interop.swmotionstudy, Version=28.1.0.74, Culture=neutral, PublicKeyToken=034d56e16c5ef330, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\TOOLS\solidworks-api\References\2019\SolidWorks.Interop.swmotionstudy.dll</HintPath>
     </Reference>
-    <Reference Include="SolidWorks.Interop.swpublished">
+    <Reference Include="SolidWorks.Interop.swpublished, Version=28.1.0.74, Culture=neutral, PublicKeyToken=89a97bdc5284e6d8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
-      <HintPath>References\SolidWorks.Interop.swpublished.dll</HintPath>
+      <HintPath>..\..\..\TOOLS\solidworks-api\References\2019\SolidWorks.Interop.swpublished.dll</HintPath>
     </Reference>
-    <Reference Include="SolidWorks.Interop.SWRoutingLib">
-      <HintPath>References\SolidWorks.Interop.SWRoutingLib.dll</HintPath>
+    <Reference Include="SolidWorks.Interop.SWRoutingLib, Version=28.1.0.74, Culture=neutral, PublicKeyToken=1439c4c051169f7b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\TOOLS\solidworks-api\References\2019\SolidWorks.Interop.SWRoutingLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -100,6 +109,9 @@
     </Compile>
     <Compile Include="SolidDnaIntegration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ErrorLogWindow.xaml.cs">
+      <DependentUpon>ErrorLogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\viewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -111,15 +123,6 @@
     <Content Include="Resources\logo-small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="References\SolidWorks.Interop.sldworks.dll" />
-    <Content Include="References\SolidWorks.Interop.sw3dprinter.dll" />
-    <Content Include="References\SolidWorks.Interop.swcommands.dll" />
-    <Content Include="References\SolidWorks.Interop.swconst.dll" />
-    <Content Include="References\SolidWorks.Interop.swdimxpert.dll" />
-    <Content Include="References\SolidWorks.Interop.swdocumentmgr.dll" />
-    <Content Include="References\SolidWorks.Interop.swmotionstudy.dll" />
-    <Content Include="References\SolidWorks.Interop.swpublished.dll" />
-    <Content Include="References\SolidWorks.Interop.SWRoutingLib.dll" />
     <Content Include="Resources\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -141,6 +144,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ErrorLogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -15,7 +15,6 @@ namespace HormesaFILEIDS.model
         private string conName;
         private string conStr;
         private queryDump q = new queryDump();
-        private ErrorHandler err;
 
         //Propiedades de conexión
 
@@ -24,18 +23,11 @@ namespace HormesaFILEIDS.model
         #region Conexión a DB
 
         //constructor de producción
-        public DAO(AuthenticationHandler authHdlr)
-        {
-            conStr = string.Format("Server={0};Initial Catalog={1};User Id={2};Password={3};Connect Timeout=5", authHdlr.DbServerIp, authHdlr.DbName, authHdlr.DbLogin, authHdlr.DbPassword);
-            err = new ErrorHandler();
-            conName = authHdlr.DbServerIp;
-        }
-
-        //Constructor para testing.
         public DAO()
         {
-            conStr = "Server=.;Initial Catalog=HORMESAFILEIDS;Integrated Security=true";
-            err = new ErrorHandler();
+            AuthenticationHandler authHdlr = new AuthenticationHandler();
+            conStr = string.Format("Server={0};Initial Catalog={1};User Id={2};Password={3};Connect Timeout=5", authHdlr.DbServerIp, authHdlr.DbName, authHdlr.DbLogin, authHdlr.DbPassword);
+            conName = authHdlr.DbServerIp;
         }
 
         //Probar la conexión a la DB
@@ -48,8 +40,9 @@ namespace HormesaFILEIDS.model
                     tempConn.Open();
                     return true;
                 }
-                catch (SqlException)
+                catch (SqlException ex)
                 {
+
                     return false;
                 }
             }
@@ -96,9 +89,9 @@ namespace HormesaFILEIDS.model
                 }
                 return string.Empty;
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                err.sqlThrower(conName, query, "DAO.singleReturnQuery", ex.Message);
+                sqlErrorLogger(conName, query, "DAO.singleReturnQuery", ex);
             }
             return string.Empty;
         }
@@ -125,9 +118,9 @@ namespace HormesaFILEIDS.model
                 }
                 return new DataTable();
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                err.sqlThrower(conName, query, "DAO.tableReturnQuery", ex.Message);
+                sqlErrorLogger(conName, query, "DAO.tableReturnQuery", ex);
             }
             return new DataTable();
         }
@@ -155,6 +148,66 @@ namespace HormesaFILEIDS.model
 
         #endregion
 
+        #region Error Loggers y getters
+        /// <summary>
+        /// Muestra mensajes de error SQl en pantalla.
+        /// </summary>
+        /// <param name="connection">Nombre de la conexión</param>
+        /// <param name="query">Consulta</param>
+        /// <param name="method">Método</param>
+        /// <param name="exmsg">Mensaje de la excepcion</param>
+        /// <param name="ex">Excepcion</param>
+        public void sqlErrorLogger(string connection, string query, string method, SqlException ex)
+        {
+            MessageBox.Show(string.Format("Ha ocurrido un error de base de datos\n" +
+                "Conexión: {0}\nConsulta: {1}\nCaller: {2}\nExcepción: {3}", connection, query, method, ex.Message));
+            try
+            {
+                singleReturnQuery(q.logSQLErrores(ex));
+            }
+            catch (Exception)
+            {
+                //Este metodo deberia fallar silenciosamente porque significa que la conexión falló
+            }
 
+        }
+        /// <summary>
+        /// Logea en la base de datos cualquier excepcion.
+        /// Esto puede mejorarse con algun delegado.
+        /// </summary>
+        /// <param name="ex"></param>
+        public void exceptionLogger(Exception ex)
+        {
+            try
+            {
+                singleReturnQuery(q.logErrores(ex));
+            }
+            catch (Exception)
+            {
+                //Este metodo deberia fallar silenciosamente porque significa que la conexión falló
+            }
+
+        }
+
+        /// <summary>
+        /// Obtener listado de errores.
+        /// </summary>
+        /// <returns></returns>
+        public DataTable getErrorLogs()
+        {
+            try
+            {
+                DataTable dt = tableReturnQuery(q.mostrarLogErrores());
+                return dt;
+            }
+            catch (Exception)
+            {
+                //Este metodo deberia fallar silenciosamente porque significa que la conexión falló
+            }
+
+            return new DataTable();
+        }
+
+        #endregion
     }
 }
