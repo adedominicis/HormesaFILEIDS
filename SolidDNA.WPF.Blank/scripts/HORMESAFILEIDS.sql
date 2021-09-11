@@ -662,6 +662,7 @@ insert into errorLogs values(@exceptionType,@exceptionMessage,@stackTrace,GETDAT
 end
 go
 
+go
 create view mostrarLogErrores as
 select id as "ID",
 exceptionType as "TIPO",
@@ -669,3 +670,22 @@ exceptionMessage as "MENSAJE",
 stackTrace as "STACKTRACE",
 exceptionDateTime as "FECHA"
 from errorLogs order by id desc
+go
+
+go
+
+-- Tabla para serilog
+CREATE TABLE [dbo].[LogEvents](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Message] [nvarchar](max) NULL,
+	[MessageTemplate] [nvarchar](max) NULL,
+	[Level] [nvarchar](max) NULL,
+	[TimeStamp] [datetime] NULL,
+	[Exception] [nvarchar](max) NULL,
+	[Properties] [nvarchar](max) NULL,
+ CONSTRAINT [PK_LogEvents] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO

@@ -175,6 +175,7 @@ namespace HormesaFILEIDS.ViewModel
         //Mostrar atributo
         public bool CbShowAttribute
         {
+
             set
             {
                 swActiveDoc.toggleAttVisibility(value);
@@ -215,7 +216,9 @@ namespace HormesaFILEIDS.ViewModel
         public void loadErrorLogWindowData(ErrorLogWindow errorLogWindow)
         {
             DataTable dtLogErrores = dao.getErrorLogs();
+            DataTable dtLogEventos = dao.getEventLogs();
             errorLogWindow.dgridLogErrores.ItemsSource = dtLogErrores.DefaultView;
+            errorLogWindow.dgridLogEventos.ItemsSource = dtLogEventos.DefaultView;
         }
 
         //Refrescar componentes dinámicos de la UI 

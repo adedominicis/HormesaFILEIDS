@@ -1,5 +1,6 @@
 ﻿using HormesaFILEIDS.model;
 using HormesaFILEIDS.ViewModel;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -22,7 +23,6 @@ namespace HormesaFILEIDS
 
         public MyAddinControl()
         {
-
             //El datacontext es el viewmodel, el viewmodel se comunica con todas las otras clases 
             vm = new viewModel();
             this.DataContext = vm;
@@ -35,7 +35,6 @@ namespace HormesaFILEIDS
             adminIsLogged = false;
             //Llenar info del server.
             vm.refreshUI(true);
-
         }
 
         #endregion
@@ -49,20 +48,23 @@ namespace HormesaFILEIDS
         /// <param name="e"></param>
         private void btLogErrores_Click(object sender, RoutedEventArgs e)
         {
-            ErrorLogWindow logWindow = new ErrorLogWindow();
-            logWindow.ShowDialog();
-            logWindow.refreshData();
-
+            try
+            {
+                ErrorLogWindow logWindow = new ErrorLogWindow();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
+            }
         }
         private void btNuevoPartIdComponente_Click(object sender, RoutedEventArgs e)
         {
             vm.asignarPartid();
-
         }
 
         private void btRenombrarArchivo_Click(object sender, RoutedEventArgs e)
         {
-
             vm.renombrarArchivo();
         }
 
@@ -91,7 +93,6 @@ namespace HormesaFILEIDS
                 err.thrower(err.handler(EnumMensajes.conexionFallida, txServerData.Text));
             }
             btProbarConexion.Content = "Probar conexión";
-
         }
 
         //Actualizar nombre del servidor
@@ -131,7 +132,6 @@ namespace HormesaFILEIDS
                 err.thrower(err.handler(EnumMensajes.passIncorrecto));
             }
             vm.refreshUI(true);
-
         }
 
         #endregion

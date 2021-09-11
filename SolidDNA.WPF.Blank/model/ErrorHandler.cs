@@ -3,24 +3,23 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Forms;
+using Serilog;
 
 namespace HormesaFILEIDS.model
 {
     internal class ErrorHandler
     {
-        DAO dao = new DAO();
-        //Acceso a datos para logging
-        queryDump q = new queryDump();
-
-
         /// <summary>
         /// Muestra mensajes de error en pantalla.
         /// </summary>
         /// <param name="msg"></param>
         public void thrower(string msg)
         {
-            string version = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
             System.Windows.Forms.MessageBox.Show(msg, "HORMESA FILEIDS v"+version);
+            Log.Information(msg);
         }
 
         /// <summary>
@@ -30,8 +29,10 @@ namespace HormesaFILEIDS.model
         /// <returns>true si el usuario marca si, false de lo contrario</returns>
         public bool yesNoThrower(string msg)
         {
+            Log.Information(msg);
             DialogResult dialogResult = System.Windows.Forms.MessageBox.Show(msg, "HORMESA FILEIDS", MessageBoxButtons.YesNo);
             return dialogResult == DialogResult.Yes;
+
         }
 
         /// <summary>
@@ -115,6 +116,7 @@ namespace HormesaFILEIDS.model
                     errorMsg = "Error desconocido";
                     break;
             }
+            
             return errorMsg;
 
         }

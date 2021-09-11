@@ -31,10 +31,12 @@ namespace HormesaFILEIDS
             //El datacontext es el viewmodel, el viewmodel se comunica con todas las otras clases 
             vm = new viewModel();
             this.DataContext = vm;
-            vm.loadErrorLogWindowData(this);
             //Inicializar taskpane en solidworks
             InitializeComponent();
-            
+            //
+            vm.loadErrorLogWindowData(this);
+            //
+            this.ShowDialog();
         }
         #endregion
 

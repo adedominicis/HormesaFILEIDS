@@ -89,7 +89,6 @@ namespace HormesaFILEIDS.model
 
         #endregion
 
-
         #region Métodos
         //Mostrar atributo.
         public void toggleAttVisibility(bool isVisible)

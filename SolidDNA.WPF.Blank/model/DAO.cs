@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows;
+
 
 namespace HormesaFILEIDS.model
 {
@@ -27,6 +29,7 @@ namespace HormesaFILEIDS.model
         {
             AuthenticationHandler authHdlr = new AuthenticationHandler();
             conStr = string.Format("Server={0};Initial Catalog={1};User Id={2};Password={3};Connect Timeout=5", authHdlr.DbServerIp, authHdlr.DbName, authHdlr.DbLogin, authHdlr.DbPassword);
+            
             conName = authHdlr.DbServerIp;
         }
 
@@ -42,7 +45,7 @@ namespace HormesaFILEIDS.model
                 }
                 catch (SqlException ex)
                 {
-
+                    
                     return false;
                 }
             }
@@ -187,6 +190,25 @@ namespace HormesaFILEIDS.model
                 //Este metodo deberia fallar silenciosamente porque significa que la conexión falló
             }
 
+        }
+
+        /// <summary>
+        /// Log de eventos de serilog
+        /// </summary>
+        /// <returns></returns>
+        internal DataTable getEventLogs()
+        {
+            try
+            {
+                DataTable dt = tableReturnQuery(q.mostrarLogEventos());
+                return dt;
+            }
+            catch (Exception)
+            {
+                //Este metodo deberia fallar silenciosamente porque significa que la conexión falló
+            }
+
+            return new DataTable();
         }
 
         /// <summary>

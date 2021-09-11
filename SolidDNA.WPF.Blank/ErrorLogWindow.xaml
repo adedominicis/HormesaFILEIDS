@@ -5,16 +5,38 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HormesaFILEIDS"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Orientation="Vertical" Background="Teal">
+             d:DesignHeight="450" d:DesignWidth="706"
+        Title="Registro de errores y excepciones - HORMESA FILEIDS">
+    <Window.Resources>
+    <Style x:Key="txTablas" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="5 5 5 5"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    </Window.Resources>
+    <StackPanel Orientation="Vertical" Background="#baefef">
+        <TextBlock Style="{StaticResource txTablas}">Detalle de Excepciones</TextBlock>
         <DataGrid Name="dgridLogErrores"
-                              IsReadOnly="True" 
-                              SelectionUnit="Cell"
-                              AutoGenerateColumns="True"
-                              HorizontalAlignment="Center"
-                              FontSize="14"
-                              FontWeight="DemiBold"
-                              AlternatingRowBackground="LemonChiffon"
+                  IsReadOnly="True" 
+                  SelectionUnit="Cell"
+                  AutoGenerateColumns="True"
+                  HorizontalAlignment="Stretch"
+                  FontSize="14"
+                  FontWeight="DemiBold"
+                  AlternatingRowBackground="LemonChiffon"
+                  Margin="5 5 5 5">
+        </DataGrid>
+        <TextBlock Style="{StaticResource txTablas}">Detalle de eventos</TextBlock>
+        <DataGrid Name="dgridLogEventos"
+                  IsReadOnly="True" 
+                  SelectionUnit="Cell"
+                  AutoGenerateColumns="True"
+                  HorizontalAlignment="Stretch"
+                  FontSize="14"
+                  FontWeight="DemiBold"
+                  AlternatingRowBackground="LemonChiffon"
                   Margin="5 5 5 5">
         </DataGrid>
     </StackPanel>

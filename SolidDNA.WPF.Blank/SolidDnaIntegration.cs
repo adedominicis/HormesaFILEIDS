@@ -1,6 +1,11 @@
 ﻿using AngelSix.SolidDna;
 using Dna;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
+using System;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using static AngelSix.SolidDna.SolidWorksEnvironment;
 
@@ -70,15 +75,66 @@ namespace HormesaFILEIDS
 
     //Se integra el GUID con el que se registra el assembly en el registro.
 
-    [Guid("19BCBD7C-1518-4180-B118-7DF731D40E5C"),ComVisible(true)]
+    [Guid("19BCBD7C-1518-4180-B118-7DF731D40E5C"), ComVisible(true)]
     public class MyAddinIntegration : AddInIntegration
     {
+        #region Constantes
+        private const string dbPassword = "HfIdS1000210721";
+        private const string dbUser = "FILEIDSUSER";
+        private const string dbLogin = "FILEIDS";
+        private const string dbName = "HORMESAFILEIDS";
+        private const string thisAppPass = "capacillo";
+        private const string thisAppUser = "admin";
+        private const string serverFileName = "server";
+        private const string schemaName = "dbo";
+        private const string tableName = "LogEvents";
+
+        #endregion
         /// <summary>
         /// Specific application start-up code
         /// </summary>
         public override void ApplicationStartup()
         {
+            string serverFilePath = "";
+            string installFolder = "";
+            try
+            {
+                //Directorio en donde está instalada la aplicación.
+                installFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                serverFilePath = string.Format("{0}\\Resources\\{1}", installFolder, serverFileName);
+                //Retornar string de conexion
+                string connectionString = string.Format("Server={0};Initial Catalog={1};User Id={2};Password={3};Connect Timeout=5",File.ReadAllText(serverFilePath), dbName, dbLogin, dbPassword);
 
+                //Serilog logger
+                Log.Logger = new LoggerConfiguration().WriteTo
+                .MSSqlServer(
+                    connectionString: connectionString,
+                    sinkOptions: new MSSqlServerSinkOptions
+                    {
+                        TableName = tableName,
+                        SchemaName = schemaName,
+                        AutoCreateSqlTable = true
+                    },
+                    restrictedToMinimumLevel: LogEventLevel.Debug,
+                    formatProvider: null,
+                    columnOptions: null,
+                    logEventFormatter: null)
+                .CreateLogger();
+
+                //Prueba en vacio del logger
+                Log.Debug("Inicializando FILEIDS "+DateTime.Now);
+
+                //Log.Information("Esto es informacion");
+
+                //Log.Warning("Esto es una alerta");
+
+                //Log.Error("Esto es un error");
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Inicializada app!");
+            }
         }
 
         /// <summary>
@@ -162,7 +218,7 @@ namespace HormesaFILEIDS
             {
                 // Set taskpane icon
                 Icon = Path.Combine(this.AssemblyPath(), "logo-small.png"),
-                  WpfControl = new MyAddinControl()
+                WpfControl = new MyAddinControl()
             };
 
             // Add it to taskpane

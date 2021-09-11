@@ -264,7 +264,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Label Content="FILEIDS 1.0.0.4"/>
+                <Label Content="FILEIDS 1.0.0.5"/>
                 <TextBox 
                     Style="{StaticResource txErrorMessageBox}"
                     Name="txTaskPaneMsg" 

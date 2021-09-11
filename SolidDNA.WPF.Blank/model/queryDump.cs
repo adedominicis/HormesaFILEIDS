@@ -133,6 +133,14 @@ namespace HormesaFILEIDS.model
         {
             return "select * from mostrarLogErrores order by id desc";
         }
+        /// <summary>
+        /// Consuota la vista mostrarLogEventos en orden inverso, ultimos primero
+        /// </summary>
+        /// <returns></returns>
+        internal string mostrarLogEventos()
+        {
+            return "select * from mostrarLogEventos order by id desc";
+        }
         #endregion
 
     }
