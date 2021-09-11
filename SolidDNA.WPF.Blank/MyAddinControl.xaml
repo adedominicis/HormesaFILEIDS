@@ -286,8 +286,9 @@
                     Background="#baefef">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="99*"/>
+                        <ColumnDefinition Width="170*"/>
                     </Grid.ColumnDefinitions>
 
 
@@ -303,47 +304,47 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Style="{StaticResource txSubTitulo}"
-                               Grid.Row="0">IP del servidor</TextBlock>
+                               Grid.Row="0" Grid.ColumnSpan="2" Margin="5,11,0,10">IP del servidor</TextBlock>
                     <TextBox 
                             Name="txServerData"
                             IsReadOnly="true"
                             Grid.Row="0" 
-                            Grid.Column="1"
+                            Grid.Column="2"
                             MaxLength="100"
                        Style="{StaticResource txID}"
-                       Margin="2,6,2,6" HorizontalAlignment="Stretch"></TextBox>
+                       Margin="1.667,6,2.333,6" HorizontalAlignment="Stretch"></TextBox>
 
                     <TextBlock Style="{StaticResource txSubTitulo}"
                                Grid.Row="2"
                                Visibility="Hidden"
-                               Name="lblPassword">Contraseña:</TextBlock>
+                               Name="lblPassword" Grid.ColumnSpan="2" Margin="5,11,0,10">Contraseña:</TextBlock>
 
                     <PasswordBox
                         Name="pwbAppPass"
                         Grid.Row="2" 
-                        Grid.Column="1"
+                        Grid.Column="2"
                         MaxLength="100"
-                        Margin="2,6,2,6"
+                        Margin="1.667,6,2.333,6"
                         Visibility="Hidden"></PasswordBox>
 
                     <Button Name="btActualizarServerName"
                         Style="{StaticResource btID}"
                         Grid.Row="1"
-                            Grid.ColumnSpan="2"
-                        Click="btActualizarServerName_Click">Editar IP del servidor</Button>
-                    
+                            Grid.ColumnSpan="3"
+                        Click="btActualizarServerName_Click" Margin="2,9,2.333,9">Editar IP del servidor</Button>
+
                     <Button Name="btLogin"
                         Style="{StaticResource btID}"
-                            Grid.ColumnSpan="2"
+                            Grid.ColumnSpan="3"
                         Grid.Row="3"
                             Visibility="Hidden"
-                        Click="btVerificarPass_Click">Login</Button>
+                        Click="btVerificarPass_Click" Margin="2,9,2.333,9">Login</Button>
 
                     <Button Name="btProbarConexion"
                         Style="{StaticResource btID}"
                         Grid.Row="5"
-                            Grid.ColumnSpan="2"
-                        Click="btProbarConexion_Click">Probar Conexión</Button>
+                            Grid.ColumnSpan="3"
+                        Click="btProbarConexion_Click" Margin="2,9,2.333,9">Probar Conexión</Button>
                 </Grid>
                 <Grid 
                     

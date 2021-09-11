@@ -215,10 +215,13 @@ namespace HormesaFILEIDS.ViewModel
         /// <param name="errorLogWindow"></param>
         public void loadErrorLogWindowData(ErrorLogWindow errorLogWindow)
         {
-            DataTable dtLogErrores = dao.getErrorLogs();
-            DataTable dtLogEventos = dao.getEventLogs();
+            queryDump q = new queryDump();
+            DataTable dtLogErrores = dao.getTableLogs(q.mostrarLogErrores());
+            DataTable dtLogEventos = dao.getTableLogs(q.mostrarLogEventos());
+            DataTable dtArchivos = dao.getTableLogs(q.listadoArchivosActivos());
             errorLogWindow.dgridLogErrores.ItemsSource = dtLogErrores.DefaultView;
             errorLogWindow.dgridLogEventos.ItemsSource = dtLogEventos.DefaultView;
+            errorLogWindow.dgridArchivos.ItemsSource = dtArchivos.DefaultView;
         }
 
         //Refrescar componentes dinámicos de la UI 

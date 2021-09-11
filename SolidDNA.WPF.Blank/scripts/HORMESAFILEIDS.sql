@@ -689,3 +689,8 @@ CREATE TABLE [dbo].[LogEvents](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
+
+-- Listado de archivos activos
+create view listadoArchivosActivos as
+select format(archivos.id,'000-000') as 'PARTID', fullpath as 'RUTA'
+from archivos

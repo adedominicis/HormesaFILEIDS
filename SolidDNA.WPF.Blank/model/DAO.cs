@@ -196,11 +196,11 @@ namespace HormesaFILEIDS.model
         /// Log de eventos de serilog
         /// </summary>
         /// <returns></returns>
-        internal DataTable getEventLogs()
+        internal DataTable getTableLogs(string query)
         {
             try
             {
-                DataTable dt = tableReturnQuery(q.mostrarLogEventos());
+                DataTable dt = tableReturnQuery(query);
                 return dt;
             }
             catch (Exception)
@@ -211,24 +211,7 @@ namespace HormesaFILEIDS.model
             return new DataTable();
         }
 
-        /// <summary>
-        /// Obtener listado de errores.
-        /// </summary>
-        /// <returns></returns>
-        public DataTable getErrorLogs()
-        {
-            try
-            {
-                DataTable dt = tableReturnQuery(q.mostrarLogErrores());
-                return dt;
-            }
-            catch (Exception)
-            {
-                //Este metodo deberia fallar silenciosamente porque significa que la conexión falló
-            }
-
-            return new DataTable();
-        }
+ 
 
         #endregion
     }

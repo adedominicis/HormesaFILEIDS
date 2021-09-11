@@ -141,6 +141,14 @@ namespace HormesaFILEIDS.model
         {
             return "select * from mostrarLogEventos order by id desc";
         }
+        /// <summary>
+        /// Consuota la vista mostrarLogEventos en orden inverso, ultimos primero
+        /// </summary>
+        /// <returns></returns>
+        internal string listadoArchivosActivos()
+        {
+            return "select * from listadoArchivosActivos order by PARTID desc";
+        }
         #endregion
 
     }

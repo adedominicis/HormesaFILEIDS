@@ -16,28 +16,83 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
     </Window.Resources>
-    <StackPanel Orientation="Vertical" Background="#baefef">
-        <TextBlock Style="{StaticResource txTablas}">Detalle de Excepciones</TextBlock>
-        <DataGrid Name="dgridLogErrores"
+    <TabControl>
+
+
+        <TabItem Header="Eventos" Background="#baefef">
+
+            <DockPanel>
+                <Grid DockPanel.Dock="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource txTablas}" Grid.Row="0">
+                            Detalle de eventos</TextBlock>
+                    <DataGrid Name="dgridLogEventos"
                   IsReadOnly="True" 
                   SelectionUnit="Cell"
                   AutoGenerateColumns="True"
                   HorizontalAlignment="Stretch"
-                  FontSize="14"
+                  FontSize="9"
                   FontWeight="DemiBold"
-                  AlternatingRowBackground="LemonChiffon"
-                  Margin="5 5 5 5">
-        </DataGrid>
-        <TextBlock Style="{StaticResource txTablas}">Detalle de eventos</TextBlock>
-        <DataGrid Name="dgridLogEventos"
+                  AlternatingRowBackground="LemonChiffon"   
+                  Margin="5 5 5 5"
+                                  Grid.Row="1">
+                    </DataGrid>
+                </Grid>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Excepciones" Background="#baefef">
+
+            <DockPanel>
+                <Grid DockPanel.Dock="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource txTablas}" Grid.Row="0">
+                            Detalle de excepciones</TextBlock>
+                    <DataGrid Name="dgridLogErrores"
                   IsReadOnly="True" 
                   SelectionUnit="Cell"
                   AutoGenerateColumns="True"
                   HorizontalAlignment="Stretch"
-                  FontSize="14"
+                  FontSize="9"
                   FontWeight="DemiBold"
-                  AlternatingRowBackground="LemonChiffon"
-                  Margin="5 5 5 5">
-        </DataGrid>
-    </StackPanel>
+                  AlternatingRowBackground="LemonChiffon"   
+                  Margin="5 5 5 5"
+                                  Grid.Row="1">
+                    </DataGrid>
+                </Grid>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Archivos" Background="#baefef">
+
+            <DockPanel>
+                <Grid DockPanel.Dock="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource txTablas}" Grid.Row="0">
+                            Archivos registrados</TextBlock>
+                    <DataGrid Name="dgridArchivos"
+                  IsReadOnly="True" 
+                  SelectionUnit="Cell"
+                  AutoGenerateColumns="True"
+                  HorizontalAlignment="Stretch"
+                  FontSize="12"
+                  FontWeight="DemiBold"
+                  AlternatingRowBackground="LemonChiffon"   
+                  Margin="5 5 5 5"
+                                  Grid.Row="1">
+                    </DataGrid>
+                </Grid>
+            </DockPanel>
+        </TabItem>
+        
+
+    </TabControl>
+    
 </Window>
