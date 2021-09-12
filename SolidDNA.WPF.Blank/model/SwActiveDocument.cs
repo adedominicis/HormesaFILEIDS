@@ -264,7 +264,7 @@ namespace HormesaFILEIDS.model
                     custPropMgr.Add3(CustomPropertyPartid, (int)swCustomInfoType_e.swCustomInfoText, getFormattedPartId("@"), (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
                 }
                 //Log de actividad
-                err.logger(string.Format("PARTID <{0}> ha sido reescrito en custom properties", partId));
+                err.logger(string.Format("PARTID <{0}> ha sido reescrito en custom properties", Helpers.formatPartId(partId)));
             }
 
         }
@@ -465,7 +465,7 @@ namespace HormesaFILEIDS.model
                 //Reescribir atributo
                 attHandler.writePartIdOnAttribute(partId);
                 //Log actividad
-                err.logger(string.Format("El archivo: <{0}> ha perdido su atributo interno. Reescribiendo desde DB con PARTID <{1}>", modelPath, dbPartid));
+                err.logger(string.Format("El archivo: <{0}> ha perdido su atributo interno.\nReescribiendo desde DB con PARTID <{1}>", modelPath, Helpers.formatPartId(dbPartid)));
                 return true;
             }
 
