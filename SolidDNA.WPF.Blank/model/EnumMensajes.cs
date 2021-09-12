@@ -19,6 +19,9 @@
         yaTienePartid,
         noHayDocumentoActivo,
         archivoNoGuardado,
-        atributoVacio
+        atributoVacio,
+        logSilencioso,
+        errorAlRegistrarArchivo,
+        archivoDesconectado
     }
 }

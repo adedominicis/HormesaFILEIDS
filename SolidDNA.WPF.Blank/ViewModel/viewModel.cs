@@ -175,7 +175,6 @@ namespace HormesaFILEIDS.ViewModel
         //Mostrar atributo
         public bool CbShowAttribute
         {
-
             set
             {
                 swActiveDoc.toggleAttVisibility(value);
@@ -300,6 +299,7 @@ namespace HormesaFILEIDS.ViewModel
             {
                 //Si el archivo está abierto en read only, hay que deshabilitar el panel principal
                 myView.swStackPanel.IsEnabled = !swModel.IsOpenedReadOnly();
+                myView.cbMostrarAtributo.IsEnabled = true;
                 //Si el servidor está conectado, se puede actualizar.
                 if (dao.IsServerConnected())
                 {
@@ -323,6 +323,7 @@ namespace HormesaFILEIDS.ViewModel
             else
             {
                 myView.swStackPanel.IsEnabled = false;
+                myView.cbMostrarAtributo.IsEnabled = false;
             }
 
 

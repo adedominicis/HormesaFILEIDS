@@ -78,15 +78,24 @@
                     <TextBlock Style="{StaticResource txTablas}" Grid.Row="0">
                             Archivos registrados</TextBlock>
                     <DataGrid Name="dgridArchivos"
-                  IsReadOnly="True" 
-                  SelectionUnit="Cell"
-                  AutoGenerateColumns="True"
-                  HorizontalAlignment="Stretch"
-                  FontSize="12"
-                  FontWeight="DemiBold"
-                  AlternatingRowBackground="LemonChiffon"   
-                  Margin="5 5 5 5"
-                                  Grid.Row="1">
+                              IsReadOnly="True" 
+                              SelectionUnit="Cell"
+                              AutoGenerateColumns="True"
+                              HorizontalAlignment="Stretch"
+                              FontSize="12"
+                              FontWeight="DemiBold"
+                              AlternatingRowBackground="LemonChiffon"   
+                              Margin="5 5 5 5"
+                              Grid.Row="1">
+                        <!--<DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="Button_Click">OBSOLETO</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>-->
                     </DataGrid>
                 </Grid>
             </DockPanel>

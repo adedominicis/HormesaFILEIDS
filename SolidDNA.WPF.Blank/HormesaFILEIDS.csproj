@@ -97,6 +97,7 @@
     <Compile Include="model\DAO.cs" />
     <Compile Include="model\EnumMensajes.cs" />
     <Compile Include="model\ErrorHandler.cs" />
+    <Compile Include="model\Helpers.cs" />
     <Compile Include="model\queryDump.cs" />
     <Compile Include="model\SwActiveDocument.cs" />
     <Compile Include="model\SwAttributeHandler.cs" />

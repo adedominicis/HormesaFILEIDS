@@ -123,7 +123,7 @@
 
                 <Grid 
                     
-                    Height="160"
+                    Height="180"
                     HorizontalAlignment="Stretch"
                     Margin="5 5 5 5"
                     Background="#baefef">
@@ -133,6 +133,7 @@
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -167,14 +168,14 @@
 
                     <Button Name="btNuevoPartIdComponente"
                         Style="{StaticResource btID}"
-                        Grid.Row="3"
-                        Grid.Column="0"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
                         Click="btNuevoPartIdComponente_Click">ASIGNAR PARTID</Button>
 
                     <Button Name="btRenombrarArchivo"
                         Style="{StaticResource btID}"
                         Grid.Row="3"
-                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
                         IsEnabled="false"
                         Click="btRenombrarArchivo_Click">RENOMBRAR ARCHIVO</Button>
 
@@ -372,7 +373,7 @@
                         Style="{StaticResource btID}"
                         Grid.Row="1"
                             Grid.ColumnSpan="2"
-                        Click="btLogErrores_Click">Log de errores</Button>
+                        Click="btLogErrores_Click">Mostrar LOG del sistema</Button>
                     <CheckBox Grid.Column="1"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"

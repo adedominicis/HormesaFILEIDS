@@ -91,16 +91,6 @@ namespace HormesaFILEIDS.model
             return null;
         }
 
-        //Formatear PARTID. Esto deberia ser un helper function ya que se pide en dos lugares.
-        private string formatPartId(string partId)
-        {
-            if (!string.IsNullOrEmpty(partId))
-            {
-                return partId.ToString().PadLeft(6, '0').Insert(3, "-");
-            }
-            return string.Empty;  
-        }
-
         #endregion
 
         #region Métodos públicos
@@ -118,7 +108,7 @@ namespace HormesaFILEIDS.model
                     if (isVisible)
                     {
                         //Mostrar el partid almacenado internamente.
-                        err.thrower("El PARTID almacenado es: " + formatPartId(getPartIdFromAttribute()));
+                        err.thrower("El PARTID almacenado es: " + Helpers.formatPartId(getPartIdFromAttribute()));
                     }
 
                 }

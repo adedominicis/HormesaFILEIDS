@@ -8,7 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using static AngelSix.SolidDna.SolidWorksEnvironment;
-
+using HormesaFILEIDS.model;
 namespace HormesaFILEIDS
 {
     // 
@@ -90,11 +90,29 @@ namespace HormesaFILEIDS
         private const string tableName = "LogEvents";
 
         #endregion
+
+
+        #region Helper methods
+
+        public void checkServerConnection()
+        {
+            DAO dao = new DAO();
+            ErrorHandler err = new ErrorHandler();
+            if (!dao.IsServerConnected())
+            {
+                err.thrower(err.handler(EnumMensajes.errorEnConexionDB));
+            }
+        }
+        #endregion
+
         /// <summary>
         /// Specific application start-up code
         /// </summary>
         public override void ApplicationStartup()
         {
+            //Revisar conexion al servidor
+            checkServerConnection();
+
             string serverFilePath = "";
             string installFolder = "";
             try
@@ -124,16 +142,11 @@ namespace HormesaFILEIDS
                 //Prueba en vacio del logger
                 Log.Debug("Inicializando FILEIDS "+DateTime.Now);
 
-                //Log.Information("Esto es informacion");
-
-                //Log.Warning("Esto es una alerta");
-
-                //Log.Error("Esto es un error");
 
             }
             catch (Exception ex)
             {
-                Log.Error("Inicializada app!");
+                Log.Error("Error inicializando logger");
             }
         }
 
@@ -231,5 +244,6 @@ namespace HormesaFILEIDS
         }
 
         #endregion
+
     }
 }
