@@ -30,7 +30,7 @@ namespace HormesaFILEIDS.model
         private Configuration activeConfig;
         private DAO dao;
         private queryDump q;
-        private string descriptorEs;
+        //private string descriptorEs;
         private ErrorHandler err;
         private SwAttributeHandler attHandler;
         private SldWorks swApp;
@@ -55,8 +55,8 @@ namespace HormesaFILEIDS.model
             partId = dao.singleReturnQuery(q.getFilePartIdFromPath(swModel.GetPathName()));
             //Reescribir partid en el archivo.
             writePartIdToFile();
-            //Leer descriptorES desde el archivo.
-            descriptorEs = swModel.Extension.CustomPropertyManager[""].Get("DESCRIPTORES");
+            //Leer descriptorES desde el archivo (deshabilitado 1.0.6)
+            //descriptorEs = swModel.Extension.CustomPropertyManager[""].Get("DESCRIPTORES");
         }
 
         #endregion
@@ -74,19 +74,22 @@ namespace HormesaFILEIDS.model
             get { return getActiveConfigName(); }
         }
 
-        //El descriptorEs
-        public string DescriptorEs
-        {
-            set
-            {
-                descriptorEs = value;
-                writePropertyToFile("DESCRIPTORES", descriptorEs);
-            }
-            get
-            {
-                return descriptorEs;
-            }
-        }
+        /// <summary>
+        /// Propiedad DescriptorEs
+        /// Deshabilitada en 1.0.6
+        /// </summary>
+        //public string DescriptorEs
+        //{
+        //    set
+        //    {
+        //        descriptorEs = value;
+        //        writePropertyToFile("DESCRIPTORES", descriptorEs);
+        //    }
+        //    get
+        //    {
+        //        return descriptorEs;
+        //    }
+        //}
 
         #endregion
 

@@ -131,29 +131,32 @@ namespace HormesaFILEIDS.ViewModel
 
         }
 
-        //Descriptor ES
-        public string DescriptorEs
-        {
-            get
-            {
-                if (swActiveDoc != null)
-                {
-                    return swActiveDoc.DescriptorEs;
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-            set
-            {
-                if (swActiveDoc != null)
-                {
-                    swActiveDoc.DescriptorEs = value;
-                    OnPropertyChanged("DescriptorEs");
-                }
-            }
-        }
+        /// <summary>
+        /// Propiedade DescriptorEs
+        /// Deshabilitada por debug en 1.0.6
+        /// </summary>
+        //public string DescriptorEs
+        //{
+        //    get
+        //    {
+        //        if (swActiveDoc != null)
+        //        {
+        //            return swActiveDoc.DescriptorEs;
+        //        }
+        //        else
+        //        {
+        //            return string.Empty;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        if (swActiveDoc != null)
+        //        {
+        //            swActiveDoc.DescriptorEs = value;
+        //            OnPropertyChanged("DescriptorEs");
+        //        }
+        //    }
+        //}
 
         //Auth Handler  
         public AuthenticationHandler AuthHldr

@@ -142,10 +142,10 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Style="{StaticResource txSubTitulo}">PARTID (@)</TextBlock>
-                    <TextBlock
+                    <!--<TextBlock
                         Style="{StaticResource txSubTitulo}"
                         Grid.Column="0"
-                        Grid.Row="1">Descriptor (ES)</TextBlock>
+                        Grid.Row="1">Descriptor (ES)</TextBlock>-->
 
 
                     <TextBox Grid.Row="0" 
@@ -157,14 +157,14 @@
                              HorizontalAlignment="Stretch" 
                              Margin="2,6,2,6"></TextBox>
 
-                    <TextBox 
+                    <!--<TextBox 
                         Name="txDescriptorEs"
                         Grid.Row="1" 
                              Grid.Column="1"
                              MaxLength="100"
                        Style="{StaticResource txID}"
                        Text="{Binding DescriptorEs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       Margin="2,6,2,6" HorizontalAlignment="Stretch"></TextBox>
+                       Margin="2,6,2,6" HorizontalAlignment="Stretch"></TextBox>-->
 
                     <Button Name="btNuevoPartIdComponente"
                         Style="{StaticResource btID}"
@@ -265,7 +265,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Label Content="FILEIDS 1.0.0.5"/>
+                <Label Content="FILEIDS 1.0.0.5b"/>
                 <TextBox 
                     Style="{StaticResource txErrorMessageBox}"
                     Name="txTaskPaneMsg" 

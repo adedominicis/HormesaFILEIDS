@@ -87,6 +87,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_0B71051819906F5ADD1A12360BB8B0CD"
+        "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0BE51801E29C1B2901F3A795993D6BBF"
         "OwnerKey" = "8:_5C3D332208CA46D2B6777E60ACDFDF30"
         "MsmSig" = "8:_UNDEFINED"
@@ -1588,6 +1594,12 @@
         "Entry"
         {
         "MsmKey" = "8:_DF5E916287EAD1BEDAD89476EF1FB79F"
+        "OwnerKey" = "8:_0B71051819906F5ADD1A12360BB8B0CD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DF5E916287EAD1BEDAD89476EF1FB79F"
         "OwnerKey" = "8:_ADFCE33E12137A152AA0D51D872BDA6C"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1853,6 +1865,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_4933F39D4D2760663395863D2419BC1F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0B71051819906F5ADD1A12360BB8B0CD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2681,7 +2699,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\HORMESAFILEIDS_1.0.5.msi"
+        "OutputFilename" = "8:Release\\HORMESAFILEIDS_1.0.5b.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -2925,6 +2943,37 @@
                     }
                 }
             "SourcePath" = "8:System.Text.Encoding.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0B71051819906F5ADD1A12360BB8B0CD"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Serilog.Sinks.File, Version=5.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_0B71051819906F5ADD1A12360BB8B0CD"
+                    {
+                    "Name" = "8:Serilog.Sinks.File.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Serilog.Sinks.File.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_61AB5439AC4A4FA782476E25FE200110"
@@ -7856,6 +7905,17 @@
                         {
                         }
                     }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_B67AE3E9CC90451EB93897832282E73E"
+                    {
+                    "Name" = "8:Logs"
+                    "AlwaysCreate" = "11:TRUE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_BFBFEA945E4D4698A8EA3A7E703D673E"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_A13CE2B1CE894FF2B0FF6DF902946601"
@@ -7896,15 +7956,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FILEIDS"
-        "ProductCode" = "8:{005C174F-A233-4C40-ACAF-EFBAAE312DE7}"
-        "PackageCode" = "8:{68B79697-A051-41E8-B48F-5965AB959E5C}"
+        "ProductCode" = "8:{5E862ABA-9BBF-4F3B-8C90-65570A96700F}"
+        "PackageCode" = "8:{2DA790EC-8221-4B36-A834-D27D6FB7C10A}"
         "UpgradeCode" = "8:{142A4A32-8A03-4417-A38E-718AA6C9705D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.5"
+        "ProductVersion" = "8:1.0.6"
         "Manufacturer" = "8:ADDR"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

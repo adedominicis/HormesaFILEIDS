@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HormesaFILEIDS", "SolidDNA.
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{2A88F191-5AF6-41E0-95A6-3648B7A98C4A}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "HormesaFILEIDSDB", "..\HormesaFILEIDSDB\HormesaFILEIDSDB.sqlproj", "{6623D3E8-D2D0-4E6D-BFF8-249BACD72980}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,12 @@ Global
 		{2A88F191-5AF6-41E0-95A6-3648B7A98C4A}.Debug|Any CPU.ActiveCfg = Debug
 		{2A88F191-5AF6-41E0-95A6-3648B7A98C4A}.Release|Any CPU.ActiveCfg = Release
 		{2A88F191-5AF6-41E0-95A6-3648B7A98C4A}.Release|Any CPU.Build.0 = Release
+		{6623D3E8-D2D0-4E6D-BFF8-249BACD72980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6623D3E8-D2D0-4E6D-BFF8-249BACD72980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6623D3E8-D2D0-4E6D-BFF8-249BACD72980}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6623D3E8-D2D0-4E6D-BFF8-249BACD72980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6623D3E8-D2D0-4E6D-BFF8-249BACD72980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6623D3E8-D2D0-4E6D-BFF8-249BACD72980}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
