@@ -124,7 +124,8 @@ namespace HormesaFILEIDS
                 string connectionString = string.Format("Server={0};Initial Catalog={1};User Id={2};Password={3};Connect Timeout=5",File.ReadAllText(serverFilePath), dbName, dbLogin, dbPassword);
 
                 //Serilog logger
-                string logFilePath = string.Format("{0}\\Logs\\FILEIDSLOG.TXT", installFolder);
+                //string logFilePath = string.Format("{0}\\Logs\\FILEIDSLOG.TXT", installFolder);
+                string logFilePath = string.Format("C:\\FILEIDSLOGS\\FILEIDSLOG.TXT", installFolder);
                 Log.Logger = new LoggerConfiguration().WriteTo
                 .MSSqlServer(
                     connectionString: connectionString,
@@ -142,7 +143,7 @@ namespace HormesaFILEIDS
                 .CreateLogger();
 
                 //Prueba en vacio del logger
-                Log.Debug("Inicializando FILEIDS "+DateTime.Now);
+                Log.Information(string.Format("Inicializando FILEIDS en server: {0}, DB: {1},",File.ReadAllText(serverFilePath), dbName));
 
 
             }
