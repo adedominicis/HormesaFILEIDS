@@ -29,7 +29,7 @@ namespace HormesaFILEIDS.model
         {
             AuthenticationHandler authHdlr = new AuthenticationHandler();
             conStr = string.Format("Server={0};Initial Catalog={1};User Id={2};Password={3};Connect Timeout=5", authHdlr.DbServerIp, authHdlr.DbName, authHdlr.DbLogin, authHdlr.DbPassword);
-            
+
             conName = authHdlr.DbServerIp;
         }
 
@@ -167,6 +167,7 @@ namespace HormesaFILEIDS.model
             try
             {
                 singleReturnQuery(q.logSQLErrores(ex));
+                Log.Error(ex.ToString());
             }
             catch (Exception)
             {
@@ -184,6 +185,7 @@ namespace HormesaFILEIDS.model
             try
             {
                 singleReturnQuery(q.logErrores(ex));
+                Log.Error(ex.ToString());
             }
             catch (Exception)
             {
@@ -210,8 +212,6 @@ namespace HormesaFILEIDS.model
 
             return new DataTable();
         }
-
- 
 
         #endregion
     }
